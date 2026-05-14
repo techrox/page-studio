@@ -125,7 +125,7 @@ CSS variables (with `--psd-*` defaults in the package's styles.css):
 | `--psd-bg-soft` | `#F8FAFC` |
 | `--psd-radius` | `8px` |
 
-Many blocks also read `--tps-*` legacy variables for backwards compatibility with the original Cibus IQ host — alias these to your brand if you don't want to rewrite block code.
+Many blocks also read `--tps-*` legacy variables for backwards compatibility with the original Page Studio host — alias these to your brand if you don't want to rewrite block code.
 
 ## Exports
 
