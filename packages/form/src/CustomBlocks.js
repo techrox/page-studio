@@ -1,4 +1,4 @@
-// Custom TipTap node extensions for the Cibus IQ admin editor:
+// Custom TipTap node extensions for the Page Studio admin editor:
 //   • CiqImage — image with width + align attributes (overrides @tiptap/extension-image
 //     with extra attrs and richer renderHTML).
 //   • Columns — a container of N columns (N is configurable: 2 or 3).
@@ -279,7 +279,7 @@ export const ShareBlock = Node.create({
           'a',
           {
             class: 'tps-block-share-btn',
-            href: 'https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcibusiq.com',
+            href: 'https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fpagestudio.dev',
             target: '_blank',
             rel: 'noopener noreferrer',
           },
@@ -289,7 +289,7 @@ export const ShareBlock = Node.create({
           'a',
           {
             class: 'tps-block-share-btn',
-            href: 'mailto:?subject=Cibus%20IQ&body=Thought%20you%27d%20find%20this%20interesting%3A%20https%3A%2F%2Fcibusiq.com',
+            href: 'mailto:?subject=Page%20Studio&body=Thought%20you%27d%20find%20this%20interesting%3A%20https%3A%2F%2Fpagestudio.dev',
           },
           'Email',
         ],
@@ -297,7 +297,7 @@ export const ShareBlock = Node.create({
           'a',
           {
             class: 'tps-block-share-btn',
-            href: 'https://twitter.com/intent/tweet?url=https%3A%2F%2Fcibusiq.com',
+            href: 'https://twitter.com/intent/tweet?url=https%3A%2F%2Fpagestudio.dev',
             target: '_blank',
             rel: 'noopener noreferrer',
           },
