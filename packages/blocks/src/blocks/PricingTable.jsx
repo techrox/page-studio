@@ -78,7 +78,7 @@ export const PricingTable = {
                 <div>
                   <div style={{ fontSize: 14, fontWeight: 700, opacity: 0.9 }}>{t.name}</div>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginTop: 6 }}>
-                    <span style={{ fontSize: 36, fontWeight: 800, letterSpacing: '-0.02em' }}>{t.price}</span>
+                    <span style={{ fontSize: 'clamp(28px, 6vw, 36px)', fontWeight: 800, letterSpacing: '-0.02em' }}>{t.price}</span>
                     {t.period && <span style={{ fontSize: 13, opacity: 0.75 }}>{t.period}</span>}
                   </div>
                   {t.description && <p style={{ marginTop: 8, marginBottom: 0, fontSize: 14, opacity: 0.85, lineHeight: 1.5 }}>{t.description}</p>}
