@@ -4,7 +4,7 @@ The editor shell for Page Studio — a drop-in `<PageStudio />` component that g
 
 ```bash
 pnpm add @techrox/page-studio @techrox/page-studio-blocks
-pnpm add @measured/puck antd @ant-design/icons   # peers
+pnpm add @puckeditor/core antd @ant-design/icons   # peers
 ```
 
 ## Usage

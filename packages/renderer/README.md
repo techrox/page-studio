@@ -6,7 +6,7 @@ Use this on public pages to display whatever your admin saved in the editor. Ren
 
 ```bash
 pnpm add @techrox/page-studio-renderer @techrox/page-studio-blocks
-pnpm add @measured/puck                            # peer
+pnpm add @puckeditor/core                          # peer
 ```
 
 ## Usage
@@ -44,7 +44,7 @@ The renderer **must** see the same `studio` value as the editor so blocks see co
 
 ## What this package wraps
 
-`<Render>` from `@measured/puck`, plus `<PageStudioProvider>` from `@techrox/page-studio-blocks`. That's it.
+`<Render>` from `@puckeditor/core`, plus `<PageStudioProvider>` from `@techrox/page-studio-blocks`. That's it.
 
 You could write the same five lines yourself; this package exists so server-only consumers don't have to add the editor as an indirect dependency.
 

@@ -6,7 +6,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render } from '@testing-library/react';
 
-vi.mock('@measured/puck', () => ({
+vi.mock('@puckeditor/core', () => ({
   Render: ({ data }) => <div data-testid="puck-render" data-count={data?.content?.length || 0} />,
 }));
 

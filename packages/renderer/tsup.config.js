@@ -10,7 +10,7 @@ export default defineConfig({
   external: [
     'react',
     'react-dom',
-    '@measured/puck',
+    '@puckeditor/core',
     '@techrox/page-studio-blocks',
   ],
   esbuildOptions(options) {
