@@ -756,6 +756,15 @@ h1, h2, h3, h4 {
 .editor-shell { height: calc(100vh - 65px); }
 
 /* Per-brand tweaks — set by the App by toggling a class on .showcase ----- */
+.showcase[data-brand="neutral"] {
+  --tps-primary: #0F766E;
+  --tps-primary-dark: #0B5550;
+  --tps-primary-darker: #064E3B;
+  --tps-primary-light: #14B8A6;
+  --tps-primary-soft: #CCFBF1;
+  --tps-accent: #F59E0B;
+  --tps-accent-dark: #D97706;
+}
 .showcase[data-brand="techrox"] {
   --tps-primary: #0B60D8;
   --tps-primary-dark: #0848A3;
