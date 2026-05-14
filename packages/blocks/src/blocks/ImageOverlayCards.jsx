@@ -89,7 +89,7 @@ export const ImageOverlayCards = {
                 color: '#fff',
                 background: c.image_url
                   ? `linear-gradient(180deg, rgba(15, 23, 42, 0.05) 0%, rgba(15, 23, 42, 0.85) 80%), url(${c.image_url}) center/cover no-repeat`
-                  : 'linear-gradient(180deg, var(--tps-primary, #0F766E) 0%, var(--tps-ink, #0F172A) 100%)',
+                  : 'linear-gradient(180deg, var(--tps-primary, #0b60d8) 0%, var(--tps-ink, #0F172A) 100%)',
               }}
               className="tps-overlay-card"
             >
