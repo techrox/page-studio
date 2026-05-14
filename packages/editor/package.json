@@ -4,6 +4,15 @@
   "description": "Drag-and-drop visual page builder for React, built on Puck. Adapter-driven persistence, brand theming, sidebar block library, replaceable top bar.",
   "license": "MIT",
   "author": "techrox",
+  "homepage": "https://github.com/techrox/page-studio#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/techrox/page-studio.git",
+    "directory": "packages/editor"
+  },
+  "bugs": {
+    "url": "https://github.com/techrox/page-studio/issues"
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
