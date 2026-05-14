@@ -558,6 +558,13 @@ h1, h2, h3, h4 {
   color: var(--tps-primary);
 }
 
+.landing-hero-meta {
+  margin: 28px 0 0;
+  font-size: 13px;
+  color: var(--tps-hint);
+  letter-spacing: 0.01em;
+}
+
 /* Sections --------------------------------------------------------------- */
 .landing-section {
   padding: clamp(56px, 7vw, 96px) 32px;
