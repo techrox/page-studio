@@ -12,10 +12,11 @@
 // warning when Publish is clicked without an adapter wired.
 
 import { useEffect, useMemo, useState, useTransition } from 'react';
-import { Puck, useGetPuck } from '@measured/puck';
+import { Puck, useGetPuck, legacySideBarPlugin } from '@puckeditor/core';
 import { App as AntdApp } from 'antd';
 
 import {
+  applyConfigDefaults,
   createPuckConfig,
   defaultOverrides,
   emptyPuckData,
@@ -26,7 +27,12 @@ import {
 import BuilderEnhancements from './BuilderEnhancements.jsx';
 import DefaultTopBar from './BuilderTopBar.jsx';
 
-import '@measured/puck/puck.css';
+import '@puckeditor/core/puck.css';
+
+// 0.21 ships a new side navigation rail. Our BuilderEnhancements observes
+// the legacy `_Sidebar--left` layout, so keep that DOM by applying the
+// legacy plugin once at module load.
+const PSD_LEGACY_SIDEBAR = legacySideBarPlugin();
 
 // Apply brand colors via BOTH an inline style on <html> (for the outer
 // editor chrome) and a <style> tag in <head> (so Puck's iframe canvas,
@@ -91,9 +97,19 @@ export default function PageStudio({
   const { message } = AntdApp.useApp();
   const [pending, startTransition] = useTransition();
   const [savedAt, setSavedAt] = useState(null);
-  const [data, setData] = useState(
+
+  // Resolve the config first so we can populate missing defaults on any
+  // seeded data the host passed in. Puck only applies defaultProps when a
+  // block is dragged in via the drawer — without this, blocks stored as
+  // `{ type, props: {} }` show empty fields when the author clicks them.
+  const resolvedConfig = useMemo(
+    () => config || createPuckConfig({ defaults: blockDefaults }),
+    [config, blockDefaults],
+  );
+
+  const [data, setData] = useState(() =>
     initialData && Array.isArray(initialData.content)
-      ? normalizePuckData(initialData)
+      ? applyConfigDefaults(normalizePuckData(initialData), resolvedConfig)
       : null,
   );
   const [loading, setLoading] = useState(!data && !!adapter.loadPage);
@@ -114,7 +130,7 @@ export default function PageStudio({
         if (cancelled) return;
         setData(
           loaded && Array.isArray(loaded.content)
-            ? normalizePuckData(loaded)
+            ? applyConfigDefaults(normalizePuckData(loaded), resolvedConfig)
             : emptyPuckData,
         );
       })
@@ -195,11 +211,6 @@ export default function PageStudio({
     );
   }
 
-  // Hosts that pass a full `config` own the merge themselves. Hosts that pass
-  // only `blockDefaults` get the default library with their tenant copy
-  // shallow-merged into each block's defaultProps.
-  const resolvedConfig = config || createPuckConfig({ defaults: blockDefaults });
-
   return (
     <PageStudioProvider value={studio}>
       <div className="psd-builder-page">
@@ -213,6 +224,7 @@ export default function PageStudio({
           overrides={mergedOverrides}
           onPublish={handlePublish}
           iframe={iframe}
+          plugins={[PSD_LEGACY_SIDEBAR]}
         />
       </div>
     </PageStudioProvider>

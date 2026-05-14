@@ -19,6 +19,7 @@
     "@vitejs/plugin-react": "^4.3.1",
     "happy-dom": "^14.12.3",
     "tsup": "^8.1.0",
+    "typescript": "^5.5.4",
     "vitest": "^1.6.0"
   },
   "engines": {

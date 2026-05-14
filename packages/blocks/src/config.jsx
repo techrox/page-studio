@@ -254,6 +254,27 @@ function makeBlockId(type) {
   return `${type || 'block'}-${suffix}`;
 }
 
+// Fill each content item's missing props from its config component's
+// defaultProps. Puck applies defaultProps only when a block is dragged in
+// via the drawer — saved/seeded payloads that store `{ type, props: {} }`
+// otherwise render (and edit) with empty fields. Existing props always win.
+//
+// Both the renderer and the editor call this on initial data so the field
+// panel is populated when the author clicks a block.
+export function applyConfigDefaults(data, config) {
+  if (!data || !Array.isArray(data.content) || !config?.components) return data;
+  let mutated = false;
+  const content = data.content.map((item) => {
+    const defaults = config.components[item?.type]?.defaultProps;
+    if (!defaults) return item;
+    const next = { ...defaults, ...(item.props || {}) };
+    if (next === item.props) return item;
+    mutated = true;
+    return { ...item, props: next };
+  });
+  return mutated ? { ...data, content } : data;
+}
+
 export function normalizePuckData(input) {
   if (!input || typeof input !== 'object') return input;
   if (!Array.isArray(input.content)) return input;
