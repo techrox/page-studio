@@ -401,7 +401,7 @@ h1, h2, h3, h4 {
 }
 .gallery-search:focus-within {
   border-color: var(--tps-primary);
-  box-shadow: 0 0 0 4px rgba(11, 96, 216, 0.12);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--tps-primary) 12%, transparent);
 }
 .gallery-search-icon { color: var(--tps-hint); font-size: 14px; }
 .gallery-search input {
@@ -453,7 +453,7 @@ h1, h2, h3, h4 {
 .gallery-tab.is-active {
   color: var(--tps-primary);
   border-left-color: var(--tps-primary);
-  background: rgba(11, 96, 216, 0.06);
+  background: color-mix(in srgb, var(--tps-primary) 6%, transparent);
 }
 .gallery-tab-count {
   font-size: 11px;
@@ -467,7 +467,7 @@ h1, h2, h3, h4 {
 }
 .gallery-tab.is-active .gallery-tab-count {
   color: var(--tps-primary);
-  background: rgba(11, 96, 216, 0.12);
+  background: color-mix(in srgb, var(--tps-primary) 12%, transparent);
 }
 
 .gallery-sections { min-width: 0; }
@@ -506,7 +506,7 @@ h1, h2, h3, h4 {
 .gallery-card:hover {
   border-color: var(--tps-primary);
   transform: translateY(-3px);
-  box-shadow: 0 16px 38px -22px rgba(11, 96, 216, 0.45);
+  box-shadow: 0 16px 38px -22px color-mix(in srgb, var(--tps-primary) 45%, transparent);
 }
 .gallery-card:focus-visible {
   outline: 2px solid var(--tps-primary);
@@ -546,7 +546,7 @@ h1, h2, h3, h4 {
   background: linear-gradient(
     180deg,
     rgba(15, 23, 42, 0) 55%,
-    rgba(11, 96, 216, 0.78) 100%
+    color-mix(in srgb, var(--tps-primary) 78%, transparent) 100%
   );
   opacity: 0;
   transition: opacity 0.18s ease;
