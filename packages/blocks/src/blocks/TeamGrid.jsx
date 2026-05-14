@@ -50,9 +50,23 @@ export const TeamGrid = {
     columns: 3,
     members: [
       {
-        name: 'Add a name',
-        role: 'Role',
-        bio: 'A short bio (2–3 sentences). Rewrite to match the person.',
+        name: 'Alex Morgan',
+        role: 'Founder',
+        bio: 'Spent a decade building product teams before starting the studio. Writes about craft, hiring, and shipping.',
+        image_url: '',
+        linkedin: '',
+      },
+      {
+        name: 'Priya Shah',
+        role: 'Head of design',
+        bio: 'Leads the design practice across web, brand, and product. Previously at a design-led SaaS company.',
+        image_url: '',
+        linkedin: '',
+      },
+      {
+        name: 'Jordan Lee',
+        role: 'Engineering lead',
+        bio: 'Front-end at heart, full-stack by necessity. Cares deeply about accessibility and performance.',
         image_url: '',
         linkedin: '',
       },
@@ -74,9 +88,9 @@ export const TeamGrid = {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: `repeat(auto-fit, minmax(${
+            gridTemplateColumns: `repeat(auto-fill, minmax(min(${
               columns === 4 ? 220 : columns === 3 ? 260 : 320
-            }px, 1fr))`,
+            }px, 100%), 1fr))`,
             gap: 24,
           }}
         >

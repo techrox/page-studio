@@ -3,7 +3,8 @@
 // Post-mount DOM enhancements for Puck's left sidebar:
 //   1. Hide Puck's "Components" / "Outline" section titles
 //   2. Inject a tab bar at the top that toggles between the two sections
-//   3. Append a count badge to each component-category header
+//   3. Inject a search input that filters the block cards by name + summary
+//   4. Append a count badge to each component-category header (visible-only)
 //
 // IMPORTANT: every DOM mutation we make MUST be idempotent (no-op when the
 // target state already matches) AND we disconnect the MutationObserver
@@ -17,11 +18,79 @@ const STORAGE_KEY = 'psd.builderTab';
 export default function BuilderEnhancements({
   blocksLabel = 'Blocks',
   layersLabel = 'Layers',
+  searchPlaceholder = 'Search blocks',
 } = {}) {
   useEffect(() => {
     if (typeof document === 'undefined') return;
 
     let observer = null;
+    // Search query persists across re-renders even if Puck wipes the sidebar
+    // and we have to re-inject the input. Lives in this closure (per mount).
+    let query = '';
+
+    // Filtering is done via attributes on elements WE own (.tps-block-card
+    // and _ComponentList_ groups). CSS in editor/styles.css hides the
+    // matching Puck wrapper via :has(). Writing only attributes — not
+    // inline styles on Puck's wrappers — keeps us out of a fight with
+    // Puck's React reconciler when it re-renders the picker after a drop.
+    const matchesQuery = (card, q) => {
+      if (!q) return true;
+      const name = (card.querySelector('.tps-block-card__name')?.textContent || '').toLowerCase();
+      const desc = (card.querySelector('.tps-block-card__desc')?.textContent || '').toLowerCase();
+      return name.includes(q) || desc.includes(q);
+    };
+
+    const setAttrIfChanged = (el, name, value) => {
+      const current = el.getAttribute(name);
+      if (value == null) {
+        if (current !== null) el.removeAttribute(name);
+      } else if (current !== value) {
+        el.setAttribute(name, value);
+      }
+    };
+
+    const applyFilter = (sidebar) => {
+      const q = query.trim().toLowerCase();
+      const cards = sidebar.querySelectorAll('.tps-block-card');
+      cards.forEach((card) => {
+        const hidden = !matchesQuery(card, q);
+        setAttrIfChanged(card, 'data-psd-hidden', hidden ? 'true' : null);
+      });
+
+      // Mark the actual grid cell so it collapses out of layout — not just
+      // our inner card. Puck's <DrawerItem> renders an unnamed <div> as the
+      // direct child of [data-puck-drawer]; that <div> IS the grid cell.
+      // Hiding only the .tps-block-card or any class-bearing inner wrapper
+      // leaves the cell empty so visible matches stay in their original
+      // grid slots (which is what the user was seeing). We tag the cell
+      // directly here so a single CSS attribute selector can collapse it.
+      const drawers = sidebar.querySelectorAll('[data-puck-drawer]');
+      drawers.forEach((drawer) => {
+        Array.from(drawer.children).forEach((cell) => {
+          const card = cell.querySelector('.tps-block-card');
+          if (!card) {
+            setAttrIfChanged(cell, 'data-psd-cell-hidden', null);
+            return;
+          }
+          const hidden = !matchesQuery(card, q);
+          setAttrIfChanged(cell, 'data-psd-cell-hidden', hidden ? 'true' : null);
+        });
+      });
+
+      // Hide entire category groups when all of their cards are filtered out.
+      const groups = sidebar.querySelectorAll('[class*="_ComponentList_"]');
+      groups.forEach((g) => {
+        const items = g.querySelectorAll('.tps-block-card');
+        if (!items.length) {
+          setAttrIfChanged(g, 'data-psd-empty', null);
+          return;
+        }
+        const allHidden = Array.from(items).every(
+          (c) => c.getAttribute('data-psd-hidden') === 'true',
+        );
+        setAttrIfChanged(g, 'data-psd-empty', q && allHidden ? 'true' : null);
+      });
+    };
 
     const apply = () => {
       const sidebar = document.querySelector('[class*="_Sidebar--left"]');
@@ -30,8 +99,6 @@ export default function BuilderEnhancements({
       const sections = sidebar.querySelectorAll('[class*="_SidebarSection_"]');
       if (sections.length < 2) return;
 
-      // Tag each section by content so CSS targets it regardless of DOM
-      // order — Puck has flipped the order between minor versions.
       sections.forEach((s) => {
         const isComponents = !!s.querySelector('[class*="_ComponentList_"]');
         const want = isComponents ? 'components' : 'outline';
@@ -79,13 +146,44 @@ export default function BuilderEnhancements({
         setActive(initial);
       }
 
+      // Search input — visible only when the components tab is active
+      // (the [data-psd-active-tab="components"] CSS gate does the toggling).
+      let search = sidebar.querySelector('.psd-sidebar-search');
+      if (!search) {
+        search = document.createElement('div');
+        search.className = 'psd-sidebar-search';
+        const input = document.createElement('input');
+        input.type = 'search';
+        input.className = 'psd-sidebar-search__input';
+        input.placeholder = searchPlaceholder;
+        input.setAttribute('aria-label', searchPlaceholder);
+        search.appendChild(input);
+        // Place directly after the tab bar.
+        if (tabs.nextSibling) sidebar.insertBefore(search, tabs.nextSibling);
+        else sidebar.appendChild(search);
+
+        input.addEventListener('input', () => {
+          query = input.value || '';
+          applyFilter(sidebar);
+        });
+      }
+      // Re-sync the input value across Puck re-renders.
+      const searchInput = search.querySelector('input');
+      if (searchInput && searchInput.value !== query) searchInput.value = query;
+
+      applyFilter(sidebar);
+
       const headers = sidebar.querySelectorAll('[class*="_ComponentList-title_"]');
       headers.forEach((header) => {
         const parent = header.closest('[class*="_ComponentList_"]');
         if (!parent) return;
         const list = parent.querySelector('[class*="_ComponentList-content_"]');
         if (!list) return;
-        const count = String(list.querySelectorAll('.tps-block-card').length);
+        const cards = list.querySelectorAll('.tps-block-card');
+        const visible = Array.from(cards).filter(
+          (c) => c.getAttribute('data-psd-hidden') !== 'true',
+        ).length;
+        const count = String(visible);
         let badge = header.querySelector('.psd-cat-count');
         if (!badge) {
           badge = document.createElement('span');
@@ -103,9 +201,6 @@ export default function BuilderEnhancements({
       });
     };
 
-    // Pause the observer for the duration of our writes — without this every
-    // badge update fires a mutation that calls apply, which mutates again,
-    // and the tab freezes.
     const safeApply = () => {
       if (observer) observer.disconnect();
       try { apply(); } catch { /* never break the host page */ }
@@ -114,7 +209,6 @@ export default function BuilderEnhancements({
 
     safeApply();
 
-    // Debounce mutations via rAF so a burst from Puck collapses into one pass.
     let queued = false;
     observer = new MutationObserver(() => {
       if (queued) return;
@@ -129,7 +223,7 @@ export default function BuilderEnhancements({
     return () => {
       if (observer) observer.disconnect();
     };
-  }, [blocksLabel, layersLabel]);
+  }, [blocksLabel, layersLabel, searchPlaceholder]);
 
   return null;
 }
