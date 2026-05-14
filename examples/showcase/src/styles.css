@@ -63,6 +63,15 @@ img, svg { max-width: 100%; height: auto; display: block; }
 .tps-section { padding: clamp(64px, 8vw, 112px) 24px; }
 .tps-section-soft { background: var(--tps-bg-section); }
 
+/* Trim outer gutters on phones so block grids get an extra ~16 px of room.
+   Container + section both add 24 px each side at desktop; on narrow
+   viewports that's 96 px of horizontal overhead, which forces auto-fit
+   grids to collapse earlier than they have to. */
+@media (max-width: 480px) {
+  .tps-container { padding: 0 16px; }
+  .tps-section { padding-left: 16px; padding-right: 16px; }
+}
+
 .tps-eyebrow {
   display: inline-block;
   font-size: 12px;
