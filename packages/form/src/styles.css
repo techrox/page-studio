@@ -1,0 +1,20 @@
+/* @techrox/page-studio-form — theme tokens with sensible defaults.
+ * Hosts can override any of these on a parent element (typically :root or
+ * the AntD App wrapper) without touching package internals.
+ *
+ * The blocks and editor packages share the same `--tps-*` tokens; keeping
+ * the names consistent means a single CSS override at the host level
+ * re-themes all three packages together.
+ */
+
+:root {
+  --tps-primary: var(--tps-primary, #0F766E);
+  --tps-primary-dark: var(--tps-primary-dark, #0B5550);
+  --tps-accent: var(--tps-accent, #F59E0B);
+  --tps-accent-dark: var(--tps-accent-dark, #B45309);
+  --tps-ink: var(--tps-ink, #0F172A);
+  --tps-muted: var(--tps-muted, #64748B);
+  --tps-bg: var(--tps-bg, #FAFAF7);
+  --tps-bg-soft: var(--tps-bg-soft, #F8FAFC);
+  --tps-radius: var(--tps-radius, 10px);
+}
