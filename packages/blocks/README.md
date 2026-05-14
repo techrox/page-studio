@@ -1,5 +1,10 @@
 # @techrox/page-studio-blocks
 
+[![npm](https://img.shields.io/npm/v/@techrox/page-studio-blocks?color=0b60d8&label=npm)](https://www.npmjs.com/package/@techrox/page-studio-blocks)
+[![downloads](https://img.shields.io/npm/dm/@techrox/page-studio-blocks?color=64748b&label=downloads)](https://www.npmjs.com/package/@techrox/page-studio-blocks)
+[![size](https://img.shields.io/bundlephobia/minzip/@techrox/page-studio-blocks?color=64748b&label=minzip)](https://bundlephobia.com/package/@techrox/page-studio-blocks)
+[![license](https://img.shields.io/badge/license-MIT-64748b)](../../LICENSE)
+
 50 production-ready content blocks + the Puck config builder + the StudioProvider context.
 
 Shared by both `@techrox/page-studio` (editor) and `@techrox/page-studio-renderer` (public render).

@@ -1,5 +1,10 @@
 # @techrox/page-studio
 
+[![npm](https://img.shields.io/npm/v/@techrox/page-studio?color=0b60d8&label=npm)](https://www.npmjs.com/package/@techrox/page-studio)
+[![downloads](https://img.shields.io/npm/dm/@techrox/page-studio?color=64748b&label=downloads)](https://www.npmjs.com/package/@techrox/page-studio)
+[![size](https://img.shields.io/bundlephobia/minzip/@techrox/page-studio?color=64748b&label=minzip)](https://bundlephobia.com/package/@techrox/page-studio)
+[![license](https://img.shields.io/badge/license-MIT-64748b)](../../LICENSE)
+
 The editor shell for Page Studio — a drop-in `<PageStudio />` component that gives you a visual page builder backed by [Puck](https://puckeditor.com).
 
 ```bash
