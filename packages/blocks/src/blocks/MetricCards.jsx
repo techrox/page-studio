@@ -101,7 +101,7 @@ export const MetricCards = {
               >
                 <div
                   style={{
-                    fontSize: 44,
+                    fontSize: 'clamp(28px, 6vw, 44px)',
                     fontWeight: 800,
                     color: dark ? '#fff' : 'var(--tps-primary)',
                     letterSpacing: '-0.02em',
