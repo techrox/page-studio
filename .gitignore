@@ -6,3 +6,6 @@ coverage/
 *.log
 .env
 .env.local
+
+# Lockfile must be tracked — override any global ignore that excludes it.
+!pnpm-lock.yaml
