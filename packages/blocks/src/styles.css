@@ -1,0 +1,149 @@
+/* @techrox/page-studio-blocks — minimal CSS the picker UI + reveal animations
+ * need at runtime. Block typography classes (.tps-h1, .tps-section, etc.) are
+ * NOT shipped here — host applications provide them via their own stylesheet.
+ * See README "Required host CSS" for the list of classes blocks reference.
+ *
+ * All CSS variables are defaulted to neutral values so the package looks
+ * sane without theming. Override at :root in your host to rebrand. */
+
+:root {
+  --tps-primary: #0f766e;
+  --tps-primary-dark: #0b5550;
+  --tps-accent: #f59e0b;
+  --tps-ink: #0f172a;
+  --tps-muted: #64748b;
+  --tps-line: #e2e8f0;
+  --tps-bg: #fafaf7;
+  --tps-bg-soft: #f8fafc;
+  --tps-radius: 8px;
+}
+
+/* --- Picker block-card (drawerItem override) ---------------------------- */
+/* Lay the picker out as a 2-column grid so each tile gets a generous icon
+ * area without forcing the user to scroll a long single-column list. Puck
+ * renders the Drawer as a flex column by default; we override via the
+ * stable `data-puck-drawer` attribute (the underlying class hash changes
+ * between Puck minor versions). */
+[data-puck-drawer] {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.tps-block-card {
+  width: 100%;
+  /* Cap during the @dnd-kit drag overlay so the cloned tile can't grow past
+   * its picker-cell size when Puck re-parents it under <body> at the cursor.
+   * 220px ≈ the widest a single picker column gets at the AntD breakpoints
+   * we render the sidebar at. */
+  max-width: 220px;
+  min-width: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  border: 1px solid var(--tps-line);
+  border-radius: var(--tps-radius);
+  background: #fff;
+  overflow: hidden;
+  transition: border-color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
+}
+.tps-block-card:hover {
+  border-color: var(--tps-primary);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+/* Preview is flush to the card edges and uses the full tile width. The
+ * SVG inside is `width: 100%; height: auto`, so its rendered height
+ * tracks the tile width — wider tiles make the icon visibly larger. */
+.tps-block-card__preview {
+  width: 85%;
+  margin: 16px auto 0;
+  overflow: hidden;
+  border-radius: var(--tps-radius);
+  background: var(--tps-bg-soft);
+  /* Lock the slot to the thumbnail's natural ratio so the SVG can't
+   * collapse to a default height when the inline `height="auto"`
+   * attribute is ignored (it's not a valid SVG length). The slot's height
+   * derives from `width × 70/120` — deterministic regardless of context.
+   * Don't add `height: 100%` here: under the @dnd-kit drag overlay the
+   * cloned card lives in a fixed-height wrapper, and `height: 100%` would
+   * blow the slot up to fill it. */
+  aspect-ratio: 120 / 70;
+}
+.tps-block-card__preview > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.tps-block-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  padding: 8px 10px 10px;
+  box-sizing: border-box;
+}
+.tps-block-card__name,
+.tps-block-card__desc {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+.tps-block-card__name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--tps-ink);
+  /* Keep names to a single line so the grid stays visually aligned —
+   * fall back to the `title` attribute on the card for the full label. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tps-block-card__desc {
+  font-size: 11px;
+  color: var(--tps-muted);
+  line-height: 1.35;
+  /* Cap at 2 lines so every tile in the grid has predictable height. The
+   * full description still surfaces on hover via the parent's `title`. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* --- Scroll-reveal animations (withReveal) ------------------------------ */
+/* SSR-safe: opaque by default. Animation only engages once <html> has
+ * .tps-anim, which the host adds after hydration. This avoids any FOUC
+ * for above-the-fold content. */
+.tps-reveal {
+  opacity: 1;
+}
+.tps-anim .tps-reveal:not(.is-in-view) {
+  opacity: 0;
+  transform: translateY(16px);
+}
+.tps-anim .tps-reveal--scale-in:not(.is-in-view) {
+  opacity: 0;
+  transform: scale(0.96);
+}
+.tps-anim .tps-reveal.is-in-view {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 480ms ease,
+    transform 480ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .tps-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

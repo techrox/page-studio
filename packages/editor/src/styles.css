@@ -1,0 +1,140 @@
+/* @techrox/page-studio — editor chrome (top bar, sidebar tabs, loading state).
+ * Block styling lives in @techrox/page-studio-blocks/styles.css. Both
+ * stylesheets share the same `--tps-*` CSS variables; override them at
+ * :root in your host (or let PageStudio's `branding` prop inject them) to
+ * rebrand both at once.
+ *
+ * Note: ".tps-builder-page" is intentionally retained as an alias so
+ * downstream styles written against the legacy Cibus IQ class names keep
+ * working. New rules should target ".psd-builder-page". */
+
+.psd-builder-page,
+.tps-builder-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--tps-bg-soft, #f8fafc);
+}
+
+.psd-builder-page--loading {
+  align-items: center;
+  justify-content: center;
+}
+.psd-builder-loading {
+  font-size: 13px;
+  color: var(--tps-muted, #64748b);
+}
+
+/* --- Top bar ------------------------------------------------------------ */
+/* With `overrides.header`, Puck renders our component directly as a child
+ * of `_PuckLayout-inner_`. That layout is a 3-column CSS grid with named
+ * areas "header header header" / "left editor right" — so unless our bar
+ * is explicitly placed in `grid-area: header`, it auto-flows into a single
+ * cell and only spans the left sidebar's column. The grid-area assignment
+ * here is what makes the bar span the full row width. */
+.psd-builder-bar {
+  grid-area: header;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 48px;
+  padding: 6px 16px;
+  background: var(--tps-ink, #0f172a);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 13px;
+}
+
+.psd-builder-bar__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  text-decoration: none;
+  color: #fff;
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+.psd-builder-bar__brand:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.psd-builder-bar__crumbs {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.85);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.psd-builder-bar__current {
+  font-weight: 600;
+}
+
+.psd-builder-bar__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* --- Sidebar tabs (injected by BuilderEnhancements) --------------------- */
+/* Sticky so they remain accessible while the blocks/outline list below
+ * scrolls. Puck's left sidebar is `overflow-y: auto`, which is the
+ * scrolling ancestor sticky positions against. */
+.psd-sidebar-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  gap: 4px;
+  padding: 12px 12px 0;
+  background: #fff;
+  border-bottom: 1px solid var(--tps-line, #e2e8f0);
+}
+.psd-sidebar-tab {
+  flex: 1;
+  padding: 8px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--tps-muted, #64748b);
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+.psd-sidebar-tab.is-active {
+  color: var(--tps-ink, #0f172a);
+  border-bottom-color: var(--tps-primary, #0f766e);
+}
+
+/* Tab visibility — driven by data-attr the script sets on the sidebar. */
+[class*='_Sidebar--left'][data-psd-active-tab='components']
+  > [class*='_SidebarSection_'][data-psd-section='outline'] {
+  display: none !important;
+}
+[class*='_Sidebar--left'][data-psd-active-tab='outline']
+  > [class*='_SidebarSection_'][data-psd-section='components'] {
+  display: none !important;
+}
+[data-psd-hidden-title='true'] {
+  display: none !important;
+}
+
+/* Category count badges */
+.psd-cat-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  margin-left: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--tps-muted, #64748b);
+  background: var(--tps-bg-soft, #f1f5f9);
+  border-radius: 10px;
+}
