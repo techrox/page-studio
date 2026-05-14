@@ -98,7 +98,7 @@ export const ArticleGrid = {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: `repeat(auto-fit, minmax(${columns === 2 ? 360 : 280}px, 1fr))`,
+            gridTemplateColumns: `repeat(auto-fit, minmax(min(${columns === 2 ? 360 : 280}px, 100%), 1fr))`,
             gap: 24,
           }}
         >

@@ -59,7 +59,7 @@ export const PricingTable = {
             {heading && <h2 className="tps-h2" style={{ marginTop: 8 }}>{heading}</h2>}
           </div>
         )}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16, alignItems: 'stretch' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: 16, alignItems: 'stretch' }}>
           {(tiers || []).map((t, i) => {
             const featList = (t.features || '').split('\n').map((s) => s.trim()).filter(Boolean);
             return (

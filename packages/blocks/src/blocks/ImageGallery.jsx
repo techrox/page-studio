@@ -45,7 +45,7 @@ export const ImageGallery = {
           </div>
         )}
         <Image.PreviewGroup>
-          <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit, minmax(${columns === 4 ? 200 : columns === 3 ? 280 : 360}px, 1fr))`, gap: 12 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit, minmax(min(${columns === 4 ? 200 : columns === 3 ? 280 : 360}px, 100%), 1fr))`, gap: 12 }}>
             {(items || []).map((img, i) => (
               <figure key={i} style={{ margin: 0 }}>
                 {img.url ? (
