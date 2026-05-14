@@ -11,9 +11,13 @@ import { App as AntdApp } from 'antd'
 import App from './App.jsx'
 import './styles.css'
 
+// Strip the trailing slash off Vite's BASE_URL so BrowserRouter accepts it
+// (`/page-studio/` → `/page-studio`, `/` stays `/`).
+const basename = import.meta.env.BASE_URL.replace(/\/$/, '') || '/'
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <AntdApp>
         <App />
       </AntdApp>
