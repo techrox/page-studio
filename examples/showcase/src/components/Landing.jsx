@@ -18,12 +18,12 @@ const PACKAGES = [
   {
     name: '@techrox/page-studio-blocks',
     tag: 'Blocks',
-    desc: 'Fifty production blocks plus the Puck config builder and StudioProvider.',
+    desc: 'Fifty production blocks plus the page config builder and StudioProvider.',
   },
   {
     name: '@techrox/page-studio-renderer',
     tag: 'Renderer',
-    desc: 'SSR-safe wrapper for displaying saved Puck JSON on a public page.',
+    desc: 'SSR-safe wrapper for displaying saved page JSON on a public page.',
   },
   {
     name: '@techrox/page-studio-form',
@@ -86,23 +86,28 @@ export default function Landing() {
             width={320}
             height={80}
           />
-          <p className="landing-eyebrow">Open source · MIT · Built on Puck</p>
+          <p className="landing-eyebrow">Open source · MIT · React · SSR-safe</p>
           <h1 className="landing-h1">
-            Drop a hero, drop two columns, <em>ship the page.</em>
+            Drag a hero. Brand it in CSS. <em>Ship the page.</em>
           </h1>
           <p className="landing-lede">
-            Page Studio is a Puck-based visual page builder, broken into four small packages.
-            Use the editor in your admin, the renderer on your site, and the block library in both.
-            Bring your own brand — pass a <code>blockDefaults</code> map and the whole library follows.
+            Page Studio is a visual page builder for React, in four small packages.
+            The editor lives in your admin. The renderer lives on your site.
+            Fifty production blocks in the box, a <code>blockDefaults</code> map per
+            tenant, and every page serialises to plain JSON — store it where you want,
+            render it anywhere.
           </p>
           <div className="landing-ctas">
             <Link to="/editor" className="landing-cta landing-cta--primary">
-              Try the live editor
+              Try the live editor →
             </Link>
             <Link to="/blocks" className="landing-cta landing-cta--ghost">
               Browse 50 blocks
             </Link>
           </div>
+          <p className="landing-hero-meta">
+            No backend required for the demo · Pages are plain JSON · Works in Next, Remix, Vite
+          </p>
         </div>
       </section>
 
@@ -226,11 +231,6 @@ import '@techrox/page-studio-blocks/styles.css';
             <strong>Page Studio</strong> · MIT licensed · built by techrox
           </div>
           <div className="landing-footer-links">
-            <a
-              href="https://github.com/measuredco/puck"
-              target="_blank"
-              rel="noreferrer noopener"
-            >Puck ↗</a>
             <Link to="/blocks">Blocks</Link>
             <Link to="/editor">Editor</Link>
           </div>
