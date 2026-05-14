@@ -11,7 +11,14 @@
 // you'll get the default block library, default top bar, and a console
 // warning when Publish is clicked without an adapter wired.
 
-import { useEffect, useMemo, useState, useTransition } from 'react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  useTransition,
+} from 'react';
 import { Puck, useGetPuck, legacySideBarPlugin } from '@puckeditor/core';
 import { App as AntdApp } from 'antd';
 
@@ -33,6 +40,49 @@ import '@puckeditor/core/puck.css';
 // the legacy `_Sidebar--left` layout, so keep that DOM by applying the
 // legacy plugin once at module load.
 const PSD_LEGACY_SIDEBAR = legacySideBarPlugin();
+
+// The header override is passed to Puck via `overrides.header`. Puck treats
+// the value as a component type — when its reference changes, React diffs
+// and unmounts the old override before mounting the new one. During that
+// gap Puck briefly paints its default top bar, which flashes a stock
+// Publish button on screen. To avoid that we keep the override component
+// reference stable for the entire lifetime of the editor and pipe live
+// props (branding, savedAt, callbacks, etc.) through a context provider
+// rendered by PageStudio. Live updates flow as normal context updates —
+// the component never gets unmounted.
+const HeaderPropsContext = createContext(null);
+
+function StableHeaderOverride() {
+  const getPuck = useGetPuck();
+  const live = useContext(HeaderPropsContext);
+  if (!live) return null;
+  const props = {
+    pageKey: live.pageKey,
+    pageTitle: live.pageTitle,
+    account: live.account,
+    livePath: live.livePath,
+    homeHref: live.homeHref,
+    savedAt: live.savedAt,
+    pending: live.pending,
+    onPublish: () => live.handlePublish(getPuck().appState.data),
+    onSignOut: live.onSignOut,
+    onCreatePage: live.onCreatePage,
+    branding: live.branding,
+    extraActions: live.headerActions,
+    LinkComponent: live.LinkComponent,
+  };
+  if (typeof live.header === 'function') return live.header(props);
+  if (live.header) return live.header;
+  return <DefaultTopBar {...props} />;
+}
+
+// `overrides.header` is referentially stable so Puck never remounts the
+// override. The internal stack also stabilizes `headerActions: () => null`
+// — that's how we suppress Puck's own actions area.
+const NO_OP_ACTIONS = () => null;
+function buildStableOverrides(hostOverrides) {
+  return { ...hostOverrides, header: StableHeaderOverride, headerActions: NO_OP_ACTIONS };
+}
 
 // Apply brand colors via BOTH an inline style on <html> (for the outer
 // editor chrome) and a <style> tag in <head> (so Puck's iframe canvas,
@@ -98,13 +148,22 @@ export default function PageStudio({
   const [pending, startTransition] = useTransition();
   const [savedAt, setSavedAt] = useState(null);
 
-  // Resolve the config first so we can populate missing defaults on any
-  // seeded data the host passed in. Puck only applies defaultProps when a
-  // block is dragged in via the drawer — without this, blocks stored as
-  // `{ type, props: {} }` show empty fields when the author clicks them.
-  const resolvedConfig = useMemo(
+  // Resolve the config ONCE on first mount and freeze the reference. Puck
+  // treats `config` as a structural prop — passing a new object on every
+  // brand switch makes it re-diff its block registry, drop @dnd-kit's
+  // collision cache and rebuild a chunk of internal memos. That's the
+  // bulk of what makes brand switching feel sluggish.
+  //
+  // Trade-off: a `blockDefaults` change after mount (e.g. host swapping
+  // tenant defaults mid-edit) no longer updates the per-block defaults
+  // applied to newly dropped blocks — those will use whatever defaults
+  // were active at first mount. CSS vars (color, ink, accent) still
+  // update live via setCssVars. For the showcase that's exactly what we
+  // want: brand swaps repaint colors instantly without churning Puck.
+  // Hosts that genuinely need brand-aware drop defaults should remount
+  // PageStudio with a fresh key when they swap tenants.
+  const [resolvedConfig] = useState(
     () => config || createPuckConfig({ defaults: blockDefaults }),
-    [config, blockDefaults],
   );
 
   const [data, setData] = useState(() =>
@@ -167,45 +226,40 @@ export default function PageStudio({
     });
   };
 
-  // Build a Puck `overrides.header` that pulls live state via useGetPuck()
-  // and forwards it to the host's top bar. Migrated from `renderHeader` —
-  // Puck deprecated the render-prop form in 0.20.x.
-  // NOTE: useMemo must run on every render (no early-return above), otherwise
-  // we violate the rules of hooks when transitioning loading → loaded.
-  const headerOverride = useMemo(() => {
-    function PsdHeaderOverride() {
-      const getPuck = useGetPuck();
-      const props = {
-        pageKey,
-        pageTitle,
-        account,
-        livePath,
-        homeHref,
-        savedAt,
-        pending,
-        onPublish: () => handlePublish(getPuck().appState.data),
-        onSignOut,
-        onCreatePage: adapter.onCreatePage,
-        branding,
-        extraActions: headerActions,
-        LinkComponent,
-      };
-      if (typeof header === 'function') return header(props);
-      if (header) return header;
-      return <DefaultTopBar {...props} />;
-    }
-    return PsdHeaderOverride;
-  }, [
-    pageKey, pageTitle, account, livePath, homeHref, savedAt, pending,
-    onSignOut, adapter.onCreatePage, branding, headerActions, LinkComponent,
+  // Live values consumed by the stable header override via context. The
+  // context VALUE may change every render — that's fine, it triggers a
+  // normal re-render of StableHeaderOverride. The override COMPONENT
+  // reference (passed to Puck via overrides.header) never changes, so
+  // Puck never unmounts it. That's what kills the default-button flash
+  // on brand switch.
+  const headerLive = useMemo(() => ({
+    pageKey,
+    pageTitle,
+    account,
+    livePath,
+    homeHref,
+    savedAt,
+    pending,
+    handlePublish,
+    onSignOut,
+    onCreatePage: adapter.onCreatePage,
+    branding,
+    headerActions,
+    LinkComponent,
     header,
+  }), [
+    pageKey, pageTitle, account, livePath, homeHref, savedAt, pending,
+    handlePublish, onSignOut, adapter.onCreatePage, branding, headerActions,
+    LinkComponent, header,
   ]);
 
-  const mergedOverrides = useMemo(() => ({
-    ...overrides,
-    header: headerOverride,
-    headerActions: () => null,
-  }), [overrides, headerOverride]);
+  // Build the overrides object ONCE per `overrides` prop change. The
+  // header slot is the stable component declared at module scope —
+  // brand swaps don't invalidate the reference.
+  const mergedOverrides = useMemo(
+    () => buildStableOverrides(overrides),
+    [overrides],
+  );
 
   if (loading || !data) {
     return (
@@ -217,21 +271,23 @@ export default function PageStudio({
 
   return (
     <PageStudioProvider value={studio}>
-      <div className="psd-builder-page">
-        <BuilderEnhancements
-          blocksLabel={sidebarLabels?.blocks}
-          layersLabel={sidebarLabels?.layers}
-          searchPlaceholder={sidebarLabels?.search}
-        />
-        <Puck
-          config={resolvedConfig}
-          data={data}
-          overrides={mergedOverrides}
-          onPublish={handlePublish}
-          iframe={iframe}
-          plugins={[PSD_LEGACY_SIDEBAR]}
-        />
-      </div>
+      <HeaderPropsContext.Provider value={headerLive}>
+        <div className="psd-builder-page">
+          <BuilderEnhancements
+            blocksLabel={sidebarLabels?.blocks}
+            layersLabel={sidebarLabels?.layers}
+            searchPlaceholder={sidebarLabels?.search}
+          />
+          <Puck
+            config={resolvedConfig}
+            data={data}
+            overrides={mergedOverrides}
+            onPublish={handlePublish}
+            iframe={iframe}
+            plugins={[PSD_LEGACY_SIDEBAR]}
+          />
+        </div>
+      </HeaderPropsContext.Provider>
     </PageStudioProvider>
   );
 }
