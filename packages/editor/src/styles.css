@@ -110,13 +110,16 @@
   border-bottom-color: var(--tps-primary, #0f766e);
 }
 
-/* Tab visibility — driven by data-attr the script sets on the sidebar. */
+/* Tab visibility — driven by data-attr the script sets on the sidebar.
+ * Use a descendant (not child) combinator: Puck's legacySideBarPlugin
+ * wraps both SidebarSections in an intermediate <div style="overflowY: auto">,
+ * so the sections are grandchildren of _Sidebar--left, not direct children. */
 [class*='_Sidebar--left'][data-psd-active-tab='components']
-  > [class*='_SidebarSection_'][data-psd-section='outline'] {
+  [class*='_SidebarSection_'][data-psd-section='outline'] {
   display: none !important;
 }
 [class*='_Sidebar--left'][data-psd-active-tab='outline']
-  > [class*='_SidebarSection_'][data-psd-section='components'] {
+  [class*='_SidebarSection_'][data-psd-section='components'] {
   display: none !important;
 }
 [data-psd-hidden-title='true'] {

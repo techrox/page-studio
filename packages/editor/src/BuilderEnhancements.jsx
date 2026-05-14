@@ -49,6 +49,35 @@ export default function BuilderEnhancements({
       }
     };
 
+    const updateCounts = (sidebar) => {
+      const headers = sidebar.querySelectorAll('[class*="_ComponentList-title_"]');
+      headers.forEach((header) => {
+        const parent = header.closest('[class*="_ComponentList_"]');
+        if (!parent) return;
+        const list = parent.querySelector('[class*="_ComponentList-content_"]');
+        if (!list) return;
+        const cards = list.querySelectorAll('.tps-block-card');
+        const visible = Array.from(cards).filter(
+          (c) => c.getAttribute('data-psd-hidden') !== 'true',
+        ).length;
+        const count = String(visible);
+        let badge = header.querySelector('.psd-cat-count');
+        if (!badge) {
+          badge = document.createElement('span');
+          badge.className = 'psd-cat-count';
+          badge.textContent = count;
+          const chevron = header.querySelector('[class*="_ComponentList-titleIcon_"]');
+          if (chevron) {
+            header.insertBefore(badge, chevron);
+          } else {
+            header.appendChild(badge);
+          }
+        } else if (badge.textContent !== count) {
+          badge.textContent = count;
+        }
+      });
+    };
+
     const applyFilter = (sidebar) => {
       const q = query.trim().toLowerCase();
       const cards = sidebar.querySelectorAll('.tps-block-card');
@@ -90,6 +119,11 @@ export default function BuilderEnhancements({
         );
         setAttrIfChanged(g, 'data-psd-empty', q && allHidden ? 'true' : null);
       });
+
+      // Counts must refresh on every filter change AND every drag/drop
+      // (which adds/removes cards). Call from here so the search-input
+      // handler also gets badge updates without re-running apply().
+      updateCounts(sidebar);
     };
 
     const apply = () => {
@@ -172,33 +206,6 @@ export default function BuilderEnhancements({
       if (searchInput && searchInput.value !== query) searchInput.value = query;
 
       applyFilter(sidebar);
-
-      const headers = sidebar.querySelectorAll('[class*="_ComponentList-title_"]');
-      headers.forEach((header) => {
-        const parent = header.closest('[class*="_ComponentList_"]');
-        if (!parent) return;
-        const list = parent.querySelector('[class*="_ComponentList-content_"]');
-        if (!list) return;
-        const cards = list.querySelectorAll('.tps-block-card');
-        const visible = Array.from(cards).filter(
-          (c) => c.getAttribute('data-psd-hidden') !== 'true',
-        ).length;
-        const count = String(visible);
-        let badge = header.querySelector('.psd-cat-count');
-        if (!badge) {
-          badge = document.createElement('span');
-          badge.className = 'psd-cat-count';
-          badge.textContent = count;
-          const chevron = header.querySelector('[class*="_ComponentList-titleIcon_"]');
-          if (chevron) {
-            header.insertBefore(badge, chevron);
-          } else {
-            header.appendChild(badge);
-          }
-        } else if (badge.textContent !== count) {
-          badge.textContent = count;
-        }
-      });
     };
 
     const safeApply = () => {
