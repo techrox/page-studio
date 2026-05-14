@@ -12,7 +12,7 @@ export default defineConfig({
     'react-dom',
     'antd',
     '@ant-design/icons',
-    '@measured/puck',
+    '@puckeditor/core',
   ],
   esbuildOptions(options) {
     options.jsx = 'automatic';

@@ -26,7 +26,7 @@ describe('Hero block', () => {
       <Wrap>{Hero.render(Hero.defaultProps)}</Wrap>,
     );
     // Heading is HTML so we render the raw mark-up; assert a known fragment.
-    expect(container.textContent).toContain('reactive');
+    expect(container.textContent).toContain('worth keeping');
   });
 });
 

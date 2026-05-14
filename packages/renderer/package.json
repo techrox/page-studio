@@ -23,13 +23,13 @@
     "test:watch": "vitest"
   },
   "peerDependencies": {
-    "@measured/puck": ">=0.18",
+    "@puckeditor/core": ">=0.21",
     "@techrox/page-studio-blocks": "workspace:*",
     "react": ">=18",
     "react-dom": ">=18"
   },
   "devDependencies": {
-    "@measured/puck": "^0.20.2",
+    "@puckeditor/core": "^0.21.2",
     "@techrox/page-studio-blocks": "workspace:*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
