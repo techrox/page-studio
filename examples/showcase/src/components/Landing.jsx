@@ -166,7 +166,7 @@ export default function Landing() {
         <pre className="landing-code">
 {`pnpm add @techrox/page-studio @techrox/page-studio-blocks \\
         @techrox/page-studio-renderer
-pnpm add @measured/puck antd @ant-design/icons   # peers`}
+pnpm add @puckeditor/core antd @ant-design/icons   # peers`}
         </pre>
         <pre className="landing-code">
 {`import { PageStudio } from '@techrox/page-studio';

@@ -13,6 +13,7 @@ export {
   defaultOverrides,
   emptyPuckData,
   normalizePuckData,
+  applyConfigDefaults,
 } from './config.jsx';
 
 export { PageStudioProvider, useStudio, StudioLink } from './context.jsx';

@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.4.0",
-    "@measured/puck": "^0.20.2",
+    "@puckeditor/core": "^0.21.2",
     "@techrox/page-studio": "workspace:*",
     "@techrox/page-studio-blocks": "workspace:*",
     "@techrox/page-studio-renderer": "workspace:*",

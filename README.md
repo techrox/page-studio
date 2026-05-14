@@ -24,7 +24,7 @@ A consumer that only renders saved Puck output on a public site can install `@te
 ```bash
 pnpm add @techrox/page-studio @techrox/page-studio-blocks @techrox/page-studio-renderer
 # peers
-pnpm add @measured/puck antd @ant-design/icons
+pnpm add @puckeditor/core antd @ant-design/icons
 ```
 
 In your admin route:
@@ -73,6 +73,18 @@ export default async function PublicPage() {
 
 ## Development
 
+A root `Makefile` wraps the common workflows. Run `make help` to see every target.
+
+```bash
+make install       # workspace install
+make build         # build the four packages
+make test          # vitest across packages
+make dev           # build packages, then run the showcase dev server
+make clean         # wipe dist/ + node_modules/ everywhere
+```
+
+The same things via pnpm if you prefer:
+
 ```bash
 pnpm install
 pnpm test          # all packages
@@ -111,7 +123,7 @@ Each package has its own README with the full API reference.
 
 ## Example
 
-A working end-to-end tour — block gallery, sample pages, brand-defaults injection, and the live editor — lives in [`examples/showcase`](./examples/showcase). Run `cd examples/showcase && make install && make dev`.
+A working end-to-end tour — block gallery, sample pages, brand-defaults injection, and the live editor — lives in [`examples/showcase`](./examples/showcase). From the repo root: `make dev` (builds the packages, then starts the showcase on [localhost:5173](http://localhost:5173)). Or step-by-step: `cd examples/showcase && make install && make dev`.
 
 ## License
 

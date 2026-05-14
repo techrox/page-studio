@@ -6,7 +6,7 @@ Shared by both `@techrox/page-studio` (editor) and `@techrox/page-studio-rendere
 
 ```bash
 pnpm add @techrox/page-studio-blocks
-pnpm add @measured/puck antd @ant-design/icons   # peers
+pnpm add @puckeditor/core antd @ant-design/icons   # peers
 ```
 
 ## Block catalogue
