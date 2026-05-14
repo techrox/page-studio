@@ -92,7 +92,7 @@ This example deliberately avoids two things a production host would have:
 
 - **No persistence** — `EditorView` stores published Puck data in React
   state. Wire `adapter.savePage` to your CMS endpoint to make edits stick.
-- **No auth / role gating** — Cibus IQ (the host that originated this
+- **No auth / role gating** — Page Studio (the host that originated this
   package) gates `/admin/*` via middleware. Add what your stack uses.
 
 Everything else — block library, editor chrome, renderer, brand

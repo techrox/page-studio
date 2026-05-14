@@ -367,7 +367,7 @@ function SeoFields() {
         <Input.TextArea rows={3} maxLength={170} showCount />
       </Form.Item>
       <Form.Item label="Open Graph image URL" name="seo_og_image">
-        <Input placeholder="https://cibusiq.com/og-image.png" />
+        <Input placeholder="https://pagestudio.dev/og-image.png" />
       </Form.Item>
       <Form.Item label="Hide from search engines" name="seo_noindex" valuePropName="checked">
         <Switch />

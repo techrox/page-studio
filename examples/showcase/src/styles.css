@@ -4,7 +4,7 @@
    The blocks library reads typography/layout classes from the host
    (see packages/blocks/README.md "Required host CSS"). This file ships a
    reasonable default set so the showcase renders the blocks identically
-   to a polished Cibus IQ-style host.
+   to a polished Page Studio-style host.
    ========================================================================= */
 
 :root {
@@ -284,6 +284,19 @@ h1, h2, h3, h4 {
   color: var(--tps-ink);
   letter-spacing: 0.01em;
 }
+/* Topbar brand — only shown when the side rail collapses (≤960px).
+   Desktop already has it inside .showcase-nav. */
+.showcase-topbar-brand {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--tps-ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.showcase-topbar-brand .showcase-brand-mark { width: 22px; height: 22px; }
 
 .showcase-content {
   flex: 1 1 auto;
@@ -504,6 +517,10 @@ h1, h2, h3, h4 {
     pointer-events: auto;
   }
   .showcase-nav-toggle { display: inline-flex; }
+  .showcase-topbar-brand { display: inline-flex; }
+  /* Page title is redundant once the brand is in the topbar — the rail
+     entry already conveys context, and the brand needs the room. */
+  .showcase-topbar h2 { display: none; }
   /* Surface the brand picker inside the drawer so users on phones can
      reach it without an extra control in the topbar. The inline copy
      in the topbar still works on tablets ≥601 px. */
