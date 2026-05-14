@@ -4,6 +4,15 @@
   "description": "SSR-safe React renderer for displaying saved Puck JSON from @techrox/page-studio on a public page. Small footprint, no editor dependencies.",
   "license": "MIT",
   "author": "techrox",
+  "homepage": "https://github.com/techrox/page-studio#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/techrox/page-studio.git",
+    "directory": "packages/renderer"
+  },
+  "bugs": {
+    "url": "https://github.com/techrox/page-studio/issues"
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

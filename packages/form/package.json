@@ -4,6 +4,15 @@
   "description": "Schema-driven structured-form page editor for React. Typed fields per page key, repeaters, TipTap rich text, live preview, revision history. Companion to @techrox/page-studio for content-shaped pages where layout is fixed.",
   "license": "MIT",
   "author": "techrox",
+  "homepage": "https://github.com/techrox/page-studio#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/techrox/page-studio.git",
+    "directory": "packages/form"
+  },
+  "bugs": {
+    "url": "https://github.com/techrox/page-studio/issues"
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
