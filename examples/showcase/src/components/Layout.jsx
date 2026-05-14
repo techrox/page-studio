@@ -106,6 +106,17 @@ export default function Layout({ brands, brandId, onBrandChange, title, children
           >
             {navOpen ? <CloseOutlined /> : <MenuOutlined />}
           </button>
+          <Link to="/" className="showcase-topbar-brand">
+            <img
+              src="/brand/page-studio-mark.svg"
+              alt=""
+              aria-hidden="true"
+              width={24}
+              height={24}
+              className="showcase-brand-mark"
+            />
+            <span>Page Studio</span>
+          </Link>
           <h2>{showTitle ? title || ' ' : ' '}</h2>
           <BrandSwitcher brands={brands} current={brandId} onChange={onBrandChange} />
         </div>

@@ -5,7 +5,7 @@
  * rebrand both at once.
  *
  * Note: ".tps-builder-page" is intentionally retained as an alias so
- * downstream styles written against the legacy Cibus IQ class names keep
+ * downstream styles written against the legacy Page Studio class names keep
  * working. New rules should target ".psd-builder-page". */
 
 .psd-builder-page,
