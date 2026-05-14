@@ -65,18 +65,6 @@ export default function Layout({ brands, brandId, onBrandChange, title, children
           </NavLink>
         </div>
 
-        <div>
-          <div className="showcase-nav-section">Reference</div>
-          <a
-            href="https://github.com/measuredco/puck"
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            Puck on GitHub ↗
-          </a>
-          <Link to="/blocks">All 50 blocks</Link>
-        </div>
-
         <div className="showcase-nav-brands">
           <div className="showcase-nav-section">Brand</div>
           <BrandSwitcher
@@ -87,7 +75,7 @@ export default function Layout({ brands, brandId, onBrandChange, title, children
           />
         </div>
 
-        <div style={{ fontSize: 12, color: 'var(--tps-hint)' }}>
+        <div className="showcase-nav-foot">
           The showcase is a working tour of <strong>@techrox/page-studio</strong> — block library, renderer, and editor.
         </div>
       </aside>
