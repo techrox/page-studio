@@ -36,7 +36,7 @@ export const InlineCTA = {
             border: primary ? 'none' : '1px solid var(--tps-line)',
             borderRadius: 'var(--tps-radius)',
           }}>
-            <div style={{ flex: 1, minWidth: 240 }}>
+            <div style={{ flex: 1, minWidth: 'min(240px, 100%)' }}>
               {headline && <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 2 }}>{headline}</div>}
               {body && <div style={{ fontSize: 14, opacity: 0.85 }}>{body}</div>}
             </div>

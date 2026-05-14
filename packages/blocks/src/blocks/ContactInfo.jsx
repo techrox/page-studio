@@ -34,7 +34,7 @@ export const ContactInfo = {
           </div>
         )}
         <div style={{ background: '#fff', border: '1px solid var(--tps-line)', borderRadius: 'var(--tps-radius)', padding: 28 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 20 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(200px, 100%), 1fr))', gap: 20 }}>
             {email && (
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--tps-muted)', fontSize: 12, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 6 }}>

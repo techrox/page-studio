@@ -36,7 +36,7 @@ export const AwardsBar = {
     <section className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`} style={{ paddingTop: 56, paddingBottom: 56 }}>
       <div className="tps-container" style={{ textAlign: 'center' }}>
         {heading && <h3 style={{ fontSize: 13, fontWeight: 700, letterSpacing: 1.5, color: 'var(--tps-muted)', textTransform: 'uppercase', marginBottom: 32 }}>{heading}</h3>}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 24 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(220px, 100%), 1fr))', gap: 24 }}>
           {(items || []).map((a, i) => (
             <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, padding: 16 }}>
               <TrophyOutlined style={{ fontSize: 28, color: 'var(--tps-accent)' }} />

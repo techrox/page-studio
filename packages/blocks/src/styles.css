@@ -147,3 +147,19 @@
     transition: none !important;
   }
 }
+
+/* Collapses a fixed-column grid to a single column on narrow viewports.
+   Blocks that ship a multi-column row (e.g. date + content + cta) opt in
+   so the row stacks vertically below ~640 px instead of forcing a
+   horizontal scroll. The `dd` rule drops the stacked-row double-border
+   for definition lists (KeyValueList). */
+@media (max-width: 640px) {
+  .tps-row-stack {
+    grid-template-columns: 1fr !important;
+    row-gap: 8px !important;
+  }
+  .tps-row-stack dd {
+    border-top: none !important;
+    padding-top: 0 !important;
+  }
+}
