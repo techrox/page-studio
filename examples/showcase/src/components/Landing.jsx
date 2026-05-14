@@ -214,7 +214,7 @@ import '@techrox/page-studio-blocks/styles.css';
       <footer className="landing-footer">
         <div className="landing-footer-inner">
           <img
-            src="/brand/page-studio-mark.svg"
+            src={`${import.meta.env.BASE_URL}brand/page-studio-mark.svg`}
             alt=""
             width={32}
             height={32}
