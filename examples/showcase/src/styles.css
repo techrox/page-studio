@@ -184,6 +184,38 @@ h1, h2, h3, h4 {
   gap: 20px;
 }
 
+/* Backdrop + hamburger live in the DOM at every breakpoint but stay
+   hidden until the ≤960 px media query opts them in. */
+.showcase-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  z-index: 35;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+}
+.showcase-nav-toggle {
+  display: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid var(--tps-line);
+  color: var(--tps-ink);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+.showcase-nav-toggle:hover {
+  border-color: var(--tps-primary);
+  color: var(--tps-primary);
+}
+.showcase-nav-brands { display: none; }
+
 .showcase-brand {
   display: flex;
   align-items: center;
@@ -237,12 +269,14 @@ h1, h2, h3, h4 {
   z-index: 10;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 12px;
+  min-height: 64px;
   padding: 14px 24px;
   border-bottom: 1px solid var(--tps-line);
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: saturate(180%) blur(8px);
 }
+.showcase-topbar > .brand-switcher { margin-left: auto; }
 .showcase-topbar h2 {
   margin: 0;
   font-size: 14px;
@@ -254,6 +288,76 @@ h1, h2, h3, h4 {
 .showcase-content {
   flex: 1 1 auto;
   min-width: 0;
+}
+
+/* Brand switcher (colored chips) --------------------------------------- */
+.brand-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.brand-switcher--stacked {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  margin-top: 6px;
+}
+.brand-chip {
+  --brand-chip-color: var(--tps-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--tps-line);
+  background: #fff;
+  color: var(--tps-muted);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+.brand-chip:hover {
+  border-color: var(--brand-chip-color);
+  color: var(--tps-ink);
+}
+.brand-chip:focus-visible {
+  outline: 2px solid var(--brand-chip-color);
+  outline-offset: 2px;
+}
+.brand-chip-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--brand-chip-color);
+  box-shadow: 0 0 0 2px #fff inset;
+  flex-shrink: 0;
+}
+.brand-chip.is-active {
+  background: var(--tps-bg-section);
+  color: var(--tps-ink);
+  border-color: var(--brand-chip-color);
+  box-shadow: 0 0 0 1px var(--brand-chip-color);
+}
+.brand-chip.is-active .brand-chip-dot {
+  box-shadow: 0 0 0 2px var(--brand-chip-color) inset;
+}
+.brand-switcher--stacked .brand-chip {
+  justify-content: flex-start;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+/* On tablets (601–960 px) the topbar still shows the inline picker, but
+   names take too much room — collapse to dots only. */
+@media (max-width: 960px) and (min-width: 601px) {
+  .showcase-topbar .brand-switcher--inline .brand-chip {
+    padding: 6px;
+  }
+  .showcase-topbar .brand-switcher--inline .brand-chip-label {
+    display: none;
+  }
 }
 
 /* Block gallery --------------------------------------------------------- */
@@ -383,10 +487,42 @@ h1, h2, h3, h4 {
 
 @media (max-width: 960px) {
   .showcase { grid-template-columns: 1fr; }
-  .showcase-nav { position: static; height: auto; }
+  .showcase-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: min(300px, 88vw);
+    height: 100vh;
+    z-index: 40;
+    transform: translateX(-100%);
+    transition: transform 0.22s ease;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+  }
+  .showcase[data-nav-open="true"] .showcase-nav { transform: translateX(0); }
+  .showcase[data-nav-open="true"] .showcase-nav-backdrop {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .showcase-nav-toggle { display: inline-flex; }
+  /* Surface the brand picker inside the drawer so users on phones can
+     reach it without an extra control in the topbar. The inline copy
+     in the topbar still works on tablets ≥601 px. */
+  .showcase-nav-brands { display: block; }
   .block-showcase { grid-template-columns: 1fr; }
   .block-showcase-render { border-right: none; border-bottom: 1px solid var(--tps-line); }
   .block-showcase-meta { position: static; }
+}
+
+/* On phones the topbar's inline brand switcher would crowd the title.
+   Hide it and rely on the drawer copy. */
+@media (max-width: 600px) {
+  .showcase-topbar > .brand-switcher { display: none; }
+  .showcase-topbar h2 {
+    flex: 1 1 auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 }
 
 /* Page list ------------------------------------------------------------- */
@@ -415,7 +551,7 @@ h1, h2, h3, h4 {
 .page-list-item-blocks { font-size: 12px; color: var(--tps-hint); margin-top: 4px; }
 
 /* Editor view ----------------------------------------------------------- */
-.editor-shell { height: calc(100vh - 51px); }
+.editor-shell { height: calc(100vh - 65px); }
 
 /* Per-brand tweaks — set by the App by toggling a class on .showcase ----- */
 .showcase[data-brand="techrox"] {
