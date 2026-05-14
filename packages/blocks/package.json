@@ -1,8 +1,9 @@
 {
   "name": "@techrox/page-studio-blocks",
-  "version": "0.1.0",
-  "description": "Block library + Puck config for @techrox/page-studio — 50 production-ready content blocks.",
+  "version": "1.0.0",
+  "description": "50 production-ready content blocks (Hero, Pricing, FAQ, Contact, …) plus the Puck config builder for @techrox/page-studio. SSR-safe, brand-themable via CSS variables, host-extensible.",
   "license": "MIT",
+  "author": "techrox",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -16,7 +17,8 @@
   "files": [
     "dist",
     "src/styles.css",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "sideEffects": [
     "*.css"
@@ -25,7 +27,8 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prepublishOnly": "pnpm run build"
   },
   "peerDependencies": {
     "@ant-design/icons": ">=5",
@@ -45,10 +48,17 @@
     "access": "public"
   },
   "keywords": [
-    "puck",
-    "cms",
-    "page-builder",
     "blocks",
-    "visual-editor"
-  ]
+    "content-blocks",
+    "page-builder",
+    "puck",
+    "puckeditor",
+    "cms",
+    "react",
+    "ssr",
+    "page-studio"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
 }

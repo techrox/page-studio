@@ -1,8 +1,9 @@
 {
   "name": "@techrox/page-studio",
-  "version": "0.1.0",
-  "description": "Standalone Puck-based visual page builder with adapter-driven persistence, header slots, and brand theming.",
+  "version": "1.0.0",
+  "description": "Drag-and-drop visual page builder for React, built on Puck. Adapter-driven persistence, brand theming, sidebar block library, replaceable top bar.",
   "license": "MIT",
+  "author": "techrox",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -16,7 +17,8 @@
   "files": [
     "dist",
     "src/styles.css",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "sideEffects": [
     "*.css"
@@ -25,7 +27,8 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prepublishOnly": "pnpm run build"
   },
   "peerDependencies": {
     "@ant-design/icons": ">=5",
@@ -47,10 +50,19 @@
     "access": "public"
   },
   "keywords": [
-    "puck",
-    "cms",
     "page-builder",
     "visual-editor",
-    "wysiwyg"
-  ]
+    "drag-and-drop",
+    "puck",
+    "puckeditor",
+    "cms",
+    "headless-cms",
+    "wysiwyg",
+    "react",
+    "antd",
+    "page-studio"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
 }
