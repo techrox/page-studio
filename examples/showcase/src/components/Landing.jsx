@@ -79,13 +79,6 @@ export default function Landing() {
     <div className="landing">
       <section className="landing-hero">
         <div className="landing-hero-inner">
-          <img
-            src="/brand/page-studio-logo.svg"
-            alt="Page Studio by techrox"
-            className="landing-hero-logo"
-            width={320}
-            height={80}
-          />
           <p className="landing-eyebrow">Open source · MIT · React · SSR-safe</p>
           <h1 className="landing-h1">
             Drag a hero. Brand it in CSS. <em>Ship the page.</em>

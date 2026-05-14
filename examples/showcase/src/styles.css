@@ -168,7 +168,7 @@ h1, h2, h3, h4 {
 .showcase {
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 240px 1fr;
+  grid-template-columns: 260px 1fr;
 }
 
 .showcase-nav {
@@ -217,19 +217,19 @@ h1, h2, h3, h4 {
 .showcase-nav-brands { display: none; }
 
 .showcase-brand {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  font-weight: 800;
-  font-size: 16px;
-  color: var(--tps-ink);
   text-decoration: none;
 }
-.showcase-brand-mark {
-  width: 28px;
-  height: 28px;
+.showcase-brand-logo {
   display: block;
-  flex-shrink: 0;
+  height: 44px;
+  width: auto;
+}
+.showcase-topbar-logo {
+  display: block;
+  height: 36px;
+  width: auto;
 }
 
 .showcase-nav-section {
@@ -289,14 +289,8 @@ h1, h2, h3, h4 {
 .showcase-topbar-brand {
   display: none;
   align-items: center;
-  gap: 8px;
-  font-weight: 800;
-  font-size: 15px;
-  color: var(--tps-ink);
   text-decoration: none;
-  white-space: nowrap;
 }
-.showcase-topbar-brand .showcase-brand-mark { width: 22px; height: 22px; }
 
 .showcase-content {
   flex: 1 1 auto;
@@ -671,12 +665,6 @@ h1, h2, h3, h4 {
   position: relative;
   max-width: var(--landing-max);
   margin: 0 auto;
-}
-.landing-hero-logo {
-  height: 56px;
-  width: auto;
-  margin-bottom: 32px;
-  display: block;
 }
 .landing-lede {
   font-size: clamp(16px, 1.5vw, 19px);
