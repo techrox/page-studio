@@ -148,13 +148,22 @@ export default function PageStudio({
   const [pending, startTransition] = useTransition();
   const [savedAt, setSavedAt] = useState(null);
 
-  // Resolve the config first so we can populate missing defaults on any
-  // seeded data the host passed in. Puck only applies defaultProps when a
-  // block is dragged in via the drawer — without this, blocks stored as
-  // `{ type, props: {} }` show empty fields when the author clicks them.
-  const resolvedConfig = useMemo(
+  // Resolve the config ONCE on first mount and freeze the reference. Puck
+  // treats `config` as a structural prop — passing a new object on every
+  // brand switch makes it re-diff its block registry, drop @dnd-kit's
+  // collision cache and rebuild a chunk of internal memos. That's the
+  // bulk of what makes brand switching feel sluggish.
+  //
+  // Trade-off: a `blockDefaults` change after mount (e.g. host swapping
+  // tenant defaults mid-edit) no longer updates the per-block defaults
+  // applied to newly dropped blocks — those will use whatever defaults
+  // were active at first mount. CSS vars (color, ink, accent) still
+  // update live via setCssVars. For the showcase that's exactly what we
+  // want: brand swaps repaint colors instantly without churning Puck.
+  // Hosts that genuinely need brand-aware drop defaults should remount
+  // PageStudio with a fresh key when they swap tenants.
+  const [resolvedConfig] = useState(
     () => config || createPuckConfig({ defaults: blockDefaults }),
-    [config, blockDefaults],
   );
 
   const [data, setData] = useState(() =>
