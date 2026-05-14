@@ -41,14 +41,12 @@ export default function Layout({ brands, brandId, onBrandChange, title, children
       <aside className="showcase-nav" aria-label="Primary">
         <Link to="/" className="showcase-brand">
           <img
-            src="/brand/page-studio-mark.svg"
-            alt=""
-            aria-hidden="true"
-            width={28}
-            height={28}
-            className="showcase-brand-mark"
+            src="/brand/page-studio-logo.svg"
+            alt="Page Studio"
+            width={204}
+            height={44}
+            className="showcase-brand-logo"
           />
-          Page Studio
         </Link>
 
         <div>
@@ -108,14 +106,12 @@ export default function Layout({ brands, brandId, onBrandChange, title, children
           </button>
           <Link to="/" className="showcase-topbar-brand">
             <img
-              src="/brand/page-studio-mark.svg"
-              alt=""
-              aria-hidden="true"
-              width={24}
-              height={24}
-              className="showcase-brand-mark"
+              src="/brand/page-studio-logo.svg"
+              alt="Page Studio"
+              width={167}
+              height={36}
+              className="showcase-topbar-logo"
             />
-            <span>Page Studio</span>
           </Link>
           <h2>{showTitle ? title || ' ' : ' '}</h2>
           <BrandSwitcher brands={brands} current={brandId} onChange={onBrandChange} />
