@@ -1,0 +1,56 @@
+{
+  "name": "@techrox/page-studio",
+  "version": "0.1.0",
+  "description": "Standalone Puck-based visual page builder with adapter-driven persistence, header slots, and brand theming.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./styles.css": "./src/styles.css"
+  },
+  "files": [
+    "dist",
+    "src/styles.css",
+    "README.md"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "peerDependencies": {
+    "@ant-design/icons": ">=5",
+    "@puckeditor/core": ">=0.21",
+    "@techrox/page-studio-blocks": "workspace:*",
+    "antd": ">=5",
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@ant-design/icons": "^5.4.0",
+    "@puckeditor/core": "^0.21.2",
+    "@techrox/page-studio-blocks": "workspace:*",
+    "antd": "^5.19.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "puck",
+    "cms",
+    "page-builder",
+    "visual-editor",
+    "wysiwyg"
+  ]
+}
