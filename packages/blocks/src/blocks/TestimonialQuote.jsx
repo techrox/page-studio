@@ -42,7 +42,7 @@ export const TestimonialQuote = {
         <div className="tps-container" style={{ maxWidth: 820, textAlign: 'center' }}>
           <div
             style={{
-              fontSize: 64,
+              fontSize: 'clamp(40px, 10vw, 64px)',
               lineHeight: 1,
               color: dark ? '#F59E0B' : 'var(--tps-primary)',
               fontFamily: 'Georgia, serif',

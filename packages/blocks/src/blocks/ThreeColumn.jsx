@@ -37,7 +37,7 @@ export const ThreeColumn = {
             {heading && <h2 className="tps-h2" style={{ marginTop: 8 }}>{heading}</h2>}
           </div>
         )}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 32 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: 32 }}>
           {(columns || []).map((c, i) => (
             <div key={i}>
               <h3 style={{ fontSize: 18, fontWeight: 700, margin: '0 0 8px' }}>{c.title}</h3>

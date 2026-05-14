@@ -74,9 +74,9 @@ export const TeamGrid = {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: `repeat(auto-fit, minmax(${
+            gridTemplateColumns: `repeat(auto-fit, minmax(min(${
               columns === 4 ? 220 : columns === 3 ? 260 : 320
-            }px, 1fr))`,
+            }px, 100%), 1fr))`,
             gap: 24,
           }}
         >

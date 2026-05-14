@@ -20,7 +20,7 @@ export const Quote = {
       <div className="tps-container" style={{ maxWidth: 720, textAlign: align }}>
         <blockquote style={{
           margin: 0,
-          fontSize: 26,
+          fontSize: 'clamp(20px, 3.5vw, 26px)',
           fontWeight: 500,
           lineHeight: 1.45,
           color: 'var(--tps-ink)',

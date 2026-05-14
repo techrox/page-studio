@@ -71,6 +71,7 @@ export const ArticleList = {
             >
               <Link
                 href={a.href || '#'}
+                className="tps-row-stack"
                 style={{
                   display: 'grid',
                   gridTemplateColumns: '110px 1fr auto',

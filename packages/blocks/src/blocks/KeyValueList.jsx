@@ -38,7 +38,7 @@ export const KeyValueList = {
             {heading && <h2 className="tps-h2" style={{ marginTop: 8 }}>{heading}</h2>}
           </div>
         )}
-        <dl style={{ margin: 0, display: 'grid', gridTemplateColumns: '180px 1fr', rowGap: 0 }}>
+        <dl className="tps-row-stack" style={{ margin: 0, display: 'grid', gridTemplateColumns: '180px 1fr', rowGap: 0 }}>
           {(items || []).map((row, i) => (
             <div key={i} style={{ display: 'contents' }}>
               <dt style={{ padding: '14px 0', borderTop: '1px solid var(--tps-line)', fontSize: 13, fontWeight: 700, color: 'var(--tps-muted)', letterSpacing: 0.5 }}>{row.key}</dt>

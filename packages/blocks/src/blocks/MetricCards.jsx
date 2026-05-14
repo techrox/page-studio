@@ -85,7 +85,7 @@ export const MetricCards = {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(220px, 100%), 1fr))',
               gap: 16,
             }}
           >
@@ -101,7 +101,7 @@ export const MetricCards = {
               >
                 <div
                   style={{
-                    fontSize: 44,
+                    fontSize: 'clamp(28px, 6vw, 44px)',
                     fontWeight: 800,
                     color: dark ? '#fff' : 'var(--tps-primary)',
                     letterSpacing: '-0.02em',
