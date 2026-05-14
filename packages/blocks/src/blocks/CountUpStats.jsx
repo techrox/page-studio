@@ -68,7 +68,7 @@ export const CountUpStats = {
         <div className="tps-container" style={{ textAlign: 'center' }}>
           {eyebrow && <span className="tps-eyebrow" style={{ color: dark ? '#F59E0B' : undefined }}>{eyebrow}</span>}
           {heading && <h2 className="tps-h2" style={{ marginTop: 8, color: dark ? '#fff' : undefined, marginBottom: 32 }}>{heading}</h2>}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 32, marginTop: heading ? 16 : 0 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(180px, 100%), 1fr))', gap: 32, marginTop: heading ? 16 : 0 }}>
             {(items || []).map((s, i) => (
               <div key={i}>
                 <div style={{ fontSize: 48, fontWeight: 800, color: dark ? '#fff' : 'var(--tps-primary)', letterSpacing: '-0.03em', lineHeight: 1 }}>

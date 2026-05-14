@@ -17,8 +17,8 @@ const TEXT = '#0F172A';
 const MUTED = '#94A3B8';
 
 const DEFAULT_BRAND_COLORS = {
-  PRIMARY: '#0F766E',
-  PRIMARY_SOFT: '#CCFBF1',
+  PRIMARY: '#0b60d8',
+  PRIMARY_SOFT: '#dbeafe',
   ACCENT: '#F59E0B',
 };
 
@@ -39,8 +39,13 @@ function readBrandColors() {
 // Refresh when the [data-brand] attribute on the nearest ancestor flips —
 // the showcase / host toggles it when the user picks a new brand, so the
 // picker thumbnails need to follow.
+//
+// The initial state is computed lazily from getComputedStyle so the very
+// first paint already uses the active brand. Without this, every preview
+// flashes the package-default teal for a frame before the post-mount
+// effect re-reads the variables.
 function useBrandColors() {
-  const [colors, setColors] = useState(DEFAULT_BRAND_COLORS);
+  const [colors, setColors] = useState(readBrandColors);
   useEffect(() => {
     setColors(readBrandColors());
     if (typeof window === 'undefined') return;

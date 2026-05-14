@@ -133,7 +133,7 @@ function ContactSectionRender({
                   <LinkedinFilled style={{ fontSize: 22, color: 'var(--tps-primary)' }} />
                   <div>
                     <div style={{ fontSize: 12, color: 'var(--tps-muted)' }}>LinkedIn</div>
-                    <div style={{ fontSize: 15, fontWeight: 600 }}>Cibus IQ</div>
+                    <div style={{ fontSize: 15, fontWeight: 600 }}>Page Studio</div>
                   </div>
                 </a>
               </Space>

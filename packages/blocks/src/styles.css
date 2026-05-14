@@ -7,8 +7,8 @@
  * sane without theming. Override at :root in your host to rebrand. */
 
 :root {
-  --tps-primary: #0f766e;
-  --tps-primary-dark: #0b5550;
+  --tps-primary: #0b60d8;
+  --tps-primary-dark: #0848a3;
   --tps-accent: #f59e0b;
   --tps-ink: #0f172a;
   --tps-muted: #64748b;
@@ -145,5 +145,21 @@
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+}
+
+/* Collapses a fixed-column grid to a single column on narrow viewports.
+   Blocks that ship a multi-column row (e.g. date + content + cta) opt in
+   so the row stacks vertically below ~640 px instead of forcing a
+   horizontal scroll. The `dd` rule drops the stacked-row double-border
+   for definition lists (KeyValueList). */
+@media (max-width: 640px) {
+  .tps-row-stack {
+    grid-template-columns: 1fr !important;
+    row-gap: 8px !important;
+  }
+  .tps-row-stack dd {
+    border-top: none !important;
+    padding-top: 0 !important;
   }
 }
