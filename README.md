@@ -1,15 +1,21 @@
 # Page Studio
 
+[![npm: editor](https://img.shields.io/npm/v/@techrox/page-studio?color=0b60d8&label=%40techrox%2Fpage-studio)](https://www.npmjs.com/package/@techrox/page-studio)
+[![npm: blocks](https://img.shields.io/npm/v/@techrox/page-studio-blocks?color=0b60d8&label=blocks)](https://www.npmjs.com/package/@techrox/page-studio-blocks)
+[![npm: renderer](https://img.shields.io/npm/v/@techrox/page-studio-renderer?color=0b60d8&label=renderer)](https://www.npmjs.com/package/@techrox/page-studio-renderer)
+[![npm: form](https://img.shields.io/npm/v/@techrox/page-studio-form?color=0b60d8&label=form)](https://www.npmjs.com/package/@techrox/page-studio-form)
+[![license](https://img.shields.io/badge/license-MIT-64748b)](./LICENSE)
+
 A standalone, framework-agnostic visual page builder, packaged for cross-team reuse. Built on [Puck](https://puckeditor.com).
 
 This monorepo publishes four coordinated packages:
 
-| Package | What it is |
-|---|---|
-| [`@techrox/page-studio`](./packages/editor) | The editor shell — drag-and-drop canvas, sidebar, top bar. Accepts adapter props for persistence and a `studio` context for host primitives (Link, services, analytics). |
-| [`@techrox/page-studio-blocks`](./packages/blocks) | 50 production-ready content blocks (Hero, Pricing, FAQ, Contact, …) + the Puck config builder + the StudioProvider context. |
-| [`@techrox/page-studio-renderer`](./packages/renderer) | Server-safe `Render` wrapper for displaying saved Puck output on a public page. |
-| [`@techrox/page-studio-form`](./packages/form) | Schema-driven structured-form page editor — typed fields per page key (hero, summary, pricing rows, …) with rich text, repeaters, live preview, and revision history. Companion to the visual builder for content-shaped pages where layout is fixed. |
+| Package | npm | What it is |
+|---|---|---|
+| [`@techrox/page-studio`](./packages/editor) | [![v](https://img.shields.io/npm/v/@techrox/page-studio?color=0b60d8&label=)](https://www.npmjs.com/package/@techrox/page-studio) | The editor shell — drag-and-drop canvas, sidebar, top bar. Accepts adapter props for persistence and a `studio` context for host primitives (Link, services, analytics). |
+| [`@techrox/page-studio-blocks`](./packages/blocks) | [![v](https://img.shields.io/npm/v/@techrox/page-studio-blocks?color=0b60d8&label=)](https://www.npmjs.com/package/@techrox/page-studio-blocks) | 50 production-ready content blocks (Hero, Pricing, FAQ, Contact, …) + the Puck config builder + the StudioProvider context. |
+| [`@techrox/page-studio-renderer`](./packages/renderer) | [![v](https://img.shields.io/npm/v/@techrox/page-studio-renderer?color=0b60d8&label=)](https://www.npmjs.com/package/@techrox/page-studio-renderer) | Server-safe `Render` wrapper for displaying saved Puck output on a public page. |
+| [`@techrox/page-studio-form`](./packages/form) | [![v](https://img.shields.io/npm/v/@techrox/page-studio-form?color=0b60d8&label=)](https://www.npmjs.com/package/@techrox/page-studio-form) | Schema-driven structured-form page editor — typed fields per page key (hero, summary, pricing rows, …) with rich text, repeaters, live preview, and revision history. Companion to the visual builder for content-shaped pages where layout is fixed. |
 
 ## Why split into packages?
 

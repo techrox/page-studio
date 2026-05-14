@@ -1,5 +1,10 @@
 # @techrox/page-studio-form
 
+[![npm](https://img.shields.io/npm/v/@techrox/page-studio-form?color=0b60d8&label=npm)](https://www.npmjs.com/package/@techrox/page-studio-form)
+[![downloads](https://img.shields.io/npm/dm/@techrox/page-studio-form?color=64748b&label=downloads)](https://www.npmjs.com/package/@techrox/page-studio-form)
+[![size](https://img.shields.io/bundlephobia/minzip/@techrox/page-studio-form?color=64748b&label=minzip)](https://bundlephobia.com/package/@techrox/page-studio-form)
+[![license](https://img.shields.io/badge/license-MIT-64748b)](../../LICENSE)
+
 Schema-driven structured-form page editor for admin CMS UIs. Companion to
 [`@techrox/page-studio`](../editor) (the Puck visual builder). Both packages
 edit the same page record; they differ in surface area:
