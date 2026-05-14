@@ -7,8 +7,8 @@
  * sane without theming. Override at :root in your host to rebrand. */
 
 :root {
-  --tps-primary: #0f766e;
-  --tps-primary-dark: #0b5550;
+  --tps-primary: #0b60d8;
+  --tps-primary-dark: #0848a3;
   --tps-accent: #f59e0b;
   --tps-ink: #0f172a;
   --tps-muted: #64748b;
