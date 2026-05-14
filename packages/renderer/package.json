@@ -1,8 +1,18 @@
 {
   "name": "@techrox/page-studio-renderer",
-  "version": "0.1.0",
-  "description": "Server-safe renderer for @techrox/page-studio Puck output.",
+  "version": "1.0.0",
+  "description": "SSR-safe React renderer for displaying saved Puck JSON from @techrox/page-studio on a public page. Small footprint, no editor dependencies.",
   "license": "MIT",
+  "author": "techrox",
+  "homepage": "https://github.com/techrox/page-studio#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/techrox/page-studio.git",
+    "directory": "packages/renderer"
+  },
+  "bugs": {
+    "url": "https://github.com/techrox/page-studio/issues"
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -14,13 +24,15 @@
   },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prepublishOnly": "pnpm run build"
   },
   "peerDependencies": {
     "@puckeditor/core": ">=0.21",
@@ -38,10 +50,17 @@
     "access": "public"
   },
   "keywords": [
-    "puck",
-    "cms",
-    "page-builder",
     "renderer",
-    "ssr"
-  ]
+    "ssr",
+    "page-renderer",
+    "puck",
+    "puckeditor",
+    "cms",
+    "react",
+    "headless",
+    "page-studio"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
 }
