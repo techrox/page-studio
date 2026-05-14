@@ -27,8 +27,8 @@ export const AnnouncementBar = {
   render: ({ text, link_label, link_href, variant }) => {
     const palette = {
       dark: { bg: 'var(--tps-ink, #0F172A)', fg: '#fff', link: 'var(--tps-accent, #F59E0B)' },
-      primary: { bg: 'var(--tps-primary, #0F766E)', fg: '#fff', link: 'var(--tps-accent, #F59E0B)' },
-      accent: { bg: 'var(--tps-accent, #F59E0B)', fg: 'var(--tps-ink, #0F172A)', link: 'var(--tps-primary, #0F766E)' },
+      primary: { bg: 'var(--tps-primary, #0b60d8)', fg: '#fff', link: 'var(--tps-accent, #F59E0B)' },
+      accent: { bg: 'var(--tps-accent, #F59E0B)', fg: 'var(--tps-ink, #0F172A)', link: 'var(--tps-primary, #0b60d8)' },
     }[variant] || { bg: 'var(--tps-ink, #0F172A)', fg: '#fff', link: 'var(--tps-accent, #F59E0B)' };
     return (
       <div style={{ background: palette.bg, color: palette.fg, padding: '8px 16px', textAlign: 'center', fontSize: 13 }}>

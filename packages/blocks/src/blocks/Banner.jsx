@@ -11,8 +11,8 @@ import { ArrowRightOutlined } from '@ant-design/icons';
 const VARIANTS = {
   info: {
     bg: 'var(--tps-primary-soft, #E0F2F1)',
-    fg: 'var(--tps-primary, #0F766E)',
-    accent: 'var(--tps-primary, #0F766E)',
+    fg: 'var(--tps-primary, #0b60d8)',
+    accent: 'var(--tps-primary, #0b60d8)',
   },
   success: { bg: '#DCFCE7', fg: '#15803D', accent: '#15803D' },
   warning: { bg: '#FEF3C7', fg: '#92400E', accent: '#B45309' },

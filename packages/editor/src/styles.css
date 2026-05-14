@@ -123,6 +123,56 @@
   display: none !important;
 }
 
+/* Block search — sticky under the tab bar; visible only on the Blocks tab. */
+.psd-sidebar-search {
+  position: sticky;
+  top: 41px; /* below the .psd-sidebar-tabs (40px content + 1px border) */
+  z-index: 4;
+  padding: 10px 12px;
+  background: #fff;
+  border-bottom: 1px solid var(--tps-line, #e2e8f0);
+}
+[class*='_Sidebar--left'][data-psd-active-tab='outline'] > .psd-sidebar-search {
+  display: none;
+}
+.psd-sidebar-search__input {
+  width: 100%;
+  height: 32px;
+  padding: 0 10px;
+  font: inherit;
+  font-size: 13px;
+  color: var(--tps-ink, #0f172a);
+  background: var(--tps-bg-soft, #f8fafc);
+  border: 1px solid var(--tps-line, #e2e8f0);
+  border-radius: 8px;
+  outline: 0;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+.psd-sidebar-search__input::placeholder { color: var(--tps-hint, #94a3b8); }
+.psd-sidebar-search__input:focus {
+  background: #fff;
+  border-color: var(--tps-primary, #0b60d8);
+  box-shadow: 0 0 0 3px rgba(11, 96, 216, 0.15);
+}
+/* Strip native search clear button — Puck cards aren't full-width either,
+ * so the trailing UI feels out of place. */
+.psd-sidebar-search__input::-webkit-search-cancel-button { -webkit-appearance: none; }
+
+/* Search filter — collapse the actual grid cell so visible matches reflow
+ * up to the top-left of the picker.
+ *
+ * Puck v0.21 (<DrawerItem>) renders an unnamed <div> as the direct child
+ * of [data-puck-drawer]; that <div> is what the CSS grid in
+ * @techrox/page-studio-blocks (styles.css `[data-puck-drawer]`) treats
+ * as the cell. The element has no class, so we tag it from JS with
+ * `data-psd-cell-hidden` (see BuilderEnhancements.jsx applyFilter) and
+ * collapse via attribute selector. The .tps-block-card[data-psd-hidden]
+ * rule below is a belt-and-braces fallback for environments where the
+ * cell tagging hasn't (yet) run. */
+[data-psd-cell-hidden='true'] { display: none !important; }
+.tps-block-card[data-psd-hidden='true'] { display: none !important; }
+[class*='_ComponentList_'][data-psd-empty='true'] { display: none !important; }
+
 /* Category count badges */
 .psd-cat-count {
   display: inline-flex;

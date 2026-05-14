@@ -114,10 +114,14 @@ export default function PageStudio({
   );
   const [loading, setLoading] = useState(!data && !!adapter.loadPage);
 
-  // Apply brand CSS variables once on mount + whenever branding changes.
-  useEffect(() => {
-    setCssVars(branding);
-  }, [branding?.primaryColor, branding?.accentColor, branding?.inkColor]);
+  // Apply brand CSS variables synchronously during render — before Puck
+  // mounts its iframe and before the first paint. Running this in useEffect
+  // makes the canvas paint once with the package-default teal and then
+  // repaint when the effect commits, producing a visible colour flash on
+  // every load. The function is idempotent (it only writes when the head
+  // <style> content actually differs) so repeated calls during strict-mode
+  // double-render are a no-op.
+  setCssVars(branding);
 
   // Initial load when initialData wasn't server-supplied. Hosts that SSR
   // their CMS read should always pass initialData and skip this code path.
@@ -217,6 +221,7 @@ export default function PageStudio({
         <BuilderEnhancements
           blocksLabel={sidebarLabels?.blocks}
           layersLabel={sidebarLabels?.layers}
+          searchPlaceholder={sidebarLabels?.search}
         />
         <Puck
           config={resolvedConfig}

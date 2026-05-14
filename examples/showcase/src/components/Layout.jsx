@@ -41,14 +41,12 @@ export default function Layout({ brands, brandId, onBrandChange, title, children
       <aside className="showcase-nav" aria-label="Primary">
         <Link to="/" className="showcase-brand">
           <img
-            src="/brand/page-studio-mark.svg"
-            alt=""
-            aria-hidden="true"
-            width={28}
-            height={28}
-            className="showcase-brand-mark"
+            src="/brand/page-studio-logo.svg"
+            alt="Page Studio"
+            width={204}
+            height={44}
+            className="showcase-brand-logo"
           />
-          Page Studio
         </Link>
 
         <div>
@@ -67,18 +65,6 @@ export default function Layout({ brands, brandId, onBrandChange, title, children
           </NavLink>
         </div>
 
-        <div>
-          <div className="showcase-nav-section">Reference</div>
-          <a
-            href="https://github.com/measuredco/puck"
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            Puck on GitHub ↗
-          </a>
-          <Link to="/blocks">All 50 blocks</Link>
-        </div>
-
         <div className="showcase-nav-brands">
           <div className="showcase-nav-section">Brand</div>
           <BrandSwitcher
@@ -89,7 +75,7 @@ export default function Layout({ brands, brandId, onBrandChange, title, children
           />
         </div>
 
-        <div style={{ fontSize: 12, color: 'var(--tps-hint)' }}>
+        <div className="showcase-nav-foot">
           The showcase is a working tour of <strong>@techrox/page-studio</strong> — block library, renderer, and editor.
         </div>
       </aside>
@@ -108,14 +94,12 @@ export default function Layout({ brands, brandId, onBrandChange, title, children
           </button>
           <Link to="/" className="showcase-topbar-brand">
             <img
-              src="/brand/page-studio-mark.svg"
-              alt=""
-              aria-hidden="true"
-              width={24}
-              height={24}
-              className="showcase-brand-mark"
+              src="/brand/page-studio-logo.svg"
+              alt="Page Studio"
+              width={167}
+              height={36}
+              className="showcase-topbar-logo"
             />
-            <span>Page Studio</span>
           </Link>
           <h2>{showTitle ? title || ' ' : ' '}</h2>
           <BrandSwitcher brands={brands} current={brandId} onChange={onBrandChange} />
