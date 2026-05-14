@@ -1,0 +1,47 @@
+{
+  "name": "@techrox/page-studio-renderer",
+  "version": "0.1.0",
+  "description": "Server-safe renderer for @techrox/page-studio Puck output.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "peerDependencies": {
+    "@measured/puck": ">=0.18",
+    "@techrox/page-studio-blocks": "workspace:*",
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@measured/puck": "^0.20.2",
+    "@techrox/page-studio-blocks": "workspace:*",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "puck",
+    "cms",
+    "page-builder",
+    "renderer",
+    "ssr"
+  ]
+}

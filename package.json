@@ -1,0 +1,29 @@
+{
+  "name": "page-studio-monorepo",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Standalone Puck-based visual page builder, packaged for cross-team reuse.",
+  "scripts": {
+    "build": "pnpm -r --filter \"./packages/*\" run build",
+    "test": "pnpm -r --filter \"./packages/*\" run test",
+    "test:watch": "pnpm -r --filter \"./packages/*\" run test:watch",
+    "clean": "pnpm -r exec rm -rf dist node_modules",
+    "lint": "eslint \"packages/*/src/**/*.{js,jsx}\""
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.3.1",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "happy-dom": "^14.12.3",
+    "tsup": "^8.1.0",
+    "vitest": "^1.6.0"
+  },
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=8"
+  },
+  "packageManager": "pnpm@10.25.0"
+}
