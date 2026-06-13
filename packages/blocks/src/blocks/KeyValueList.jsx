@@ -16,7 +16,7 @@ export const KeyValueList = {
     },
     background: {
       type: 'radio', label: 'Background',
-      options: [{ label: 'White', value: 'white' }, { label: 'Soft', value: 'soft' }],
+      options: [{ label: 'White', value: 'white' }, { label: 'Soft', value: 'soft' }, { label: 'Dark', value: 'dark' }],
     },
   },
   defaultProps: {
@@ -30,7 +30,7 @@ export const KeyValueList = {
     background: 'white',
   },
   render: ({ eyebrow, heading, items, background }) => (
-    <section className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`} style={{ paddingTop: 48, paddingBottom: 48 }}>
+    <section className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`} style={{ paddingTop: 48, paddingBottom: 48 }}>
       <div className="tps-container" style={{ maxWidth: 820 }}>
         {(eyebrow || heading) && (
           <div style={{ marginBottom: 24 }}>

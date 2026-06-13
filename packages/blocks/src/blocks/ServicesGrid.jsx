@@ -24,6 +24,7 @@ export const ServicesGrid = {
       options: [
         { label: 'White', value: 'white' },
         { label: 'Soft', value: 'soft' },
+        { label: 'Dark', value: 'dark' },
       ],
     },
   },
@@ -38,7 +39,7 @@ export const ServicesGrid = {
     const list = show === 'all' ? services : services.slice(0, Number(show));
     return (
       <section
-        className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`}
+        className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`}
         style={{ paddingTop: 56, paddingBottom: 56 }}
       >
         <div className="tps-container">
@@ -66,7 +67,7 @@ export const ServicesGrid = {
                 style={{
                   display: 'block',
                   padding: 24,
-                  background: '#fff',
+                  background: 'var(--tps-bg)',
                   border: '1px solid var(--tps-line)',
                   borderRadius: 'var(--tps-radius)',
                   textDecoration: 'none',

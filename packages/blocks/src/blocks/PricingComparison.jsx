@@ -26,7 +26,7 @@ export const PricingComparison = {
     },
     background: {
       type: 'radio', label: 'Background',
-      options: [{ label: 'White', value: 'white' }, { label: 'Soft', value: 'soft' }],
+      options: [{ label: 'White', value: 'white' }, { label: 'Soft', value: 'soft' }, { label: 'Dark', value: 'dark' }],
     },
   },
   defaultProps: {
@@ -45,7 +45,7 @@ export const PricingComparison = {
   render: ({ eyebrow, heading, tiers, rows, background }) => {
     const tierList = tiers || [];
     return (
-      <section className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`} style={{ paddingTop: 56, paddingBottom: 56 }}>
+      <section className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`} style={{ paddingTop: 56, paddingBottom: 56 }}>
         <div className="tps-container" style={{ maxWidth: 940 }}>
           {(eyebrow || heading) && (
             <div style={{ marginBottom: 32, textAlign: 'center' }}>
@@ -53,7 +53,7 @@ export const PricingComparison = {
               {heading && <h2 className="tps-h2" style={{ marginTop: 8 }}>{heading}</h2>}
             </div>
           )}
-          <div style={{ overflowX: 'auto', border: '1px solid var(--tps-line)', borderRadius: 'var(--tps-radius)', background: '#fff' }}>
+          <div style={{ overflowX: 'auto', border: '1px solid var(--tps-line)', borderRadius: 'var(--tps-radius)', background: 'var(--tps-bg)' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
                 <tr>

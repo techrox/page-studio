@@ -17,7 +17,7 @@ export const PressMentions = {
     },
     background: {
       type: 'radio', label: 'Background',
-      options: [{ label: 'White', value: 'white' }, { label: 'Soft', value: 'soft' }],
+      options: [{ label: 'White', value: 'white' }, { label: 'Soft', value: 'soft' }, { label: 'Dark', value: 'dark' }],
     },
   },
   defaultProps: {
@@ -30,7 +30,7 @@ export const PressMentions = {
     background: 'soft',
   },
   render: ({ heading, items, background }) => (
-    <section className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`} style={{ paddingTop: 48, paddingBottom: 48 }}>
+    <section className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`} style={{ paddingTop: 48, paddingBottom: 48 }}>
       <div className="tps-container" style={{ textAlign: 'center' }}>
         {heading && <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2, color: 'var(--tps-muted)', marginBottom: 28, textTransform: 'uppercase' }}>{heading}</div>}
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', gap: 40 }}>

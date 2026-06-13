@@ -16,7 +16,7 @@ export const ThreeColumn = {
     },
     background: {
       type: 'radio', label: 'Background',
-      options: [{ label: 'White', value: 'white' }, { label: 'Soft', value: 'soft' }],
+      options: [{ label: 'White', value: 'white' }, { label: 'Soft', value: 'soft' }, { label: 'Dark', value: 'dark' }],
     },
   },
   defaultProps: {
@@ -29,7 +29,7 @@ export const ThreeColumn = {
     background: 'white',
   },
   render: ({ eyebrow, heading, columns, background }) => (
-    <section className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`} style={{ paddingTop: 56, paddingBottom: 56 }}>
+    <section className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`} style={{ paddingTop: 56, paddingBottom: 56 }}>
       <div className="tps-container">
         {(eyebrow || heading) && (
           <div style={{ marginBottom: 32 }}>

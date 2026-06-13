@@ -1,21 +1,275 @@
-/* @techrox/page-studio-blocks — minimal CSS the picker UI + reveal animations
- * need at runtime. Block typography classes (.tps-h1, .tps-section, etc.) are
- * NOT shipped here — host applications provide them via their own stylesheet.
- * See README "Required host CSS" for the list of classes blocks reference.
+/* @techrox/page-studio-blocks — base styles for the block library.
  *
- * All CSS variables are defaulted to neutral values so the package looks
- * sane without theming. Override at :root in your host to rebrand. */
+ * Includes:
+ *   - CSS variable defaults (override at :root in your host to theme)
+ *   - Layout primitives (.tps-container, .tps-section, .tps-h1, …) that
+ *     block render functions reference at runtime
+ *   - Picker UI styles
+ *   - Scroll-reveal animations */
 
 :root {
-  --tps-primary: #0b60d8;
-  --tps-primary-dark: #0848a3;
-  --tps-accent: #f59e0b;
-  --tps-ink: #0f172a;
-  --tps-muted: #64748b;
-  --tps-line: #e2e8f0;
-  --tps-bg: #fafaf7;
-  --tps-bg-soft: #f8fafc;
-  --tps-radius: 8px;
+  --tps-primary:       #0b60d8;
+  --tps-primary-dark:  #0848a3;
+  --tps-primary-light: #3b82f6;
+  --tps-primary-soft:  #dbeafe;
+  --tps-accent:        #f59e0b;
+  --tps-accent-dark:   #d97706;
+  --tps-ink:           #0f172a;
+  --tps-ink-2:         #334155;
+  --tps-muted:         #64748b;
+  --tps-hint:          #94a3b8;
+  --tps-line:          #e2e8f0;
+  --tps-bg:            #ffffff;
+  --tps-bg-soft:       #fafaf7;
+  --tps-bg-section:    #f8fafc;
+  --tps-max:           1240px;
+  --tps-radius:        14px;
+  --tps-radius-lg:     20px;
+}
+
+/* -------------------------------------------------------------------------
+   Layout primitives — referenced by block render functions
+   ------------------------------------------------------------------------- */
+.tps-container {
+  max-width: var(--tps-max);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.tps-section {
+  padding: clamp(64px, 8vw, 112px) 24px;
+}
+
+.tps-section-soft {
+  background: var(--tps-bg-soft);
+}
+
+/* -------------------------------------------------------------------------
+   Themes
+   -------------------------------------------------------------------------
+   A theme is nothing more than a re-scoped set of the *neutral* tokens
+   (ink / muted / line / bg / …). Brand tokens (--tps-primary, --tps-accent)
+   are deliberately left alone, so every vendor keeps its hue in every theme.
+
+   Apply a theme by setting `data-tps-theme="<name>"` on ANY container — the
+   renderer root, a page wrapper, a single section. Every descendant block
+   reads var(--tps-*) and re-paints automatically: no per-block code, no
+   re-render, just the CSS cascade. That's the whole mechanism, and it scales
+   — adding a new theme is one rule below, nothing else changes.
+
+       <div data-tps-theme="dark"> … blocks … </div>
+
+   The same token set also backs the per-section opt-in `background:'dark'`
+   (.tps-section-dark) so a single light page can drop one dark section.
+
+   To ADD a theme (e.g. "sepia"): copy the dark rule, rename the selector to
+   `[data-tps-theme="sepia"], .tps-section-sepia`, and change the values.
+   Nothing in the blocks needs to know the theme exists.
+   ------------------------------------------------------------------------- */
+
+/* Explicit light = the :root defaults, restated so a light island can be
+   nested inside a dark container via data-tps-theme="light". */
+[data-tps-theme="light"] {
+  --tps-ink:          #0f172a;
+  --tps-ink-2:        #334155;
+  --tps-muted:        #64748b;
+  --tps-hint:         #94a3b8;
+  --tps-line:         #e2e8f0;
+  --tps-bg:           #ffffff;
+  --tps-bg-soft:      #fafaf7;
+  --tps-bg-section:   #f8fafc;
+}
+
+/* Dark theme. Shared by the container scope and the per-section opt-in. */
+[data-tps-theme="dark"],
+.tps-section-dark {
+  --tps-ink:          #f1f5f9;
+  --tps-ink-2:        #cbd5e1;
+  --tps-muted:        #94a3b8;
+  --tps-hint:         #64748b;
+  --tps-line:         #262626;
+  --tps-bg:           #141414;
+  --tps-bg-soft:      #1a1a1a;
+  --tps-bg-section:   #0a0a0a;
+  --tps-primary-soft: #1a1a1a;
+}
+/* A container theme paints its own backdrop; the per-section variant paints
+   its surface (it's a section wrapper, not just a token scope). */
+[data-tps-theme="dark"] {
+  background: var(--tps-bg-section);
+  color: var(--tps-ink);
+}
+.tps-section-dark {
+  background: #0a0a0a;
+  color: var(--tps-ink);
+}
+/* Eyebrows are primary by default — low contrast on dark, so flip to accent. */
+[data-tps-theme="dark"] .tps-eyebrow,
+.tps-section-dark .tps-eyebrow {
+  color: var(--tps-accent);
+}
+/* AntD form controls on a dark surface (form blocks). */
+[data-tps-theme="dark"] .ant-input,
+[data-tps-theme="dark"] .ant-input-number,
+[data-tps-theme="dark"] .ant-input-affix-wrapper,
+[data-tps-theme="dark"] .ant-picker,
+[data-tps-theme="dark"] .ant-select-selector,
+.tps-section-dark .ant-input,
+.tps-section-dark .ant-input-number,
+.tps-section-dark .ant-input-affix-wrapper,
+.tps-section-dark .ant-picker,
+.tps-section-dark .ant-select-selector {
+  background: #1a1a1a !important;
+  border-color: #2e2e2e !important;
+  color: #f1f5f9 !important;
+}
+[data-tps-theme="dark"] .ant-input::placeholder,
+[data-tps-theme="dark"] .ant-select-selection-placeholder,
+[data-tps-theme="dark"] .ant-picker-input > input::placeholder,
+.tps-section-dark .ant-input::placeholder,
+.tps-section-dark .ant-select-selection-placeholder,
+.tps-section-dark .ant-picker-input > input::placeholder {
+  color: #64748b !important;
+}
+[data-tps-theme="dark"] .ant-form-item-label > label,
+[data-tps-theme="dark"] .ant-checkbox-wrapper,
+[data-tps-theme="dark"] .ant-radio-wrapper,
+.tps-section-dark .ant-form-item-label > label,
+.tps-section-dark .ant-checkbox-wrapper,
+.tps-section-dark .ant-radio-wrapper {
+  color: #cbd5e1 !important;
+}
+
+.tps-eyebrow {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--tps-primary);
+  margin-bottom: 16px;
+}
+
+.tps-h1 {
+  font-size: clamp(36px, 5.5vw, 60px);
+  letter-spacing: -0.02em;
+  color: var(--tps-ink);
+  margin: 0 0 16px;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.tps-h2 {
+  font-size: clamp(28px, 4vw, 42px);
+  letter-spacing: -0.02em;
+  color: var(--tps-ink);
+  margin: 0 0 16px;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.tps-h3 {
+  font-size: clamp(22px, 2.5vw, 28px);
+  letter-spacing: -0.02em;
+  color: var(--tps-ink);
+  margin: 0 0 16px;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.tps-lede {
+  font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.65;
+  color: var(--tps-muted);
+  max-width: 720px;
+  margin: 0 0 28px;
+}
+
+/* Hero — soft radial glow in primary + accent colours, dot-grid overlay */
+.tps-hero {
+  position: relative;
+  padding: clamp(72px, 10vw, 128px) 24px clamp(64px, 8vw, 112px);
+  background:
+    radial-gradient(1100px 480px at 8% -10%, rgba(11, 96, 216, 0.06), transparent 60%),
+    radial-gradient(900px 420px at 100% 0%, rgba(245, 158, 11, 0.04), transparent 60%),
+    var(--tps-bg);
+  overflow: hidden;
+}
+
+.tps-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(15, 23, 42, 0.04) 1px,
+    transparent 0
+  );
+  background-size: 24px 24px;
+  mask-image: radial-gradient(ellipse 70% 50% at 50% 30%, #000 30%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 30%, #000 30%, transparent 70%);
+  pointer-events: none;
+}
+
+.tps-hero-inner {
+  position: relative;
+  max-width: var(--tps-max);
+  margin: 0 auto;
+}
+
+/* <em> inside a hero heading renders as a gradient text fill */
+.tps-hero h1 em {
+  font-style: normal;
+  background: linear-gradient(
+    120deg,
+    var(--tps-primary) 0%,
+    var(--tps-primary-light) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.tps-service-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--tps-primary-soft);
+  color: var(--tps-primary);
+  font-size: 22px;
+  margin-bottom: 18px;
+}
+
+.tps-service-hero {
+  background: linear-gradient(180deg, var(--tps-bg) 0%, var(--tps-bg-soft) 100%);
+  padding: clamp(60px, 8vw, 96px) 24px clamp(40px, 5vw, 64px);
+  border-bottom: 1px solid var(--tps-line);
+}
+
+.tps-form-card {
+  background: var(--tps-bg);
+  border: 1px solid var(--tps-line);
+  border-radius: var(--tps-radius);
+  padding: clamp(24px, 4vw, 40px);
+}
+
+.tps-overlay-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--tps-radius);
+}
+
+.tps-card-hover {
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.tps-card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
 }
 
 /* --- Picker block-card (drawerItem override) ---------------------------- */
@@ -45,7 +299,7 @@
   padding: 0;
   border: 1px solid var(--tps-line);
   border-radius: var(--tps-radius);
-  background: #fff;
+  background: var(--tps-bg);
   overflow: hidden;
   transition: border-color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
 }

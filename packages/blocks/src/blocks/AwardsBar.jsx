@@ -20,7 +20,7 @@ export const AwardsBar = {
     },
     background: {
       type: 'radio', label: 'Background',
-      options: [{ label: 'White', value: 'white' }, { label: 'Soft', value: 'soft' }],
+      options: [{ label: 'White', value: 'white' }, { label: 'Soft', value: 'soft' }, { label: 'Dark', value: 'dark' }],
     },
   },
   defaultProps: {
@@ -33,7 +33,7 @@ export const AwardsBar = {
     background: 'white',
   },
   render: ({ heading, items, background }) => (
-    <section className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`} style={{ paddingTop: 56, paddingBottom: 56 }}>
+    <section className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`} style={{ paddingTop: 56, paddingBottom: 56 }}>
       <div className="tps-container" style={{ textAlign: 'center' }}>
         {heading && <h3 style={{ fontSize: 13, fontWeight: 700, letterSpacing: 1.5, color: 'var(--tps-muted)', textTransform: 'uppercase', marginBottom: 32 }}>{heading}</h3>}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(220px, 100%), 1fr))', gap: 24 }}>

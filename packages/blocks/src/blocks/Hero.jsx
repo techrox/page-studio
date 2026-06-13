@@ -38,6 +38,14 @@ export const Hero = {
         { label: 'Simple (plain section)', value: 'simple' },
       ],
     },
+    background: {
+      type: 'radio',
+      label: 'Background',
+      options: [
+        { label: 'Light', value: 'light' },
+        { label: 'Dark', value: 'dark' },
+      ],
+    },
   },
   defaultProps: {
     eyebrow: 'Welcome',
@@ -51,6 +59,7 @@ export const Hero = {
     secondary_cta_href: '/about',
     align: 'left',
     variant: 'landing',
+    background: 'light',
   },
   render: ({
     eyebrow,
@@ -62,9 +71,12 @@ export const Hero = {
     secondary_cta_href,
     align,
     variant,
+    background,
   }) => {
     const isLanding = variant === 'landing';
-    const sectionClass = isLanding ? 'tps-hero' : 'tps-section';
+    const sectionClass = `${isLanding ? 'tps-hero' : 'tps-section'}${
+      background === 'dark' ? ' tps-section-dark' : ''
+    }`;
     const innerClass = isLanding ? 'tps-hero-inner' : 'tps-container';
     return (
       <section

@@ -24,6 +24,7 @@ export const SectionHeader = {
       options: [
         { label: 'White', value: 'white' },
         { label: 'Soft', value: 'soft' },
+        { label: 'Dark', value: 'dark' },
       ],
     },
     spacing: {
@@ -49,7 +50,7 @@ export const SectionHeader = {
       spacing === 'compact' ? 32 : spacing === 'generous' ? 96 : 56;
     return (
       <section
-        className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`}
+        className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`}
         style={{ paddingTop: pad, paddingBottom: pad }}
       >
         <div
