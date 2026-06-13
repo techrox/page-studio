@@ -19,6 +19,7 @@ export {
 export { PageStudioProvider, useStudio, StudioLink } from './context.jsx';
 
 export { withReveal } from './withReveal.jsx';
+export { withTheme, themeField, THEME_OPTIONS } from './withTheme.jsx';
 
 export {
   default as BlockThumbnail,
@@ -49,6 +50,18 @@ export { Timeline } from './blocks/Timeline.jsx';
 export { VideoEmbed } from './blocks/VideoEmbed.jsx';
 export { ContactSection } from './blocks/ContactSection.jsx';
 export { NewsletterSignup } from './blocks/NewsletterSignup.jsx';
+export { FormContact } from './blocks/FormContact.jsx';
+export { FormLeadCapture } from './blocks/FormLeadCapture.jsx';
+export { FormNewsletter } from './blocks/FormNewsletter.jsx';
+export { FormFeedback } from './blocks/FormFeedback.jsx';
+export { FormSurvey } from './blocks/FormSurvey.jsx';
+export { FormBooking } from './blocks/FormBooking.jsx';
+export { FormRegistration } from './blocks/FormRegistration.jsx';
+export { FormQuoteRequest } from './blocks/FormQuoteRequest.jsx';
+export { FormApplication } from './blocks/FormApplication.jsx';
+export { FormSupport } from './blocks/FormSupport.jsx';
+export { FormWaitlist } from './blocks/FormWaitlist.jsx';
+export { FormAddress } from './blocks/FormAddress.jsx';
 export { ArticleFeatured } from './blocks/ArticleFeatured.jsx';
 export { ArticleGrid } from './blocks/ArticleGrid.jsx';
 export { ArticleList } from './blocks/ArticleList.jsx';
