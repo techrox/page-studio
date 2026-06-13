@@ -640,7 +640,7 @@ h1, h2, h3, h4 {
   border: 1px dashed var(--tps-line);
   margin: 24px;
   border-radius: var(--tps-radius);
-  background: #fff;
+  background: var(--tps-bg);
   overflow: hidden;
 }
 .block-showcase-meta {

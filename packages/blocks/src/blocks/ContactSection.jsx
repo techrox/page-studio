@@ -179,7 +179,7 @@ function ContactSectionRender({
                         width: 72,
                         height: 72,
                         borderRadius: '50%',
-                        background: 'rgba(15, 118, 110, 0.1)',
+                        background: 'var(--tps-primary-soft, #dbeafe)',
                         color: 'var(--tps-primary)',
                         display: 'inline-flex',
                         alignItems: 'center',
