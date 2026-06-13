@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="56" viewBox="0 0 260 56" role="img" aria-label="Page Studio">
+  <title>Page Studio</title>
+  <g>
+    <rect x="0" y="2" width="50" height="14" rx="3" fill="#0b60d8"/>
+    <rect x="0" y="20" width="22" height="22" rx="3" fill="#bcd6f6"/>
+    <rect x="28" y="20" width="22" height="22" rx="3" fill="#bcd6f6"/>
+  </g>
+  <text x="64" y="38" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" font-size="32" font-weight="700" fill="#f1f5f9" letter-spacing="-0.8">Page Studio</text>
+</svg>
