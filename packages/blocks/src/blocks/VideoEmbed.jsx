@@ -37,6 +37,7 @@ export const VideoEmbed = {
       options: [
         { label: 'White', value: 'white' },
         { label: 'Soft', value: 'soft' },
+        { label: 'Dark', value: 'dark' },
       ],
     },
   },
@@ -56,7 +57,7 @@ export const VideoEmbed = {
         : null;
     return (
       <section
-        className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`}
+        className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`}
         style={{ paddingTop: 48, paddingBottom: 48 }}
       >
         <div className="tps-container" style={{ maxWidth: max_width }}>

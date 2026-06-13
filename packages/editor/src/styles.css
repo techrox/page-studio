@@ -39,7 +39,10 @@
   gap: 16px;
   min-height: 48px;
   padding: 6px 16px;
-  background: var(--tps-ink, #0f172a);
+  /* The builder bar stays a dark surface in every theme. It reads a chrome
+   * token (not --tps-ink) so it doesn't invert when the block ink flips for
+   * dark mode — the dark scope below just retargets --psd-bar-bg. */
+  background: var(--psd-bar-bg, var(--tps-ink, #0f172a));
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   font-size: 13px;
 }
@@ -91,7 +94,7 @@
   display: flex;
   gap: 4px;
   padding: 12px 12px 0;
-  background: #fff;
+  background: var(--tps-bg, #fff);
   border-bottom: 1px solid var(--tps-line, #e2e8f0);
 }
 .psd-sidebar-tab {
@@ -132,7 +135,7 @@
   top: 41px; /* below the .psd-sidebar-tabs (40px content + 1px border) */
   z-index: 4;
   padding: 10px 12px;
-  background: #fff;
+  background: var(--tps-bg, #fff);
   border-bottom: 1px solid var(--tps-line, #e2e8f0);
 }
 [class*='_Sidebar--left'][data-psd-active-tab='outline'] > .psd-sidebar-search {
@@ -153,7 +156,7 @@
 }
 .psd-sidebar-search__input::placeholder { color: var(--tps-hint, #94a3b8); }
 .psd-sidebar-search__input:focus {
-  background: #fff;
+  background: var(--tps-bg, #fff);
   border-color: var(--tps-primary, #0b60d8);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--tps-primary, #0b60d8) 15%, transparent);
 }
@@ -175,6 +178,71 @@
 [data-psd-cell-hidden='true'] { display: none !important; }
 .tps-block-card[data-psd-hidden='true'] { display: none !important; }
 [class*='_ComponentList_'][data-psd-empty='true'] { display: none !important; }
+
+/* -------------------------------------------------------------------------
+   Themes — editor chrome
+   -------------------------------------------------------------------------
+   PageStudio stamps `data-tps-theme="<name>"` on `.psd-builder-page` (the
+   element that wraps the whole editor). A theme is the same idea here as in
+   the block library: a re-scope of tokens, repainting descendants through
+   the CSS cascade — no per-component code.
+
+   Two token families are retargeted under the dark scope:
+     1. --tps-*   — our own chrome (top bar, sidebar tabs, search, badges).
+     2. --puck-*  — Puck's grey/azure ramp, defined on :root by puck.css.
+        Because `.psd-builder-page` sits between :root and every Puck panel,
+        redefining the ramp here re-themes Puck's left side nav, blocks
+        drawer, layers, the right field panel and ALL its inputs at once.
+
+   The canvas iframe is a separate document and never inherits this
+   attribute — it is themed through branding.cssVars (see PageStudio.jsx).
+
+   To add a theme (e.g. "sepia"): copy this block, rename the selector, and
+   change the values. Nothing in the editor components needs to know. */
+[data-tps-theme="dark"].psd-builder-page,
+[data-tps-theme="dark"] .psd-builder-page {
+  /* Chrome neutrals — mirrors @techrox/page-studio-blocks dark tokens so the
+     chrome self-themes from the attribute alone, even when a host passes no
+     branding.cssVars. */
+  --tps-ink:          #f1f5f9;
+  --tps-ink-2:        #cbd5e1;
+  --tps-muted:        #94a3b8;
+  --tps-hint:         #64748b;
+  --tps-line:         #262626;
+  --tps-bg:           #141414;
+  --tps-bg-soft:      #1a1a1a;
+  --tps-bg-section:   #0a0a0a;
+
+  /* The builder bar stays dark regardless of theme (see .psd-builder-bar). */
+  --psd-bar-bg:       #0a0a0a;
+
+  /* Puck ramp — backgrounds (light end) flip to dark surfaces, the text end
+     flips to light, mid-greys stay readable on dark. */
+  --puck-color-white:    #141414;
+  --puck-color-grey-12:  #1a1a1a;
+  --puck-color-grey-11:  #1f1f1f;
+  --puck-color-grey-10:  #262626;
+  --puck-color-grey-09:  #333333;
+  --puck-color-grey-08:  #525252;
+  --puck-color-grey-07:  #6b6b6b;
+  --puck-color-grey-06:  #8a8a8a;
+  --puck-color-grey-05:  #a3a3a3;
+  --puck-color-grey-04:  #b5b5b5;
+  --puck-color-grey-03:  #cfcfcf;
+  --puck-color-grey-02:  #e2e2e2;
+  --puck-color-grey-01:  #f1f1f1;
+  --puck-color-black:    #f8fafc;
+
+  /* Azure light tints are used as selected-row backgrounds — keep them dark
+     so a selection doesn't flash near-white. The saturated end (01–08, used
+     for primary buttons / active accents) reads fine on dark, left as-is. */
+  --puck-color-azure-12: #0f1b2d;
+  --puck-color-azure-11: #11203a;
+  --puck-color-azure-10: #16294a;
+  --puck-color-azure-09: #1b3257;
+
+  background: var(--tps-bg-soft, #1a1a1a);
+}
 
 /* Category count badges */
 .psd-cat-count {

@@ -37,7 +37,7 @@ export const PricingTable = {
     background: {
       type: 'radio',
       label: 'Background',
-      options: [{ label: 'White', value: 'white' }, { label: 'Soft', value: 'soft' }],
+      options: [{ label: 'White', value: 'white' }, { label: 'Soft', value: 'soft' }, { label: 'Dark', value: 'dark' }],
     },
   },
   defaultProps: {
@@ -51,7 +51,7 @@ export const PricingTable = {
     background: 'soft',
   },
   render: ({ eyebrow, heading, tiers, background }) => (
-    <section className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`} style={{ paddingTop: 64, paddingBottom: 64 }}>
+    <section className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`} style={{ paddingTop: 64, paddingBottom: 64 }}>
       <div className="tps-container">
         {(eyebrow || heading) && (
           <div style={{ textAlign: 'center', marginBottom: 40 }}>
@@ -65,7 +65,7 @@ export const PricingTable = {
             return (
               <div key={i} style={{
                 position: 'relative', padding: 28,
-                background: t.highlighted ? 'var(--tps-primary)' : '#fff',
+                background: t.highlighted ? 'var(--tps-primary)' : 'var(--tps-bg)',
                 color: t.highlighted ? '#fff' : 'var(--tps-ink)',
                 border: t.highlighted ? 'none' : '1px solid var(--tps-line)',
                 borderRadius: 'var(--tps-radius)',

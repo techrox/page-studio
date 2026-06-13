@@ -258,7 +258,10 @@ function ContactSectionRender({
                         <Select
                           size="large"
                           placeholder="Select the stage that best describes you"
-                          options={stagesList.map((s) => ({ value: s, label: s }))}
+                          options={stagesList.map((s) => {
+                          const v = typeof s === 'string' ? s : s?.text || String(s);
+                          return { value: v, label: v };
+                        })}
                         />
                       </Form.Item>
                     )}

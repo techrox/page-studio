@@ -34,13 +34,8 @@ export const CTABanner = {
     const dark = background === 'dark';
     return (
       <section
-        className={`tps-section ${!dark ? 'tps-section-soft' : ''}`}
-        style={{
-          paddingTop: 80,
-          paddingBottom: 80,
-          background: dark ? '#0F172A' : undefined,
-          color: dark ? '#fff' : undefined,
-        }}
+        className={`tps-section ${!dark ? 'tps-section-soft' : 'tps-section-dark'}`}
+        style={{ paddingTop: 80, paddingBottom: 80 }}
       >
         <div className="tps-container" style={{ textAlign: 'center', maxWidth: 720 }}>
           {tagline && (
@@ -49,7 +44,7 @@ export const CTABanner = {
                 fontSize: 12,
                 fontWeight: 700,
                 letterSpacing: 2,
-                color: dark ? '#F59E0B' : 'var(--tps-accent-dark)',
+                color: dark ? 'var(--tps-accent)' : 'var(--tps-accent-dark)',
                 marginBottom: 12,
               }}
             >
@@ -59,15 +54,11 @@ export const CTABanner = {
           {heading_html && (
             <h2
               className="tps-h2"
-              style={{ color: dark ? '#fff' : undefined }}
               dangerouslySetInnerHTML={{ __html: heading_html }}
             />
           )}
           {body && (
-            <p
-              className="tps-lede"
-              style={{ margin: '16px auto 32px', color: dark ? 'rgba(255,255,255,0.85)' : undefined }}
-            >
+            <p className="tps-lede" style={{ margin: '16px auto 32px' }}>
               {body}
             </p>
           )}

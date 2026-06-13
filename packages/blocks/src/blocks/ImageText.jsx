@@ -30,6 +30,7 @@ export const ImageText = {
       options: [
         { label: 'White', value: 'white' },
         { label: 'Soft', value: 'soft' },
+        { label: 'Dark', value: 'dark' },
       ],
     },
   },
@@ -72,7 +73,7 @@ export const ImageText = {
         style={{
           width: '100%',
           aspectRatio: '4 / 3',
-          background: '#E2E8F0',
+          background: 'var(--tps-line)',
           borderRadius: 'var(--tps-radius)',
           display: 'flex',
           alignItems: 'center',
@@ -100,7 +101,7 @@ export const ImageText = {
     );
     return (
       <section
-        className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`}
+        className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`}
         style={{ paddingTop: 56, paddingBottom: 56 }}
       >
         <div className="tps-container">

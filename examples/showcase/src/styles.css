@@ -109,9 +109,9 @@ h1, h2, h3, h4 {
   position: relative;
   padding: clamp(72px, 10vw, 128px) 24px clamp(64px, 8vw, 112px);
   background:
-    radial-gradient(1100px 480px at 8% -10%, rgba(15, 118, 110, 0.07), transparent 60%),
-    radial-gradient(900px 420px at 100% 0%, rgba(245, 158, 11, 0.05), transparent 60%),
-    #ffffff;
+    radial-gradient(1100px 480px at 8% -10%, rgba(11, 96, 216, 0.06), transparent 60%),
+    radial-gradient(900px 420px at 100% 0%, rgba(245, 158, 11, 0.04), transparent 60%),
+    var(--tps-bg);
   overflow: hidden;
 }
 .tps-hero::before {
@@ -145,7 +145,7 @@ h1, h2, h3, h4 {
   width: 48px;
   height: 48px;
   border-radius: 12px;
-  background: rgba(15, 118, 110, 0.1);
+  background: var(--tps-primary-soft);
   color: var(--tps-primary);
   font-size: 22px;
   margin-bottom: 18px;
@@ -153,12 +153,12 @@ h1, h2, h3, h4 {
 
 /* ContactSection ---------------------------------------------------------- */
 .tps-service-hero {
-  background: linear-gradient(180deg, #fff 0%, var(--tps-bg-section) 100%);
+  background: linear-gradient(180deg, var(--tps-bg) 0%, var(--tps-bg-soft) 100%);
   padding: clamp(60px, 8vw, 96px) 24px clamp(40px, 5vw, 64px);
   border-bottom: 1px solid var(--tps-line);
 }
 .tps-form-card {
-  background: #fff;
+  background: var(--tps-bg);
   border: 1px solid var(--tps-line);
   border-radius: var(--tps-radius);
   padding: clamp(24px, 4vw, 40px);
@@ -492,7 +492,7 @@ h1, h2, h3, h4 {
   position: relative;
   border: 1px solid var(--tps-line);
   border-radius: var(--tps-radius);
-  background: #fff;
+  background: var(--tps-bg);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -517,7 +517,7 @@ h1, h2, h3, h4 {
   overflow: hidden;
   position: relative;
   border-bottom: 1px solid var(--tps-line);
-  background: #fff;
+  background: var(--tps-bg);
 }
 .gallery-card-preview-inner {
   position: absolute;
@@ -789,6 +789,80 @@ h1, h2, h3, h4 {
   --tps-accent: #EAB308;
   --tps-accent-dark: #CA8A04;
 }
+/* Pulsar — green palette. This rule only sets the brand *colour* tokens; the
+   near-black surface comes from the theme (data-tps-theme="dark"), which the
+   App flips on because Pulsar declares `theme: 'dark'`. Colour and theme are
+   independent — any brand can be toggled light or dark. */
+.showcase[data-brand="pulsar"] {
+  --tps-primary: #22C55E;
+  --tps-primary-dark: #16A34A;
+  --tps-primary-light: #4ADE80;
+  --tps-primary-soft: #DCFCE7;
+  --tps-accent: #4ADE80;
+  --tps-accent-dark: #16A34A;
+}
+
+/* -------------------------------------------------------------------------
+   Dark theme — chrome
+   -------------------------------------------------------------------------
+   The blocks/renderer get their dark palette from the [data-tps-theme="dark"]
+   contract in the blocks package (token re-scope). Here we only darken the
+   showcase's own chrome — nav rail, topbar, content backdrop — so the whole
+   tour, not just the canvas, reads as dark. Brand colour tokens are untouched
+   (set by the data-brand rule above), so each vendor keeps its hue.
+   ------------------------------------------------------------------------- */
+.showcase[data-tps-theme="dark"] {
+  --tps-line-soft: #1b1b1b;
+  /* --tps-primary-soft is a SURFACE tint, not a brand hue — the per-brand
+     rules above set it to a light wash (e.g. #DBEAFE) at the same specificity
+     as this selector, so without restating it here the soft chips/fills would
+     stay light on a dark page. Re-claim it for the theme (matches the package
+     [data-tps-theme="dark"] value); primary/accent hues stay brand-owned. */
+  --tps-primary-soft: #1a1a1a;
+  background: var(--tps-bg-section);
+  color: var(--tps-ink);
+}
+.showcase[data-tps-theme="dark"] .showcase-nav {
+  background: #0f0f0f;
+  border-right-color: #1f1f1f;
+}
+.showcase[data-tps-theme="dark"] .showcase-topbar {
+  background: rgba(10, 10, 10, 0.92);
+  border-bottom-color: #1f1f1f;
+}
+.showcase[data-tps-theme="dark"] .showcase-content {
+  background: var(--tps-bg-section);
+}
+.showcase[data-tps-theme="dark"] .showcase-nav a.is-active {
+  background: rgba(255, 255, 255, 0.07);
+}
+.showcase[data-tps-theme="dark"] .showcase-nav-toggle {
+  border-color: #2a2a2a;
+}
+
+/* Theme toggle button (topbar). Sits next to the brand switcher. */
+.showcase-theme-toggle {
+  margin-left: auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid var(--tps-line);
+  color: var(--tps-muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  transition: border-color 120ms ease, color 120ms ease;
+}
+.showcase-theme-toggle:hover {
+  border-color: var(--tps-primary);
+  color: var(--tps-primary);
+}
+/* With the toggle owning the right-side margin, the switcher packs in beside it. */
+.showcase-topbar > .showcase-theme-toggle + .brand-switcher { margin-left: 8px; }
 
 /* =========================================================================
    Landing page — index of the showcase
