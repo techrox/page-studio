@@ -84,38 +84,69 @@ function buildStableOverrides(hostOverrides) {
   return { ...hostOverrides, header: StableHeaderOverride, headerActions: NO_OP_ACTIONS };
 }
 
-// Apply brand colors via BOTH an inline style on <html> (for the outer
-// editor chrome) and a <style> tag in <head> (so Puck's iframe canvas,
-// which clones head styles into its document, picks them up too). Pure
-// inline styles on document.documentElement do not propagate to the
-// iframe — only <style>/<link> elements do.
+// Apply brand colors + theme tokens by injecting a single <style id="tps-brand-vars">
+// into <head>. Its `:root { --tps-*: … }` rule themes BOTH surfaces: the outer
+// editor chrome reads it directly, and Puck clones <head> <style>/<link> nodes
+// into its canvas iframe (keeping them in sync via a MutationObserver), so the
+// blocks pick up the same tokens.
 //
-// We write to `--tps-*` because that's what the block library reads. The
-// host page may also paint these vars on a wrapping element (e.g. a
-// brand-switcher's `[data-brand]` div), but that element doesn't exist
-// inside Puck's iframe — so without this :root injection the canvas
-// falls back to the package's default values and ignores the brand.
+// Do NOT also write these tokens as inline styles on document.documentElement.
+// It looks harmless — inline styles on the outer <html> don't "leak" into the
+// iframe through the cascade — but Puck SNAPSHOTS the outer <html>'s style
+// attribute onto the iframe's <html> ONCE at canvas mount and never re-syncs it.
+// On a later theme flip the head <style> updates (and re-clones), but the iframe's
+// inline <html> tokens stay frozen at their mount-time values. Inline styles beat
+// every stylesheet rule, so those stale light tokens override the synced dark
+// :root rule — the chrome goes dark while the canvas stays light. Keeping tokens
+// in the <style> tag only (no inline) lets the synced :root rule win cleanly.
+//
+// We write to `--tps-*` because that's what the block library reads. The host
+// page may also paint these vars on a wrapping element (e.g. a brand-switcher's
+// `[data-brand]` div), but that element doesn't exist inside Puck's iframe — so
+// without this :root injection the canvas falls back to the package defaults.
 function setCssVars(branding) {
   if (typeof document === 'undefined' || !branding) return;
-  const root = document.documentElement.style;
-  if (branding.primaryColor) root.setProperty('--tps-primary', branding.primaryColor);
-  if (branding.accentColor) root.setProperty('--tps-accent', branding.accentColor);
-  if (branding.inkColor) root.setProperty('--tps-ink', branding.inkColor);
 
   const lines = [];
   if (branding.primaryColor) lines.push(`--tps-primary: ${branding.primaryColor};`);
   if (branding.accentColor) lines.push(`--tps-accent: ${branding.accentColor};`);
   if (branding.inkColor) lines.push(`--tps-ink: ${branding.inkColor};`);
+
+  // Arbitrary theme tokens — a flat { '--tps-bg': '#141414', … } map. This is
+  // how a host flips the whole canvas to a non-default theme (dark, sepia, …):
+  // the iframe only inherits <head> :root rules, not a `data-tps-theme`
+  // attribute on the host wrapper, so we write the resolved token values
+  // straight into :root. The host picks the set; the package owns the values.
+  const cssVars = branding.cssVars || {};
+  for (const [k, v] of Object.entries(cssVars)) {
+    if (v == null) continue;
+    lines.push(`${k}: ${v};`);
+  }
   if (!lines.length) return;
 
-  let tag = document.getElementById('tps-brand-vars');
-  if (!tag) {
-    tag = document.createElement('style');
-    tag.id = 'tps-brand-vars';
-    document.head.appendChild(tag);
-  }
-  const next = `:root { ${lines.join(' ')} }`;
-  if (tag.textContent !== next) tag.textContent = next;
+  // Paint the canvas backdrop from the theme's section token when supplied, so
+  // plain (transparent) sections sit on the themed surface inside the iframe.
+  const bg = cssVars['--tps-bg-section'];
+  const canvas = bg ? ` html { background: ${bg}; }` : '';
+  const next = `:root { ${lines.join(' ')} }${canvas}`;
+
+  const existing = document.getElementById('tps-brand-vars');
+  if (existing && existing.textContent === next) return;
+
+  // Replace the node — do NOT just edit textContent. Puck clones <head> styles
+  // into the canvas iframe and keeps them in sync with a MutationObserver that
+  // only reacts to childList changes (nodes added/removed), not characterData.
+  // Editing an existing tag's text therefore never reaches the iframe, so the
+  // canvas keeps the theme it mounted with while the chrome (which reads
+  // data-tps-theme directly, outside the iframe) flips — the exact split where
+  // sidebars go dark but the blocks stay light. Removing + re-appending a fresh
+  // node fires a childList mutation, so Puck re-clones the new tokens and the
+  // canvas flips with the chrome.
+  if (existing) existing.remove();
+  const tag = document.createElement('style');
+  tag.id = 'tps-brand-vars';
+  tag.textContent = next;
+  document.head.appendChild(tag);
 }
 
 export default function PageStudio({
@@ -126,6 +157,12 @@ export default function PageStudio({
   livePath,
   homeHref,
   branding,
+  // Active editor theme — 'light' | 'dark' | any future token-scope name.
+  // Stamped as data-tps-theme on the editor root so the whole chrome (top
+  // bar, sidebars, field panel, inputs) re-paints through the CSS cascade,
+  // alongside the canvas (which is themed via branding.cssVars). Falls back
+  // to branding.theme so a host that only passes branding still themes.
+  theme,
   studio,
   adapter = {},
   config,
@@ -181,6 +218,12 @@ export default function PageStudio({
   // <style> content actually differs) so repeated calls during strict-mode
   // double-render are a no-op.
   setCssVars(branding);
+
+  // Single external theme switch for the editor chrome. The canvas gets its
+  // theme from branding.cssVars (the iframe can't see this attribute); the
+  // chrome — top bar, both sidebars, the field panel and its inputs — gets
+  // it from data-tps-theme on the root below. Default 'light'.
+  const resolvedTheme = theme || branding?.theme || 'light';
 
   // Initial load when initialData wasn't server-supplied. Hosts that SSR
   // their CMS read should always pass initialData and skip this code path.
@@ -263,7 +306,10 @@ export default function PageStudio({
 
   if (loading || !data) {
     return (
-      <div className="psd-builder-page psd-builder-page--loading">
+      <div
+        className="psd-builder-page psd-builder-page--loading"
+        data-tps-theme={resolvedTheme}
+      >
         <div className="psd-builder-loading">Loading editor…</div>
       </div>
     );
@@ -272,7 +318,7 @@ export default function PageStudio({
   return (
     <PageStudioProvider value={studio}>
       <HeaderPropsContext.Provider value={headerLive}>
-        <div className="psd-builder-page">
+        <div className="psd-builder-page" data-tps-theme={resolvedTheme}>
           <BuilderEnhancements
             blocksLabel={sidebarLabels?.blocks}
             layersLabel={sidebarLabels?.layers}

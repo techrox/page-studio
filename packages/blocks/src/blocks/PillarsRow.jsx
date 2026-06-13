@@ -61,6 +61,7 @@ export const PillarsRow = {
       options: [
         { label: 'White', value: 'white' },
         { label: 'Soft', value: 'soft' },
+        { label: 'Dark', value: 'dark' },
       ],
     },
   },
@@ -87,7 +88,7 @@ export const PillarsRow = {
   },
   render: ({ items, columns, background }) => (
     <section
-      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`}
+      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`}
       style={{ paddingTop: 56, paddingBottom: 56 }}
     >
       <div className="tps-container">
@@ -106,7 +107,7 @@ export const PillarsRow = {
               <div
                 key={i}
                 style={{
-                  background: '#fff',
+                  background: 'var(--tps-bg)',
                   border: '1px solid var(--tps-line)',
                   borderRadius: 'var(--tps-radius)',
                   padding: 32,

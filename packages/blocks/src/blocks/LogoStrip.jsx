@@ -23,6 +23,7 @@ export const LogoStrip = {
       options: [
         { label: 'White', value: 'white' },
         { label: 'Soft', value: 'soft' },
+        { label: 'Dark', value: 'dark' },
       ],
     },
   },
@@ -39,7 +40,7 @@ export const LogoStrip = {
   },
   render: ({ heading, items, background }) => (
     <section
-      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`}
+      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`}
       style={{ paddingTop: 40, paddingBottom: 40 }}
     >
       <div className="tps-container" style={{ textAlign: 'center' }}>

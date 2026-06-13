@@ -13,7 +13,7 @@ export const InlineCTA = {
     button_href: { type: 'text', label: 'Button URL' },
     background: {
       type: 'radio', label: 'Background',
-      options: [{ label: 'Soft', value: 'soft' }, { label: 'Primary', value: 'primary' }],
+      options: [{ label: 'Soft', value: 'soft' }, { label: 'Primary', value: 'primary' }, { label: 'Dark', value: 'dark' }],
     },
   },
   defaultProps: {
@@ -26,7 +26,7 @@ export const InlineCTA = {
   render: ({ headline, body, button_label, button_href, background }) => {
     const primary = background === 'primary';
     return (
-      <section className="tps-section" style={{ paddingTop: 24, paddingBottom: 24 }}>
+      <section className={`tps-section${background === 'dark' ? ' tps-section-dark' : ''}`} style={{ paddingTop: 24, paddingBottom: 24 }}>
         <div className="tps-container">
           <div style={{
             display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between',
