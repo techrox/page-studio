@@ -56,3 +56,19 @@ You could write the same five lines yourself; this package exists so server-only
 ## License
 
 MIT.
+
+## Credits
+
+**Page Studio** is built and maintained by [Techlathon](https://www.techlathon.com/).
+
+Made with ♥ in India.
+
+### Work with us
+
+Have a project in mind? We'd love to hear from you — reach out at **[info@techlathon.com](mailto:info@techlathon.com)**.
+
+---
+
+<p align="center">
+  Built with <a href="https://techrox.github.io/page-studio/editor">Page Studio</a> · © Techlathon
+</p>
