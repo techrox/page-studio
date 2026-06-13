@@ -41,7 +41,7 @@ export default function Layout({ brands, brandId, onBrandChange, theme = 'light'
       <aside className="showcase-nav" aria-label="Primary">
         <Link to="/" className="showcase-brand">
           <img
-            src={`${import.meta.env.BASE_URL}brand/page-studio-logo.svg`}
+            src={`${import.meta.env.BASE_URL}brand/page-studio-logo${theme === 'dark' ? '-reverse' : ''}.svg`}
             alt="Page Studio"
             width={204}
             height={44}
@@ -94,7 +94,7 @@ export default function Layout({ brands, brandId, onBrandChange, theme = 'light'
           </button>
           <Link to="/" className="showcase-topbar-brand">
             <img
-              src={`${import.meta.env.BASE_URL}brand/page-studio-logo.svg`}
+              src={`${import.meta.env.BASE_URL}brand/page-studio-logo${theme === 'dark' ? '-reverse' : ''}.svg`}
               alt="Page Studio"
               width={167}
               height={36}
