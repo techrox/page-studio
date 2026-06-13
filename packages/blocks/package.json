@@ -1,6 +1,6 @@
 {
   "name": "@techrox/page-studio-blocks",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "50 production-ready content blocks (Hero, Pricing, FAQ, Contact, …) plus the Puck config builder for @techrox/page-studio. SSR-safe, brand-themable via CSS variables, host-extensible.",
   "license": "MIT",
   "author": "techrox",

@@ -42,7 +42,7 @@ export const StepsVertical = {
         <ol style={{ listStyle: 'none', margin: 0, padding: 0 }}>
           {(items || []).map((s, i) => (
             <li key={i} className="tps-row-stack" style={{ display: 'grid', gridTemplateColumns: '64px 1fr', gap: 24, paddingBottom: 32, position: 'relative' }}>
-              <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'rgba(15, 118, 110, 0.1)', color: 'var(--tps-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 18 }}>
+              <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'var(--tps-primary-soft, #dbeafe)', color: 'var(--tps-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 18 }}>
                 {String(i + 1).padStart(2, '0')}
               </div>
               <div>
