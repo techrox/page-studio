@@ -52,12 +52,25 @@ import { AccordionBlock } from './blocks/AccordionBlock';
 import { SocialLinks } from './blocks/SocialLinks';
 import { ContactInfo } from './blocks/ContactInfo';
 import { MapEmbed } from './blocks/MapEmbed';
+import { FormContact } from './blocks/FormContact';
+import { FormLeadCapture } from './blocks/FormLeadCapture';
+import { FormNewsletter } from './blocks/FormNewsletter';
+import { FormFeedback } from './blocks/FormFeedback';
+import { FormSurvey } from './blocks/FormSurvey';
+import { FormBooking } from './blocks/FormBooking';
+import { FormRegistration } from './blocks/FormRegistration';
+import { FormQuoteRequest } from './blocks/FormQuoteRequest';
+import { FormApplication } from './blocks/FormApplication';
+import { FormSupport } from './blocks/FormSupport';
+import { FormWaitlist } from './blocks/FormWaitlist';
+import { FormAddress } from './blocks/FormAddress';
 import { EventsList } from './blocks/EventsList';
 import { Divider } from './blocks/Divider';
 import { ThreeColumn } from './blocks/ThreeColumn';
 import { PressMentions } from './blocks/PressMentions';
 import { Container } from './blocks/Container';
 import { withReveal } from './withReveal';
+import { withTheme } from './withTheme';
 import BlockThumbnail, { BLOCK_DESCRIPTIONS } from './BlockThumbnail';
 
 // Default reveal animation per block. Heavier "section" blocks fade up;
@@ -84,6 +97,18 @@ const DEFAULT_REVEAL = {
   VideoEmbed: 'scale-in',
   ContactSection: 'fade-up',
   NewsletterSignup: 'fade-up',
+  FormContact: 'fade-up',
+  FormLeadCapture: 'fade-up',
+  FormNewsletter: 'fade-up',
+  FormFeedback: 'fade-up',
+  FormSurvey: 'fade-up',
+  FormBooking: 'fade-up',
+  FormRegistration: 'fade-up',
+  FormQuoteRequest: 'fade-up',
+  FormApplication: 'fade-up',
+  FormSupport: 'fade-up',
+  FormWaitlist: 'fade-up',
+  FormAddress: 'fade-up',
   ArticleFeatured: 'fade-up',
   ArticleGrid: 'fade-up',
   ArticleList: 'fade-up',
@@ -138,6 +163,18 @@ export const defaultBlocks = {
   VideoEmbed,
   ContactSection,
   NewsletterSignup,
+  FormContact,
+  FormLeadCapture,
+  FormNewsletter,
+  FormFeedback,
+  FormSurvey,
+  FormBooking,
+  FormRegistration,
+  FormQuoteRequest,
+  FormApplication,
+  FormSupport,
+  FormWaitlist,
+  FormAddress,
   ArticleFeatured,
   ArticleGrid,
   ArticleList,
@@ -200,7 +237,24 @@ export const defaultCategories = {
     components: ['VideoEmbed', 'ImageGallery', 'ImageCaption', 'MapEmbed'],
   },
   Forms: {
-    components: ['ContactSection', 'NewsletterSignup', 'ContactInfo', 'SocialLinks'],
+    components: [
+      'ContactSection',
+      'NewsletterSignup',
+      'ContactInfo',
+      'SocialLinks',
+      'FormContact',
+      'FormLeadCapture',
+      'FormNewsletter',
+      'FormFeedback',
+      'FormSurvey',
+      'FormBooking',
+      'FormRegistration',
+      'FormQuoteRequest',
+      'FormApplication',
+      'FormSupport',
+      'FormWaitlist',
+      'FormAddress',
+    ],
   },
   Layout: {
     components: ['Spacer', 'Divider', 'RawHtml'],
@@ -322,7 +376,11 @@ export function createPuckConfig({
     const withDefaults = override
       ? { ...block, defaultProps: { ...(block.defaultProps || {}), ...override } }
       : block;
-    components[name] = animation ? withReveal(withDefaults, animation) : withDefaults;
+    // Every block gets a per-block `theme` field + data-tps-theme stamping.
+    // Wrapped INSIDE withReveal so both clones land on the same root element
+    // and the theme is visible on the editor canvas (reveal isn't).
+    const themed = withTheme(withDefaults);
+    components[name] = animation ? withReveal(themed, animation) : themed;
   }
   return { components, categories, root };
 }
