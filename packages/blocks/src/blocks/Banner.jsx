@@ -16,9 +16,11 @@ const VARIANTS = {
   },
   success: { bg: '#DCFCE7', fg: '#15803D', accent: '#15803D' },
   warning: { bg: '#FEF3C7', fg: '#92400E', accent: '#B45309' },
+  // Inverse strip: fg follows --tps-bg so it stays readable when --tps-ink
+  // flips light in a dark theme (a fixed '#FFFFFF' fg went invisible there).
   dark: {
     bg: 'var(--tps-ink, #0F172A)',
-    fg: '#FFFFFF',
+    fg: 'var(--tps-bg, #FFFFFF)',
     accent: 'var(--tps-accent, #F59E0B)',
   },
 };

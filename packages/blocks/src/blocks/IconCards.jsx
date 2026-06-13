@@ -126,7 +126,7 @@ export const IconCards = {
                     width: 40,
                     height: 40,
                     borderRadius: 8,
-                    background: 'rgba(15, 118, 110, 0.1)',
+                    background: 'var(--tps-primary-soft, #dbeafe)',
                     color: 'var(--tps-primary)',
                     display: 'inline-flex',
                     alignItems: 'center',
