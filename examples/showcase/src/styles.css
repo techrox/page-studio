@@ -180,7 +180,7 @@ h1, h2, h3, h4 {
   height: 100vh;
   overflow-y: auto;
   border-right: 1px solid var(--tps-line);
-  background: #fff;
+  background: var(--tps-bg);
   padding: 24px 20px;
   display: flex;
   flex-direction: column;
@@ -328,7 +328,7 @@ h1, h2, h3, h4 {
   padding: 6px 12px 6px 8px;
   border-radius: 999px;
   border: 1px solid var(--tps-line);
-  background: #fff;
+  background: var(--tps-bg);
   color: var(--tps-muted);
   font-size: 12px;
   font-weight: 600;
@@ -395,7 +395,7 @@ h1, h2, h3, h4 {
   height: 40px;
   border: 1px solid var(--tps-line);
   border-radius: 999px;
-  background: #fff;
+  background: var(--tps-bg);
   color: var(--tps-muted);
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
@@ -741,7 +741,7 @@ h1, h2, h3, h4 {
   padding: 18px 20px;
   border: 1px solid var(--tps-line);
   border-radius: var(--tps-radius);
-  background: #fff;
+  background: var(--tps-bg);
   text-decoration: none;
   color: inherit;
   margin-bottom: 12px;
@@ -1019,7 +1019,7 @@ h1, h2, h3, h4 {
   border: 1px solid var(--tps-line);
   border-radius: var(--tps-radius);
   padding: 22px;
-  background: #fff;
+  background: var(--tps-bg);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -1060,7 +1060,7 @@ h1, h2, h3, h4 {
   border: 1px solid var(--tps-line);
   border-radius: var(--tps-radius);
   padding: 24px;
-  background: #fff;
+  background: var(--tps-bg);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -1125,7 +1125,7 @@ h1, h2, h3, h4 {
 .landing-principle {
   padding: 22px;
   border-left: 3px solid var(--tps-primary);
-  background: #fff;
+  background: var(--tps-bg);
   border-radius: 0 var(--tps-radius) var(--tps-radius) 0;
 }
 .landing-principle h3 {
@@ -1154,7 +1154,7 @@ h1, h2, h3, h4 {
 .landing-credits li {
   border: 1px solid var(--tps-line);
   border-radius: var(--tps-radius);
-  background: #fff;
+  background: var(--tps-bg);
   transition: border-color 0.15s ease, transform 0.15s ease;
 }
 .landing-credits li:hover { border-color: var(--tps-primary); transform: translateY(-1px); }
@@ -1181,7 +1181,7 @@ h1, h2, h3, h4 {
 /* Footer ----------------------------------------------------------------- */
 .landing-footer {
   border-top: 1px solid var(--tps-line);
-  background: #fff;
+  background: var(--tps-bg);
   padding: 24px 32px;
 }
 .landing-footer-inner {
