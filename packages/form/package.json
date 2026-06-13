@@ -1,6 +1,6 @@
 {
   "name": "@techrox/page-studio-form",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Schema-driven structured-form page editor for React. Typed fields per page key, repeaters, TipTap rich text, live preview, revision history. Companion to @techrox/page-studio for content-shaped pages where layout is fixed.",
   "license": "MIT",
   "author": "techrox",
