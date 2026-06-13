@@ -10,6 +10,15 @@ types), when to reach for it, and short tips.
 > are what land on a Puck data object and what `blockDefaults` keys
 > against in `createPuckConfig({ defaults })`.
 
+> **Dark backgrounds.** Every block with a `background` field now offers a
+> **Dark** option alongside White/Soft (plus Hero and the form blocks). It
+> applies the `.tps-section-dark` class, which re-scopes the neutral
+> `--tps-*` tokens (ink, line, bg, muted) to dark values — so text, cards,
+> and borders flip automatically while your brand `--tps-primary` /
+> `--tps-accent` stay put. For a full dark page (e.g. a black-and-green
+> tenant), set those brand tokens via the host's `branding` prop and reach
+> for the Dark variant per section.
+
 ## Categories at a glance
 
 | Category | Blocks |

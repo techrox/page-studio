@@ -25,7 +25,7 @@ export const ImageGallery = {
     },
     background: {
       type: 'radio', label: 'Background',
-      options: [{ label: 'White', value: 'white' }, { label: 'Soft', value: 'soft' }],
+      options: [{ label: 'White', value: 'white' }, { label: 'Soft', value: 'soft' }, { label: 'Dark', value: 'dark' }],
     },
   },
   defaultProps: {
@@ -36,7 +36,7 @@ export const ImageGallery = {
     ], background: 'white',
   },
   render: ({ eyebrow, heading, columns, items, background }) => (
-    <section className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`} style={{ paddingTop: 56, paddingBottom: 56 }}>
+    <section className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`} style={{ paddingTop: 56, paddingBottom: 56 }}>
       <div className="tps-container">
         {(eyebrow || heading) && (
           <div style={{ marginBottom: 32 }}>
@@ -55,7 +55,7 @@ export const ImageGallery = {
                     style={{ borderRadius: 'var(--tps-radius)', objectFit: 'cover', aspectRatio: '4 / 3', width: '100%' }}
                   />
                 ) : (
-                  <div style={{ aspectRatio: '4 / 3', background: '#E2E8F0', borderRadius: 'var(--tps-radius)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94A3B8', fontSize: 12 }}>Image</div>
+                  <div style={{ aspectRatio: '4 / 3', background: 'var(--tps-line)', borderRadius: 'var(--tps-radius)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94A3B8', fontSize: 12 }}>Image</div>
                 )}
                 {img.caption && <figcaption style={{ marginTop: 6, fontSize: 12, color: 'var(--tps-muted)' }}>{img.caption}</figcaption>}
               </figure>

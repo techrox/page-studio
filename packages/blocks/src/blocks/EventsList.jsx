@@ -23,7 +23,7 @@ export const EventsList = {
     },
     background: {
       type: 'radio', label: 'Background',
-      options: [{ label: 'White', value: 'white' }, { label: 'Soft', value: 'soft' }],
+      options: [{ label: 'White', value: 'white' }, { label: 'Soft', value: 'soft' }, { label: 'Dark', value: 'dark' }],
     },
   },
   defaultProps: {
@@ -36,7 +36,7 @@ export const EventsList = {
     background: 'white',
   },
   render: ({ eyebrow, heading, items, background }) => (
-    <section className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`} style={{ paddingTop: 56, paddingBottom: 56 }}>
+    <section className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`} style={{ paddingTop: 56, paddingBottom: 56 }}>
       <div className="tps-container" style={{ maxWidth: 920 }}>
         {(eyebrow || heading) && (
           <div style={{ marginBottom: 32 }}>
@@ -46,7 +46,7 @@ export const EventsList = {
         )}
         <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
           {(items || []).map((e, i) => (
-            <li key={i} className="tps-row-stack" style={{ display: 'grid', gridTemplateColumns: '88px 1fr auto', gap: 24, alignItems: 'center', padding: 20, background: '#fff', border: '1px solid var(--tps-line)', borderRadius: 'var(--tps-radius)' }}>
+            <li key={i} className="tps-row-stack" style={{ display: 'grid', gridTemplateColumns: '88px 1fr auto', gap: 24, alignItems: 'center', padding: 20, background: 'var(--tps-bg)', border: '1px solid var(--tps-line)', borderRadius: 'var(--tps-radius)' }}>
               <div style={{ background: 'rgba(15,118,110,0.08)', color: 'var(--tps-primary)', padding: '12px 8px', borderRadius: 'var(--tps-radius)', textAlign: 'center', fontWeight: 700, fontSize: 13, lineHeight: 1.2, letterSpacing: 0.5 }}>
                 <CalendarOutlined style={{ display: 'block', marginBottom: 4 }} />
                 {e.date_short}
