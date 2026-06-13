@@ -33,6 +33,7 @@ export const FAQ = {
       options: [
         { label: 'White', value: 'white' },
         { label: 'Soft', value: 'soft' },
+        { label: 'Dark', value: 'dark' },
       ],
     },
   },
@@ -60,7 +61,7 @@ export const FAQ = {
   },
   render: ({ eyebrow, heading, items, background }) => (
     <section
-      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`}
+      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`}
       style={{ paddingTop: 56, paddingBottom: 56 }}
     >
       <div className="tps-container" style={{ maxWidth: 820 }}>
@@ -89,7 +90,7 @@ export const FAQ = {
               />
             ),
             style: {
-              background: '#fff',
+              background: 'var(--tps-bg)',
               border: '1px solid var(--tps-line)',
               borderRadius: 'var(--tps-radius)',
               marginBottom: 12,

@@ -29,6 +29,7 @@ export const Timeline = {
       options: [
         { label: 'White', value: 'white' },
         { label: 'Soft', value: 'soft' },
+        { label: 'Dark', value: 'dark' },
       ],
     },
   },
@@ -45,7 +46,7 @@ export const Timeline = {
   },
   render: ({ eyebrow, heading, items, background }) => (
     <section
-      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`}
+      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`}
       style={{ paddingTop: 56, paddingBottom: 56 }}
     >
       <div className="tps-container" style={{ maxWidth: 720 }}>
@@ -94,7 +95,7 @@ export const Timeline = {
                   height: 12,
                   borderRadius: '50%',
                   background: 'var(--tps-primary)',
-                  boxShadow: '0 0 0 4px #fff',
+                  boxShadow: '0 0 0 4px var(--tps-bg)',
                 }}
               />
               <div

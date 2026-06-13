@@ -179,7 +179,7 @@ function ContactSectionRender({
                         width: 72,
                         height: 72,
                         borderRadius: '50%',
-                        background: 'rgba(15, 118, 110, 0.1)',
+                        background: 'var(--tps-primary-soft, #dbeafe)',
                         color: 'var(--tps-primary)',
                         display: 'inline-flex',
                         alignItems: 'center',
@@ -258,7 +258,10 @@ function ContactSectionRender({
                         <Select
                           size="large"
                           placeholder="Select the stage that best describes you"
-                          options={stagesList.map((s) => ({ value: s, label: s }))}
+                          options={stagesList.map((s) => {
+                          const v = typeof s === 'string' ? s : s?.text || String(s);
+                          return { value: v, label: v };
+                        })}
                         />
                       </Form.Item>
                     )}

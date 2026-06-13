@@ -50,33 +50,19 @@ export const MetricCards = {
     background: 'white',
   },
   render: ({ eyebrow, heading, items, background }) => {
-    const dark = background === 'dark';
     return (
       <section
-        className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`}
-        style={{
-          paddingTop: 64,
-          paddingBottom: 64,
-          background: dark ? '#0F172A' : undefined,
-          color: dark ? '#fff' : undefined,
-        }}
+        className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${
+          background === 'dark' ? ' tps-section-dark' : ''
+        }`}
+        style={{ paddingTop: 64, paddingBottom: 64 }}
       >
         <div className="tps-container">
           {(eyebrow || heading) && (
             <div style={{ marginBottom: 40 }}>
-              {eyebrow && (
-                <span
-                  className="tps-eyebrow"
-                  style={{ color: dark ? '#F59E0B' : undefined }}
-                >
-                  {eyebrow}
-                </span>
-              )}
+              {eyebrow && <span className="tps-eyebrow">{eyebrow}</span>}
               {heading && (
-                <h2
-                  className="tps-h2"
-                  style={{ marginTop: 8, color: dark ? '#fff' : undefined }}
-                >
+                <h2 className="tps-h2" style={{ marginTop: 8 }}>
                   {heading}
                 </h2>
               )}
@@ -94,8 +80,8 @@ export const MetricCards = {
                 key={i}
                 style={{
                   padding: 28,
-                  background: dark ? 'rgba(255,255,255,0.04)' : '#fff',
-                  border: dark ? '1px solid rgba(255,255,255,0.08)' : '1px solid var(--tps-line)',
+                  background: 'var(--tps-bg)',
+                  border: '1px solid var(--tps-line)',
                   borderRadius: 'var(--tps-radius)',
                 }}
               >
@@ -103,7 +89,7 @@ export const MetricCards = {
                   style={{
                     fontSize: 'clamp(28px, 6vw, 44px)',
                     fontWeight: 800,
-                    color: dark ? '#fff' : 'var(--tps-primary)',
+                    color: 'var(--tps-primary)',
                     letterSpacing: '-0.02em',
                     lineHeight: 1.05,
                     marginBottom: 12,
@@ -114,7 +100,7 @@ export const MetricCards = {
                 <div
                   style={{
                     fontSize: 14,
-                    color: dark ? 'rgba(255,255,255,0.85)' : 'var(--tps-ink-2)',
+                    color: 'var(--tps-ink-2)',
                     lineHeight: 1.55,
                     marginBottom: m.delta ? 12 : 0,
                   }}

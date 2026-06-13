@@ -1,6 +1,6 @@
 {
   "name": "@techrox/page-studio-renderer",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "SSR-safe React renderer for displaying saved Puck JSON from @techrox/page-studio on a public page. Small footprint, no editor dependencies.",
   "license": "MIT",
   "author": "techrox",

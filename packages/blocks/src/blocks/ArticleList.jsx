@@ -35,6 +35,7 @@ export const ArticleList = {
       options: [
         { label: 'White', value: 'white' },
         { label: 'Soft', value: 'soft' },
+        { label: 'Dark', value: 'dark' },
       ],
     },
   },
@@ -51,7 +52,7 @@ export const ArticleList = {
   },
   render: ({ eyebrow, heading, items, background }) => (
     <section
-      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`}
+      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`}
       style={{ paddingTop: 56, paddingBottom: 56 }}
     >
       <div className="tps-container" style={{ maxWidth: 820 }}>
