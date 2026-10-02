@@ -29,6 +29,8 @@ export {
 // Re-export every block by name so consumers can cherry-pick. Importing the
 // whole library is fine in practice — tsup tree-shakes anything not reached
 // by the consumer's import graph.
+export { ContactHeader, ContactHeaderComponent } from './blocks/ContactHeader.jsx';
+export { NavigationHeader, NavigationHeaderComponent } from './blocks/NavigationHeader.jsx';
 export { Hero } from './blocks/Hero.jsx';
 export { SectionHeader } from './blocks/SectionHeader.jsx';
 export { CTABanner } from './blocks/CTABanner.jsx';

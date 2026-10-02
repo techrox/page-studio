@@ -108,6 +108,26 @@ function getPreviews(c) {
   );
 
   return {
+  ContactHeader: (
+    <Frame>
+      <rect x="10" y="32" width="28" height="4" rx="1" fill={MUTED} />
+      <line x1="42" y1="31" x2="42" y2="37" stroke={BORDER} strokeWidth="1" />
+      <rect x="46" y="32" width="22" height="4" rx="1" fill={MUTED} />
+      <rect x="52" y="16" width="16" height="8" rx="2" fill={PRIMARY} />
+      <rect x="86" y="30" width="12" height="8" rx="2" fill="none" stroke={BORDER} strokeWidth="0.8" />
+      <rect x="101" y="30" width="14" height="8" rx="2" fill={PRIMARY} />
+    </Frame>
+  ),
+  NavigationHeader: (
+    <Frame>
+      <rect x="10" y="30" width="18" height="8" rx="2" fill={PRIMARY} />
+      <rect x="36" y="32" width="12" height="4" rx="1" fill={TEXT} />
+      <rect x="52" y="32" width="12" height="4" rx="1" fill={MUTED} />
+      <rect x="68" y="32" width="16" height="4" rx="1" fill={MUTED} />
+      <polygon points="86,33 89,33 87.5,36" fill={MUTED} />
+      <rect x="98" y="29" width="17" height="9" rx="2" fill={PRIMARY} />
+    </Frame>
+  ),
   Hero: (
     <Frame>
       <rect x="14" y="14" width="20" height="3" rx="1" fill={PRIMARY} opacity="0.7" />
@@ -1106,6 +1126,8 @@ export const BLOCK_DESCRIPTIONS = {
   ImageGallery: 'Photo grid with click-to-enlarge lightbox. 2/3/4-col layouts.',
   ImageCaption: 'Single image with caption and optional photo credit.',
   InlineCTA: 'Compact one-line CTA strip — sits between content sections without dominating.',
+  ContactHeader: 'Top header with dynamic contact items (phones & emails), centered logo, and configurable actions/login.',
+  NavigationHeader: 'Header with logo, horizontal navigation menus, multi-level dropdowns, and mobile drawer.',
   AnnouncementBar: 'Slim full-width strip for announcements, beta access, event invites — dark / primary / accent variants.',
   Quote: 'Editorial pull-quote with optional attribution. Left-bordered or centered.',
   CodeBlock: 'Monospace code snippet with title bar and language label.',

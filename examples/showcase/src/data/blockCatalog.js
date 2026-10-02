@@ -21,6 +21,23 @@ export const BLOCK_CATEGORY = (() => {
 // Kept in this file (not derived from the source) so the docs stay
 // human-readable when a block adds an obscure internal field.
 export const BLOCK_FIELDS = {
+  ContactHeader: [
+    ['phones', 'array of phone numbers (max 3)'],
+    ['emails', 'array of email addresses (max 3)'],
+    ['logo_url / logo_text / logo_href', 'image URL, brand text fallback, link'],
+    ['isLoggedIn', 'radio -- logged in (profile icon) / logged out (login button)'],
+    ['login_label / login_href', 'login button label and link'],
+    ['enquiry_label / enquiry_href', 'enquiry button label and link'],
+    ['variant', 'select -- light / soft / dark / transparent'],
+    ['sticky', 'radio -- sticky header'],
+  ],
+  NavigationHeader: [
+    ['logo_url / logo_text / logo_href', 'image URL, brand text fallback, link'],
+    ['menus', 'array of menu items with optional child dropdowns'],
+    ['cta_label / cta_href', 'optional CTA button label and link'],
+    ['variant', 'select -- light / soft / dark / transparent'],
+    ['sticky', 'radio -- sticky header'],
+  ],
   Hero: [
     ['eyebrow', 'text'],
     ['heading_html', 'textarea -- HTML allowed'],
@@ -359,6 +376,21 @@ export const BLOCK_FIELDS = {
 
 // "When to use" + tips. Designer-audience, written in our own voice.
 export const BLOCK_GUIDANCE = {
+  ContactHeader: {
+    when: 'Top-of-site header displaying contact phone numbers, emails, brand logo, and authentication/action buttons.',
+    tips: [
+      'Pass up to 3 phone numbers and 3 email addresses dynamically.',
+      'Logo is mathematically centered between contact details and action buttons.',
+      'Toggle isLoggedIn to switch between the Login button and user profile icon/menu.',
+    ],
+  },
+  NavigationHeader: {
+    when: 'Primary navigation bar with brand logo, dynamic hierarchical menus, and responsive mobile drawer.',
+    tips: [
+      'Supports nested child menus rendered automatically as accessible dropdowns.',
+      'Includes active state highlighting and custom navigation callbacks.',
+    ],
+  },
   Hero: {
     when: 'Top of a marketing/landing page. The `landing` variant has the radial-gradient halo background; use `simple` for sub-page heroes.',
     tips: [

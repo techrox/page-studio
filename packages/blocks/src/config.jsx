@@ -6,6 +6,8 @@
 // to `defaultBlocks` + (optionally) a category. Consumers who want to extend
 // the library do the same with their own files and pass them via `blocks:`.
 
+import { ContactHeader } from './blocks/ContactHeader';
+import { NavigationHeader } from './blocks/NavigationHeader';
 import { Hero } from './blocks/Hero';
 import { StatsStrip } from './blocks/StatsStrip';
 import { SectionHeader } from './blocks/SectionHeader';
@@ -137,11 +139,15 @@ const DEFAULT_REVEAL = {
   ThreeColumn: 'fade-up',
   PressMentions: 'scale-in',
   Container: 'fade-up',
+  ContactHeader: null,
+  NavigationHeader: null,
   Spacer: null,
   RawHtml: null,
 };
 
 export const defaultBlocks = {
+  ContactHeader,
+  NavigationHeader,
   Hero,
   SectionHeader,
   CTABanner,
@@ -209,8 +215,11 @@ export const defaultBlocks = {
 
 // Sidebar grouping for Puck's components panel. Authors browse by category.
 export const defaultCategories = {
+  Headers: {
+    components: ['ContactHeader', 'NavigationHeader', 'AnnouncementBar'],
+  },
   'Page sections': {
-    components: ['Hero', 'SectionHeader', 'CTABanner', 'Banner', 'AnnouncementBar', 'InlineCTA'],
+    components: ['Hero', 'SectionHeader', 'CTABanner', 'Banner', 'InlineCTA'],
   },
   Content: {
     components: ['RichText', 'PrinciplesList', 'TwoColumn', 'ThreeColumn', 'ImageText', 'Quote', 'KeyValueList', 'Container', 'CodeBlock'],
