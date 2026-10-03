@@ -8,6 +8,7 @@
 // no override yet.
 
 import { Render } from '@puckeditor/core';
+import { ConfigProvider } from 'antd';
 import {
   applyConfigDefaults,
   createPuckConfig,
@@ -45,14 +46,26 @@ export function PageStudioRender({
     Object.assign(brandStyle, branding.cssVars);
   }
 
+  const antdTheme = primary
+    ? {
+        token: {
+          colorPrimary: primary,
+          colorInfo: primary,
+          borderRadius: 8,
+        },
+      }
+    : undefined;
+
   // Blocks read site/services/Link/etc. from StudioContext at render time.
   // Wrapping here means the renderer works the same whether the host is
   // server-rendered or hydrating on the client.
   return (
-    <PageStudioProvider value={studio}>
-      <div className={`tps-renderer-root ${className}`.trim()} style={brandStyle}>
-        <Render config={resolved} data={populated} />
-      </div>
-    </PageStudioProvider>
+    <ConfigProvider theme={antdTheme}>
+      <PageStudioProvider value={studio}>
+        <div className={`tps-renderer-root ${className}`.trim()} style={brandStyle}>
+          <Render config={resolved} data={populated} />
+        </div>
+      </PageStudioProvider>
+    </ConfigProvider>
   );
 }

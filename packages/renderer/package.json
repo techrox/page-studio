@@ -37,12 +37,14 @@
   "peerDependencies": {
     "@puckeditor/core": ">=0.21",
     "@techrox/page-studio-blocks": "workspace:*",
+    "antd": ">=5",
     "react": ">=18",
     "react-dom": ">=18"
   },
   "devDependencies": {
     "@puckeditor/core": "^0.21.2",
     "@techrox/page-studio-blocks": "workspace:*",
+    "antd": "^5.19.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

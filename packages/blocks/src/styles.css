@@ -1229,5 +1229,63 @@
   }
 }
 
+/* -------------------------------------------------------------------------
+   Ant Design Button & Control Overrides
+   Ensures primary buttons (Login, Read more, Get in touch, Explore, CTAs),
+   links, and inputs strictly inherit --tps-primary across both editor & renderer
+   ------------------------------------------------------------------------- */
+.tps-renderer-root .ant-btn-primary,
+.psd-builder-page .ant-btn-primary,
+.psd-canvas-body .ant-btn-primary,
+[data-tps-theme] .ant-btn-primary,
+.tps-header-btn.ant-btn-primary,
+.tps-modal-btn.ant-btn-primary {
+  background-color: var(--tps-primary, #0b60d8) !important;
+  border-color: var(--tps-primary, #0b60d8) !important;
+  color: #ffffff !important;
+}
 
+.tps-renderer-root .ant-btn-primary:not(:disabled):hover,
+.psd-builder-page .ant-btn-primary:not(:disabled):hover,
+.psd-canvas-body .ant-btn-primary:not(:disabled):hover,
+[data-tps-theme] .ant-btn-primary:not(:disabled):hover,
+.tps-header-btn.ant-btn-primary:not(:disabled):hover,
+.tps-modal-btn.ant-btn-primary:not(:disabled):hover {
+  background-color: var(--tps-primary-dark, var(--tps-primary, #0848a3)) !important;
+  border-color: var(--tps-primary-dark, var(--tps-primary, #0848a3)) !important;
+  color: #ffffff !important;
+  opacity: 0.92;
+}
 
+.tps-renderer-root .ant-btn-primary:not(:disabled):active,
+.psd-builder-page .ant-btn-primary:not(:disabled):active,
+.psd-canvas-body .ant-btn-primary:not(:disabled):active,
+[data-tps-theme] .ant-btn-primary:not(:disabled):active,
+.tps-header-btn.ant-btn-primary:not(:disabled):active,
+.tps-modal-btn.ant-btn-primary:not(:disabled):active {
+  background-color: var(--tps-primary-dark, var(--tps-primary, #0848a3)) !important;
+  border-color: var(--tps-primary-dark, var(--tps-primary, #0848a3)) !important;
+  color: #ffffff !important;
+}
+
+.tps-renderer-root .ant-btn-link,
+.psd-builder-page .ant-btn-link,
+.psd-canvas-body .ant-btn-link,
+[data-tps-theme] .ant-btn-link {
+  color: var(--tps-primary, #0b60d8) !important;
+}
+
+.tps-renderer-root .ant-btn-link:not(:disabled):hover,
+.psd-builder-page .ant-btn-link:not(:disabled):hover,
+.psd-canvas-body .ant-btn-link:not(:disabled):hover,
+[data-tps-theme] .ant-btn-link:not(:disabled):hover {
+  color: var(--tps-primary-dark, #0848a3) !important;
+}
+
+.tps-renderer-root .ant-btn-default:not(:disabled):hover,
+.psd-builder-page .ant-btn-default:not(:disabled):hover,
+.psd-canvas-body .ant-btn-default:not(:disabled):hover,
+[data-tps-theme] .ant-btn-default:not(:disabled):hover {
+  color: var(--tps-primary, #0b60d8) !important;
+  border-color: var(--tps-primary, #0b60d8) !important;
+}

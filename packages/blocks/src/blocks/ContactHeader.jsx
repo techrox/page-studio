@@ -9,7 +9,7 @@ import {
   LoginOutlined,
   SendOutlined,
 } from '@ant-design/icons';
-import { StudioLink as Link } from '../context';
+import { StudioLink as Link, useStudio } from '../context';
 
 /**
  * Pure React component for the Contact Header.
@@ -46,6 +46,34 @@ export function ContactHeaderComponent({
   onProfileClick,
   renderLogo,
 }) {
+  const studio = useStudio();
+  const studioUser = studio?.currentUser || studio?.user;
+  const effectiveIsLoggedIn =
+    studio?.currentUser !== undefined || studio?.user !== undefined || studio?.isLoggedIn !== undefined
+      ? Boolean(studio?.currentUser || studio?.user || studio?.isLoggedIn)
+      : Boolean(isLoggedIn);
+
+  const effectiveProfile =
+    profile ||
+    studio?.profile ||
+    (studioUser
+      ? {
+          name:
+            studioUser?.fullName ||
+            studioUser?.name ||
+            studioUser?.userName ||
+            studioUser?.username ||
+            studioUser?.email,
+          avatar: studioUser?.avatarUrl || studioUser?.avatar,
+          menuItems:
+            studio?.profileMenuItems ||
+            studio?.userMenuItems ||
+            studio?.menuItems ||
+            studioUser?.menuItems,
+          onClick: studio?.onProfileClick || studioUser?.onClick,
+        }
+      : undefined);
+
   // Normalize contact items respecting maximum 3 phones and 3 emails
   const contactItems = useMemo(() => {
     // If a generic `contacts` array is provided, partition into phones and emails
@@ -155,7 +183,7 @@ export function ContactHeaderComponent({
         type: 'login',
         label: login_label,
         href: login_href,
-        variant: 'default',
+        variant: enquiry_label ? 'default' : 'primary',
         onClick: onLoginClick,
       });
     }
@@ -187,16 +215,16 @@ export function ContactHeaderComponent({
 
   // Render profile control when logged in
   const renderProfileControl = (action) => {
-    if (profile?.renderProfile) {
-      return profile.renderProfile({ ...profile, isLoggedIn });
+    if (effectiveProfile?.renderProfile) {
+      return effectiveProfile.renderProfile({ ...effectiveProfile, isLoggedIn: effectiveIsLoggedIn });
     }
 
-    const profileIconNode = profile?.icon || <UserOutlined />;
-    const profileName = profile?.name;
-    const profileAvatar = profile?.avatar;
+    const profileIconNode = effectiveProfile?.icon || <UserOutlined />;
+    const profileName = effectiveProfile?.name;
+    const profileAvatar = effectiveProfile?.avatar;
 
     const handleProfileClick = (e) => {
-      if (profile?.onClick) profile.onClick(e);
+      if (effectiveProfile?.onClick) effectiveProfile.onClick(e);
       if (onProfileClick) onProfileClick(e);
     };
 
@@ -216,8 +244,8 @@ export function ContactHeaderComponent({
       </button>
     );
 
-    if (profile?.menuItems && profile.menuItems.length > 0) {
-      const items = profile.menuItems.map((item, idx) => ({
+    if (effectiveProfile?.menuItems && effectiveProfile.menuItems.length > 0) {
+      const items = effectiveProfile.menuItems.map((item, idx) => ({
         key: item.key || String(idx),
         label: item.href ? (
           <Link href={item.href}>{item.label}</Link>
@@ -344,7 +372,7 @@ export function ContactHeaderComponent({
               const isLoginType = action.type === 'login';
 
               // If logged in and action is login, replace with profile icon/menu
-              if (isLoginType && isLoggedIn) {
+              if (isLoginType && effectiveIsLoggedIn) {
                 return (
                   <div key={action.type || idx} className="tps-contact-header__action-item">
                     {renderProfileControl(action)}

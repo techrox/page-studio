@@ -10,7 +10,7 @@ import {
   UserOutlined,
   LoginOutlined,
 } from '@ant-design/icons';
-import { StudioLink as Link } from '../context';
+import { StudioLink as Link, useStudio } from '../context';
 
 /**
  * Pure React component for the Navigation Header.
@@ -48,8 +48,36 @@ export function NavigationHeaderComponent({
   renderLink,
   renderLogo,
 }) {
+  const studio = useStudio();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [expandedMobileKeys, setExpandedMobileKeys] = useState({});
+
+  const studioUser = studio?.currentUser || studio?.user;
+  const effectiveIsLoggedIn =
+    studio?.currentUser !== undefined || studio?.user !== undefined || studio?.isLoggedIn !== undefined
+      ? Boolean(studio?.currentUser || studio?.user || studio?.isLoggedIn)
+      : Boolean(isLoggedIn);
+
+  const effectiveProfile =
+    profile ||
+    studio?.profile ||
+    (studioUser
+      ? {
+          name:
+            studioUser?.fullName ||
+            studioUser?.name ||
+            studioUser?.userName ||
+            studioUser?.username ||
+            studioUser?.email,
+          avatar: studioUser?.avatarUrl || studioUser?.avatar,
+          menuItems:
+            studio?.profileMenuItems ||
+            studio?.userMenuItems ||
+            studio?.menuItems ||
+            studioUser?.menuItems,
+          onClick: studio?.onProfileClick || studioUser?.onClick,
+        }
+      : undefined);
 
   const effectiveActivePath = activePath !== undefined ? activePath : currentPath;
 
@@ -139,16 +167,16 @@ export function NavigationHeaderComponent({
 
   // Render profile control when logged in
   const renderProfileControl = (action) => {
-    if (profile?.renderProfile) {
-      return profile.renderProfile({ ...profile, isLoggedIn });
+    if (effectiveProfile?.renderProfile) {
+      return effectiveProfile.renderProfile({ ...effectiveProfile, isLoggedIn: effectiveIsLoggedIn });
     }
 
-    const profileIconNode = profile?.icon || <UserOutlined />;
-    const profileName = profile?.name;
-    const profileAvatar = profile?.avatar;
+    const profileIconNode = effectiveProfile?.icon || <UserOutlined />;
+    const profileName = effectiveProfile?.name;
+    const profileAvatar = effectiveProfile?.avatar;
 
     const handleProfileClick = (e) => {
-      if (profile?.onClick) profile.onClick(e);
+      if (effectiveProfile?.onClick) effectiveProfile.onClick(e);
       if (onProfileClick) onProfileClick(e);
     };
 
@@ -168,8 +196,8 @@ export function NavigationHeaderComponent({
       </button>
     );
 
-    if (profile?.menuItems && profile.menuItems.length > 0) {
-      const items = profile.menuItems.map((item, idx) => ({
+    if (effectiveProfile?.menuItems && effectiveProfile.menuItems.length > 0) {
+      const items = effectiveProfile.menuItems.map((item, idx) => ({
         key: item.key || String(idx),
         label: item.href ? (
           <Link href={item.href}>{item.label}</Link>
@@ -495,7 +523,7 @@ export function NavigationHeaderComponent({
                 const isLoginType = action.type === 'login';
 
                 // If logged in and action is login, render profile dropdown/avatar
-                if (isLoginType && isLoggedIn) {
+                if (isLoginType && effectiveIsLoggedIn) {
                   return (
                     <div key={action.type || idx} className="tps-nav-header__action-item">
                       {renderProfileControl(action)}
@@ -578,11 +606,11 @@ export function NavigationHeaderComponent({
             <div className="tps-mobile-nav__actions" style={{ marginTop: 24, display: 'flex', flexDirection: 'column', gap: 8 }}>
               {normalizedActions.map((action, idx) => {
                 const isLoginType = action.type === 'login';
-                if (isLoginType && isLoggedIn) {
+                if (isLoginType && effectiveIsLoggedIn) {
                   return (
                     <div key={action.type || idx} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 0' }}>
                       {renderProfileControl(action)}
-                      {profile?.name && <span style={{ fontWeight: 500 }}>{profile.name}</span>}
+                      {effectiveProfile?.name && <span style={{ fontWeight: 500 }}>{effectiveProfile.name}</span>}
                     </div>
                   );
                 }
