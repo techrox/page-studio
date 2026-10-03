@@ -170,6 +170,11 @@ export default function PageStudio({
   // to branding.theme so a host that only passes branding still themes.
   theme,
   studio,
+  onFileUpload,
+  uploadFile,
+  uploadMedia,
+  onFilePreview,
+  renderPdfPreview,
   adapter = {},
   config,
   blockDefaults,
@@ -321,8 +326,20 @@ export default function PageStudio({
     );
   }
 
+  const mergedStudio = useMemo(
+    () => ({
+      ...(studio || {}),
+      onFileUpload: onFileUpload || studio?.onFileUpload,
+      uploadFile: uploadFile || studio?.uploadFile,
+      uploadMedia: uploadMedia || studio?.uploadMedia,
+      onFilePreview: onFilePreview || studio?.onFilePreview,
+      renderPdfPreview: renderPdfPreview || studio?.renderPdfPreview,
+    }),
+    [studio, onFileUpload, uploadFile, uploadMedia, onFilePreview, renderPdfPreview],
+  );
+
   return (
-    <PageStudioProvider value={studio}>
+    <PageStudioProvider value={mergedStudio}>
       <HeaderPropsContext.Provider value={headerLive}>
         <div className="psd-builder-page" data-tps-theme={resolvedTheme}>
           <BuilderEnhancements

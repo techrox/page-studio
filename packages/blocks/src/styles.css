@@ -1289,3 +1289,93 @@
   color: var(--tps-primary, #0b60d8) !important;
   border-color: var(--tps-primary, #0b60d8) !important;
 }
+
+/* -------------------------------------------------------------------------
+   Rich Text Block & Field Styles (.tps-rich-body, .tps-field-rich-canvas)
+   ------------------------------------------------------------------------- */
+.tps-rich-body img,
+.tps-field-rich-canvas img {
+  max-width: 100% !important;
+  height: auto !important;
+  border-radius: 8px !important;
+  margin: 14px 0 !important;
+  display: block !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.tps-rich-body p,
+.tps-field-rich-canvas p {
+  margin: 0 0 1em;
+}
+
+.tps-rich-body h1, .tps-field-rich-canvas h1 { font-size: 28px; font-weight: 700; margin: 1.1em 0 0.5em; line-height: 1.3; }
+.tps-rich-body h2, .tps-field-rich-canvas h2 { font-size: 22px; font-weight: 700; margin: 1em 0 0.45em; line-height: 1.35; }
+.tps-rich-body h3, .tps-field-rich-canvas h3 { font-size: 18px; font-weight: 600; margin: 0.9em 0 0.4em; }
+.tps-rich-body h4, .tps-field-rich-canvas h4 { font-size: 16px; font-weight: 600; margin: 0.8em 0 0.35em; }
+
+.tps-rich-body blockquote,
+.tps-field-rich-canvas blockquote {
+  border-left: 4px solid var(--tps-primary, #0b60d8);
+  padding: 8px 16px;
+  margin: 1.2em 0;
+  color: var(--tps-muted, #64748b);
+  background: var(--tps-bg-soft, #fafaf7);
+  border-radius: 0 6px 6px 0;
+  font-style: italic;
+}
+
+.tps-rich-body ul, .tps-field-rich-canvas ul,
+.tps-rich-body ol, .tps-field-rich-canvas ol {
+  padding-left: 24px;
+  margin: 0 0 1em;
+}
+
+.tps-block-pdf-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 18px;
+  margin: 16px 0;
+  background: var(--tps-bg-soft, #f8fafc);
+  border: 1px solid var(--tps-line, #e2e8f0);
+  border-radius: 10px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.tps-block-pdf-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.tps-pdf-preview-btn {
+  padding: 6px 14px;
+  background: var(--tps-primary, #0f766e);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.tps-pdf-preview-btn:hover {
+  opacity: 0.9;
+}
+
+.tps-pdf-download-btn {
+  padding: 5px 14px;
+  background: #fff;
+  color: var(--tps-ink-2, #334155);
+  border: 1px solid var(--tps-line, #cbd5e1);
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.15s;
+}
+.tps-pdf-download-btn:hover {
+  color: var(--tps-primary, #0f766e);
+  border-color: var(--tps-primary, #0f766e);
+}
+
