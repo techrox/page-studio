@@ -128,6 +128,27 @@ function getPreviews(c) {
       <rect x="98" y="29" width="17" height="9" rx="2" fill={PRIMARY} />
     </Frame>
   ),
+  Marquee: (
+    <Frame>
+      <rect x="10" y="28" width="18" height="12" rx="6" fill={PRIMARY} />
+      <rect x="34" y="32" width="22" height="4" rx="1" fill={TEXT} />
+      <circle cx="62" cy="34" r="1.5" fill={MUTED} />
+      <rect x="70" y="32" width="28" height="4" rx="1" fill={TEXT} />
+      <circle cx="104" cy="34" r="1.5" fill={MUTED} />
+      <rect x="112" y="32" width="12" height="4" rx="1" fill={TEXT} />
+    </Frame>
+  ),
+  PopupModal: (
+    <Frame>
+      <rect x="25" y="10" width="70" height="50" rx="4" fill={CARD || BG} stroke={PRIMARY} strokeWidth="1.2" />
+      <rect x="30" y="14" width="60" height="14" rx="2" fill={PRIMARY} opacity="0.8" />
+      <rect x="30" y="32" width="45" height="4" rx="1" fill={TEXT} />
+      <rect x="30" y="39" width="55" height="3" rx="0.5" fill={MUTED} />
+      <rect x="30" y="44" width="40" height="3" rx="0.5" fill={MUTED} />
+      <rect x="30" y="50" width="22" height="6" rx="2" fill={PRIMARY} />
+      <circle cx="88" cy="17" r="2.5" fill={MUTED} opacity="0.8" />
+    </Frame>
+  ),
   Hero: (
     <Frame>
       <rect x="14" y="14" width="20" height="3" rx="1" fill={PRIMARY} opacity="0.7" />
@@ -1128,6 +1149,8 @@ export const BLOCK_DESCRIPTIONS = {
   InlineCTA: 'Compact one-line CTA strip — sits between content sections without dominating.',
   ContactHeader: 'Top header with dynamic contact items (phones & emails), centered logo, and configurable actions/login.',
   NavigationHeader: 'Header with logo, horizontal navigation menus, multi-level dropdowns, and mobile drawer.',
+  Marquee: 'Scrolling ticker / marquee for news, alerts, and updates with HTML links and ordering.',
+  PopupModal: 'Centered popup modal with image, rich text, actions, and auto-open/dismiss triggers.',
   AnnouncementBar: 'Slim full-width strip for announcements, beta access, event invites — dark / primary / accent variants.',
   Quote: 'Editorial pull-quote with optional attribution. Left-bordered or centered.',
   CodeBlock: 'Monospace code snippet with title bar and language label.',

@@ -108,7 +108,13 @@ function setCssVars(branding) {
   if (typeof document === 'undefined' || !branding) return;
 
   const lines = [];
-  if (branding.primaryColor) lines.push(`--tps-primary: ${branding.primaryColor};`);
+  const primary = branding.primaryColor || branding.brandColor;
+  if (primary) {
+    lines.push(`--tps-primary: ${primary};`);
+    if (!branding.cssVars?.['--tps-primary-soft']) {
+      lines.push(`--tps-primary-soft: ${primary}18;`);
+    }
+  }
   if (branding.accentColor) lines.push(`--tps-accent: ${branding.accentColor};`);
   if (branding.inkColor) lines.push(`--tps-ink: ${branding.inkColor};`);
 

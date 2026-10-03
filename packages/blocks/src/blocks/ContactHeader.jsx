@@ -34,6 +34,7 @@ export function ContactHeaderComponent({
   profile,
   variant = 'light',
   background,
+  backgroundColor,
   sticky = false,
   divider = true,
   maxWidth = 'var(--tps-max, 1240px)',
@@ -258,6 +259,8 @@ export function ContactHeaderComponent({
     ...style,
   };
 
+  const bgStyle = backgroundColor ? { backgroundColor } : {};
+
   return (
     <header
       className={`tps-contact-header ${isDark ? 'tps-contact-header--dark' : ''} ${
@@ -265,6 +268,7 @@ export function ContactHeaderComponent({
       } ${isTransparent ? 'tps-contact-header--transparent' : ''} ${
         sticky ? 'tps-contact-header--sticky' : ''
       } ${className}`.trim()}
+      style={bgStyle}
     >
       <div className="tps-contact-header__container" style={containerStyle}>
         {/* Left Section: Contact Information */}
@@ -449,6 +453,10 @@ export const ContactHeader = {
         { label: 'Transparent', value: 'transparent' },
       ],
     },
+    backgroundColor: {
+      type: 'text',
+      label: 'Background color (hex/CSS)',
+    },
     sticky: {
       type: 'radio',
       label: 'Sticky header',
@@ -477,6 +485,7 @@ export const ContactHeader = {
     enquiry_label: 'Enquiry',
     enquiry_href: '/contact',
     variant: 'light',
+    backgroundColor: '',
     sticky: false,
   },
   render: (props) => <ContactHeaderComponent {...props} />,

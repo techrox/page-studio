@@ -206,7 +206,58 @@ describe('NavigationHeader component & block', () => {
     expect(container.textContent).toContain('Home');
     expect(container.textContent).toContain('About');
     expect(container.textContent).toContain('Courses');
-    expect(container.textContent).toContain('Get Started');
+    expect(container.textContent).toContain('Login');
+  });
+
+  it('supports custom backgroundColor prop on ContactHeader and NavigationHeader', () => {
+    const { container: contactContainer } = render(
+      <Wrap>
+        <ContactHeaderComponent backgroundColor="#123456" />
+      </Wrap>
+    );
+    const contactHeader = contactContainer.querySelector('.tps-contact-header');
+    expect(contactHeader.style.backgroundColor).toBe('rgb(18, 52, 86)');
+
+    const { container: navContainer } = render(
+      <Wrap>
+        <NavigationHeaderComponent backgroundColor="#654321" />
+      </Wrap>
+    );
+    const navHeader = navContainer.querySelector('.tps-nav-header');
+    expect(navHeader.style.backgroundColor).toBe('rgb(101, 67, 33)');
+  });
+
+  it('replaces Login button with Profile icon when isLoggedIn is true in NavigationHeader', () => {
+    const onProfileClick = vi.fn();
+    const { container, rerender } = render(
+      <Wrap>
+        <NavigationHeaderComponent
+          isLoggedIn={false}
+          login_label="Sign In"
+        />
+      </Wrap>
+    );
+
+    expect(container.textContent).toContain('Sign In');
+    expect(container.querySelector('.tps-profile-btn')).toBeNull();
+
+    rerender(
+      <Wrap>
+        <NavigationHeaderComponent
+          isLoggedIn={true}
+          login_label="Sign In"
+          profile={{ name: 'John Doe', onClick: onProfileClick }}
+        />
+      </Wrap>
+    );
+
+    expect(container.textContent).not.toContain('Sign In');
+    const profileBtn = container.querySelector('.tps-profile-btn');
+    expect(profileBtn).not.toBeNull();
+    expect(profileBtn.textContent).toContain('John Doe');
+
+    fireEvent.click(profileBtn);
+    expect(onProfileClick).toHaveBeenCalledTimes(1);
   });
 
   it('dynamically generates menus from configuration without hardcoding', () => {

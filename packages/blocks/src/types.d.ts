@@ -76,10 +76,15 @@ export interface ContactHeaderProps {
   logo_text?: string;
   logo_height?: number | string;
   actions?: HeaderAction[];
+  login_label?: string;
+  login_href?: string;
+  enquiry_label?: string;
+  enquiry_href?: string;
   isLoggedIn?: boolean;
   profile?: ProfileConfig;
   variant?: HeaderVariant;
   background?: 'white' | 'soft' | 'dark' | 'transparent';
+  backgroundColor?: string;
   sticky?: boolean;
   divider?: ReactNode | boolean;
   maxWidth?: number | string;
@@ -117,16 +122,80 @@ export interface NavigationHeaderProps {
   currentPath?: string;
   isActive?: (item: MenuItem, activePath?: string) => boolean;
   actions?: HeaderAction[];
+  login_label?: string;
+  login_href?: string;
+  isLoggedIn?: boolean;
+  profile?: ProfileConfig;
   cta_label?: string;
   cta_href?: string;
   variant?: HeaderVariant;
   background?: 'white' | 'soft' | 'dark' | 'transparent';
+  backgroundColor?: string;
   sticky?: boolean;
   maxWidth?: number | string;
   className?: string;
   style?: React.CSSProperties;
   mobileBreakpoint?: number;
   onNavigate?: (path: string, item: MenuItem, event: MouseEvent<HTMLElement>) => void;
+  onActionClick?: (action: HeaderAction, event: MouseEvent<HTMLElement>) => void;
+  onLoginClick?: (event: MouseEvent<HTMLElement>) => void;
+  onProfileClick?: (event: MouseEvent<HTMLElement>) => void;
   renderLink?: (props: { href: string; children: ReactNode; className?: string; onClick?: (e: any) => void }) => ReactNode;
   renderLogo?: (logo: HeaderLogo) => ReactNode;
 }
+
+export interface MarqueeItem {
+  id?: string;
+  order?: number;
+  text?: string;
+  link_label?: string;
+  link_href?: string;
+}
+
+export interface MarqueeProps {
+  items?: MarqueeItem[];
+  badge_text?: string;
+  speed?: number;
+  direction?: 'left' | 'right';
+  pauseOnHover?: boolean;
+  separator?: string;
+  variant?: 'primary' | 'dark' | 'soft' | 'light' | 'accent';
+  backgroundColor?: string;
+  textColor?: string;
+  fontSize?: number | string;
+  gap?: number | string;
+  maxWidth?: number | string;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+export interface PopupModalProps {
+  heading?: string;
+  eyebrow?: string;
+  body_html?: string;
+  image_url?: string;
+  image_alt?: string;
+  image_position?: 'top' | 'left' | 'banner' | 'none';
+  image_height?: number | string;
+  primary_cta_label?: string;
+  primary_cta_href?: string;
+  secondary_cta_label?: string;
+  secondary_cta_href?: string;
+  show_dismiss_button?: boolean;
+  dismiss_label?: string;
+  delay?: number;
+  show_frequency?: 'always' | 'once_per_session' | 'once_ever';
+  storage_key?: string;
+  closeOnBackdrop?: boolean;
+  closeOnEsc?: boolean;
+  maxWidth?: number | string;
+  variant?: 'light' | 'dark' | 'soft';
+  backgroundColor?: string;
+  className?: string;
+  style?: React.CSSProperties;
+  onClose?: () => void;
+  onPrimaryClick?: (event: MouseEvent<HTMLElement>) => void;
+  onSecondaryClick?: (event: MouseEvent<HTMLElement>) => void;
+}
+
+

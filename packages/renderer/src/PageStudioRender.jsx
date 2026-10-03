@@ -19,18 +19,40 @@ export function PageStudioRender({
   config,
   fallback = null,
   studio,
+  branding,
+  brandColor,
+  className = '',
+  style = {},
 }) {
   if (!data || !Array.isArray(data.content) || data.content.length === 0) {
     return fallback;
   }
   const resolved = config || createPuckConfig();
   const populated = applyConfigDefaults(data, resolved);
+
+  // Compute CSS variable overrides from branding
+  const primary = branding?.primaryColor || branding?.brandColor || brandColor;
+  const brandStyle = { ...style };
+  if (primary) {
+    brandStyle['--tps-primary'] = primary;
+    if (!branding?.cssVars?.['--tps-primary-soft']) {
+      brandStyle['--tps-primary-soft'] = `${primary}18`;
+    }
+  }
+  if (branding?.accentColor) brandStyle['--tps-accent'] = branding.accentColor;
+  if (branding?.inkColor) brandStyle['--tps-ink'] = branding.inkColor;
+  if (branding?.cssVars) {
+    Object.assign(brandStyle, branding.cssVars);
+  }
+
   // Blocks read site/services/Link/etc. from StudioContext at render time.
   // Wrapping here means the renderer works the same whether the host is
   // server-rendered or hydrating on the client.
   return (
     <PageStudioProvider value={studio}>
-      <Render config={resolved} data={populated} />
+      <div className={`tps-renderer-root ${className}`.trim()} style={brandStyle}>
+        <Render config={resolved} data={populated} />
+      </div>
     </PageStudioProvider>
   );
 }

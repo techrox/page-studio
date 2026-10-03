@@ -1,12 +1,14 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { Dropdown, Button, Drawer } from 'antd';
+import { Dropdown, Button, Drawer, Avatar, Tooltip } from 'antd';
 import {
   DownOutlined,
   MenuOutlined,
   CloseOutlined,
   RightOutlined,
+  UserOutlined,
+  LoginOutlined,
 } from '@ant-design/icons';
 import { StudioLink as Link } from '../context';
 
@@ -26,15 +28,23 @@ export function NavigationHeaderComponent({
   currentPath,
   isActive,
   actions,
+  login_label = 'Login',
+  login_href = '/login',
+  isLoggedIn = false,
+  profile,
   cta_label,
   cta_href,
   variant = 'light',
   background,
+  backgroundColor,
   sticky = false,
   maxWidth = 'var(--tps-max, 1240px)',
   className = '',
   style = {},
   onNavigate,
+  onActionClick,
+  onLoginClick,
+  onProfileClick,
   renderLink,
   renderLogo,
 }) {
@@ -94,17 +104,101 @@ export function NavigationHeaderComponent({
     if (Array.isArray(actions) && actions.length > 0) {
       return actions.slice(0, 2);
     }
+    const list = [];
     if (cta_label) {
-      return [
-        {
-          label: cta_label,
-          href: cta_href || '#',
-          variant: 'primary',
-        },
-      ];
+      list.push({
+        type: 'cta',
+        label: cta_label,
+        href: cta_href || '#',
+        variant: 'primary',
+      });
     }
-    return [];
-  }, [actions, cta_label, cta_href]);
+    if (login_label) {
+      list.push({
+        type: 'login',
+        label: login_label,
+        href: login_href,
+        variant: cta_label ? 'default' : 'primary',
+        onClick: onLoginClick,
+      });
+    }
+    return list.slice(0, 2);
+  }, [actions, cta_label, cta_href, login_label, login_href, onLoginClick]);
+
+  // Handle action click
+  const handleActionClick = (action, e) => {
+    if (action.onClick) {
+      action.onClick(e);
+    } else if (action.type === 'login' && onLoginClick) {
+      onLoginClick(e);
+    }
+    if (onActionClick) {
+      onActionClick(action, e);
+    }
+  };
+
+  // Render profile control when logged in
+  const renderProfileControl = (action) => {
+    if (profile?.renderProfile) {
+      return profile.renderProfile({ ...profile, isLoggedIn });
+    }
+
+    const profileIconNode = profile?.icon || <UserOutlined />;
+    const profileName = profile?.name;
+    const profileAvatar = profile?.avatar;
+
+    const handleProfileClick = (e) => {
+      if (profile?.onClick) profile.onClick(e);
+      if (onProfileClick) onProfileClick(e);
+    };
+
+    const profileBtn = (
+      <button
+        type="button"
+        className="tps-profile-btn"
+        onClick={handleProfileClick}
+        aria-label={profileName ? `Profile: ${profileName}` : 'User Profile'}
+      >
+        {profileAvatar ? (
+          <Avatar size={30} src={profileAvatar} />
+        ) : (
+          <span className="tps-profile-btn__icon">{profileIconNode}</span>
+        )}
+        {profileName && <span className="tps-profile-btn__name">{profileName}</span>}
+      </button>
+    );
+
+    if (profile?.menuItems && profile.menuItems.length > 0) {
+      const items = profile.menuItems.map((item, idx) => ({
+        key: item.key || String(idx),
+        label: item.href ? (
+          <Link href={item.href}>{item.label}</Link>
+        ) : (
+          <span>{item.label}</span>
+        ),
+        icon: item.icon,
+        danger: item.danger,
+        disabled: item.disabled,
+        onClick: item.onClick,
+      }));
+
+      return (
+        <Dropdown menu={{ items }} placement="bottomRight" arrow>
+          {profileBtn}
+        </Dropdown>
+      );
+    }
+
+    if (profileName) {
+      return (
+        <Tooltip title={profileName} placement="bottom">
+          {profileBtn}
+        </Tooltip>
+      );
+    }
+
+    return profileBtn;
+  };
 
   // Handle menu item navigation
   const handleItemClick = (item, e) => {
@@ -340,6 +434,8 @@ export function NavigationHeaderComponent({
     ...style,
   };
 
+  const bgStyle = backgroundColor ? { backgroundColor } : {};
+
   return (
     <header
       className={`tps-nav-header ${isDark ? 'tps-nav-header--dark' : ''} ${
@@ -347,6 +443,7 @@ export function NavigationHeaderComponent({
       } ${isTransparent ? 'tps-nav-header--transparent' : ''} ${
         sticky ? 'tps-nav-header--sticky' : ''
       } ${className}`.trim()}
+      style={bgStyle}
     >
       <div className="tps-nav-header__container" style={containerStyle}>
         {/* Left Section: Logo */}
@@ -394,32 +491,51 @@ export function NavigationHeaderComponent({
         <div className="tps-nav-header__right">
           {normalizedActions.length > 0 && (
             <div className="tps-nav-header__actions">
-              {normalizedActions.map((action, idx) => (
-                <div key={idx} className="tps-nav-header__action-item">
-                  {action.href && !action.onClick ? (
-                    <Link href={action.href}>
+              {normalizedActions.map((action, idx) => {
+                const isLoginType = action.type === 'login';
+
+                // If logged in and action is login, render profile dropdown/avatar
+                if (isLoginType && isLoggedIn) {
+                  return (
+                    <div key={action.type || idx} className="tps-nav-header__action-item">
+                      {renderProfileControl(action)}
+                    </div>
+                  );
+                }
+
+                const btnIcon =
+                  action.icon ||
+                  (isLoginType ? <LoginOutlined /> : undefined);
+                const btnType = action.variant === 'primary' ? 'primary' : 'default';
+
+                return (
+                  <div key={action.type || idx} className="tps-nav-header__action-item">
+                    {action.href && !action.onClick ? (
+                      <Link href={action.href}>
+                        <Button
+                          type={btnType}
+                          className="tps-header-btn"
+                          icon={btnIcon}
+                          disabled={action.disabled}
+                          onClick={(e) => handleActionClick(action, e)}
+                        >
+                          {action.label || (isLoginType ? 'Login' : 'Action')}
+                        </Button>
+                      </Link>
+                    ) : (
                       <Button
-                        type={action.variant === 'primary' ? 'primary' : 'default'}
+                        type={btnType}
                         className="tps-header-btn"
-                        icon={action.icon}
+                        icon={btnIcon}
                         disabled={action.disabled}
+                        onClick={(e) => handleActionClick(action, e)}
                       >
-                        {action.label}
+                        {action.label || (isLoginType ? 'Login' : 'Action')}
                       </Button>
-                    </Link>
-                  ) : (
-                    <Button
-                      type={action.variant === 'primary' ? 'primary' : 'default'}
-                      className="tps-header-btn"
-                      icon={action.icon}
-                      disabled={action.disabled}
-                      onClick={(e) => action.onClick && action.onClick(e)}
-                    >
-                      {action.label}
-                    </Button>
-                  )}
-                </div>
-              ))}
+                    )}
+                  </div>
+                );
+              })}
             </div>
           )}
 
@@ -460,20 +576,33 @@ export function NavigationHeaderComponent({
           </div>
           {normalizedActions.length > 0 && (
             <div className="tps-mobile-nav__actions" style={{ marginTop: 24, display: 'flex', flexDirection: 'column', gap: 8 }}>
-              {normalizedActions.map((action, idx) => (
-                <Button
-                  key={idx}
-                  type={action.variant === 'primary' ? 'primary' : 'default'}
-                  block
-                  href={action.href}
-                  onClick={(e) => {
-                    setMobileMenuOpen(false);
-                    if (action.onClick) action.onClick(e);
-                  }}
-                >
-                  {action.label}
-                </Button>
-              ))}
+              {normalizedActions.map((action, idx) => {
+                const isLoginType = action.type === 'login';
+                if (isLoginType && isLoggedIn) {
+                  return (
+                    <div key={action.type || idx} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 0' }}>
+                      {renderProfileControl(action)}
+                      {profile?.name && <span style={{ fontWeight: 500 }}>{profile.name}</span>}
+                    </div>
+                  );
+                }
+                const btnIcon = action.icon || (isLoginType ? <LoginOutlined /> : undefined);
+                return (
+                  <Button
+                    key={idx}
+                    type={action.variant === 'primary' ? 'primary' : 'default'}
+                    icon={btnIcon}
+                    block
+                    href={action.href}
+                    onClick={(e) => {
+                      setMobileMenuOpen(false);
+                      handleActionClick(action, e);
+                    }}
+                  >
+                    {action.label || (isLoginType ? 'Login' : 'Action')}
+                  </Button>
+                );
+              })}
             </div>
           )}
         </div>
@@ -515,9 +644,20 @@ export const NavigationHeader = {
       defaultItemProps: { label: 'New Item', path: '/' },
       getItemSummary: (item, i) => item?.label || `Menu ${i + 1}`,
     },
-    // Optional Right CTA
-    cta_label: { type: 'text', label: 'CTA button label' },
-    cta_href: { type: 'text', label: 'CTA button link' },
+    // Actions & Auth
+    isLoggedIn: {
+      type: 'radio',
+      label: 'User status',
+      options: [
+        { label: 'Logged out (Show Login)', value: false },
+        { label: 'Logged in (Show Profile)', value: true },
+      ],
+    },
+    login_label: { type: 'text', label: 'Login button label' },
+    login_href: { type: 'text', label: 'Login URL' },
+    // Optional Secondary CTA
+    cta_label: { type: 'text', label: 'Secondary CTA button label (optional)' },
+    cta_href: { type: 'text', label: 'Secondary CTA button link (optional)' },
     // Styling
     variant: {
       type: 'select',
@@ -528,6 +668,10 @@ export const NavigationHeader = {
         { label: 'Dark', value: 'dark' },
         { label: 'Transparent', value: 'transparent' },
       ],
+    },
+    backgroundColor: {
+      type: 'text',
+      label: 'Background color (hex/CSS)',
     },
     sticky: {
       type: 'radio',
@@ -557,9 +701,13 @@ export const NavigationHeader = {
       },
       { label: 'Contact', path: '/contact' },
     ],
-    cta_label: 'Get Started',
-    cta_href: '/get-started',
+    isLoggedIn: false,
+    login_label: 'Login',
+    login_href: '/login',
+    cta_label: '',
+    cta_href: '',
     variant: 'light',
+    backgroundColor: '',
     sticky: false,
   },
   render: (props) => <NavigationHeaderComponent {...props} />,
