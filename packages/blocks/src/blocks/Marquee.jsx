@@ -2,6 +2,7 @@
 
 import { useMemo } from 'react';
 import { StudioLink as Link } from '../context';
+import { htmlField } from './HtmlField.jsx';
 
 /**
  * Pure React component for running ticker / marquee text with HTML link support.
@@ -132,10 +133,7 @@ export const Marquee = {
           type: 'number',
           label: 'Order / Priority (e.g. 1, 2, 3)',
         },
-        text: {
-          type: 'textarea',
-          label: 'HTML text (supports formatting & <a href="..."> links)',
-        },
+        text: htmlField('HTML text (supports formatting & links)'),
         link_label: {
           type: 'text',
           label: 'Extra link label (optional)',

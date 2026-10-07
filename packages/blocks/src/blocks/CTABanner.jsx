@@ -3,12 +3,13 @@
 import { StudioLink as Link } from '../context';
 import { Button } from 'antd';
 import { ArrowRightOutlined } from '@ant-design/icons';
+import { htmlField } from './HtmlField.jsx';
 
 export const CTABanner = {
   label: 'CTA banner',
   fields: {
     tagline: { type: 'text', label: 'Tagline (small caps)' },
-    heading_html: { type: 'textarea', label: 'Heading (HTML allowed)' },
+    heading_html: htmlField('Heading (HTML allowed)'),
     body: { type: 'textarea', label: 'Body' },
     button_label: { type: 'text', label: 'Button label' },
     button_href: { type: 'text', label: 'Button link' },

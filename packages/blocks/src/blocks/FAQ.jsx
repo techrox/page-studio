@@ -4,6 +4,7 @@
 // the accessibility + keyboard handling for free.
 
 import { Collapse } from 'antd';
+import { htmlField } from './HtmlField.jsx';
 
 export const FAQ = {
   label: 'FAQ accordion',
@@ -15,11 +16,7 @@ export const FAQ = {
       label: 'Questions',
       arrayFields: {
         question: { type: 'text', label: 'Question' },
-        answer_html: {
-          type: 'textarea',
-          label: 'Answer (HTML allowed)',
-          rows: 5,
-        },
+        answer_html: htmlField('Answer (HTML allowed)'),
       },
       defaultItemProps: {
         question: 'New question?',

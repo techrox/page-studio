@@ -12,6 +12,7 @@ import { Row, Col, Form, Input, Button, Select, Space, App as AntdApp } from 'an
 import { SendOutlined, MailOutlined, LinkedinFilled } from '@ant-design/icons';
 
 import { useStudio } from '../context';
+import { htmlField } from './HtmlField.jsx';
 
 function ContactSectionRender({
   hero_eyebrow,
@@ -329,10 +330,7 @@ export const ContactSection = {
     response_label: { type: 'text', label: 'Response card label' },
     response_body: { type: 'textarea', label: 'Response card body' },
     form_submit_label: { type: 'text', label: 'Submit button label' },
-    form_privacy_html: {
-      type: 'textarea',
-      label: 'Privacy footer (HTML allowed)',
-    },
+    form_privacy_html: htmlField('Privacy footer (HTML allowed)'),
     success_heading: { type: 'text', label: 'Success heading' },
     success_body: { type: 'textarea', label: 'Success body' },
     stages: {

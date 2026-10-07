@@ -1,10 +1,12 @@
 // RawHtml — escape hatch for pasting in arbitrary markup (embeds, custom
 // layouts, etc.). Wrapped in a container so it inherits site spacing.
 
+import { htmlField } from './HtmlField.jsx';
+
 export const RawHtml = {
   label: 'Custom HTML',
   fields: {
-    html: { type: 'textarea', label: 'HTML' },
+    html: htmlField('HTML content'),
     contained: {
       type: 'radio',
       label: 'Width',

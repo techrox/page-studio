@@ -1,14 +1,13 @@
 // SectionHeader — eyebrow + heading + optional lede. The standard "what
 // follows is a major section" introduction used across the site.
 
+import { htmlField } from './HtmlField.jsx';
+
 export const SectionHeader = {
   label: 'Section header',
   fields: {
     eyebrow: { type: 'text', label: 'Eyebrow' },
-    heading_html: {
-      type: 'textarea',
-      label: 'Heading (HTML allowed)',
-    },
+    heading_html: htmlField('Heading (HTML allowed)'),
     lede: { type: 'textarea', label: 'Lede (optional)' },
     align: {
       type: 'radio',

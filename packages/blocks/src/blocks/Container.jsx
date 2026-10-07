@@ -2,12 +2,14 @@
 // adjacent blocks. Doesn't accept children blocks (Puck DropZones add too
 // much complexity); instead this is a single decorative wrapper for one
 // title + one body of content.
+import { htmlField } from './HtmlField.jsx';
+
 export const Container = {
   label: 'Container box',
   fields: {
     eyebrow: { type: 'text', label: 'Eyebrow' },
     heading: { type: 'text', label: 'Heading' },
-    body_html: { type: 'textarea', label: 'Body (HTML)', rows: 5 },
+    body_html: htmlField('Body (HTML)'),
     background: {
       type: 'select', label: 'Box background',
       options: [

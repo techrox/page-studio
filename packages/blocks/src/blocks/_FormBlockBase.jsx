@@ -3,6 +3,7 @@ import { Form, Row, Col, Button, App as AntdApp } from 'antd';
 import { SendOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import { useStudio } from '../context';
 import { DynamicFormField } from './_DynamicFormField';
+import { htmlField } from './HtmlField.jsx';
 
 // Puck array-field definition shared by every form block.
 // Authors configure form fields in the Puck sidebar — add, remove, reorder,
@@ -94,7 +95,7 @@ export const COMMON_FORM_FIELDS = {
   form_heading: { type: 'text', label: 'Heading' },
   form_lede: { type: 'textarea', label: 'Lede' },
   form_submit_label: { type: 'text', label: 'Submit button label' },
-  form_privacy_html: { type: 'textarea', label: 'Privacy footer (HTML allowed)' },
+  form_privacy_html: htmlField('Privacy footer (HTML allowed)'),
   success_heading: { type: 'text', label: 'Success heading' },
   success_body: { type: 'textarea', label: 'Success body' },
   background: {

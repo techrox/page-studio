@@ -8,15 +8,13 @@
 import { StudioLink as Link } from '../context';
 import { Button } from 'antd';
 import { ArrowRightOutlined } from '@ant-design/icons';
+import { htmlField } from './HtmlField.jsx';
 
 export const Hero = {
   label: 'Hero',
   fields: {
     eyebrow: { type: 'text', label: 'Eyebrow' },
-    heading_html: {
-      type: 'textarea',
-      label: 'Heading (HTML allowed)',
-    },
+    heading_html: htmlField('Heading (HTML allowed)'),
     lede: { type: 'textarea', label: 'Lede' },
     primary_cta_label: { type: 'text', label: 'Primary button label' },
     primary_cta_href: { type: 'text', label: 'Primary button link' },

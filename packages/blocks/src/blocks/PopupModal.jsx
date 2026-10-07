@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Button } from 'antd';
 import { CloseOutlined, EyeOutlined } from '@ant-design/icons';
 import { StudioLink as Link } from '../context';
+import { htmlField } from './HtmlField.jsx';
 
 /**
  * Pure React component for a center-aligned popup modal that opens on page load.
@@ -289,10 +290,7 @@ export const PopupModal = {
       type: 'text',
       label: 'Eyebrow / Subtitle (optional)',
     },
-    body_html: {
-      type: 'textarea',
-      label: 'Body text (HTML supported)',
-    },
+    body_html: htmlField('Body text (HTML supported)'),
     // Image
     image_url: {
       type: 'text',
