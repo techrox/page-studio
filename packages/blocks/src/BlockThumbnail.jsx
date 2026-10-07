@@ -118,6 +118,31 @@ function getPreviews(c) {
       <rect x="101" y="30" width="14" height="8" rx="2" fill={PRIMARY} />
     </Frame>
   ),
+  ContactNavigationHeader: (
+    <Frame>
+      <rect x="0" y="0" width={FRAME_W} height="16" fill={PRIMARY} />
+      <rect x="10" y="6" width="22" height="4" rx="1" fill="#ffffff" opacity="0.9" />
+      <rect x="36" y="6" width="22" height="4" rx="1" fill="#ffffff" opacity="0.9" />
+      <rect x="96" y="5" width="18" height="6" rx="1" fill="#ffffff" opacity="0.25" />
+      <rect x="10" y="32" width="18" height="8" rx="2" fill={PRIMARY} />
+      <rect x="36" y="34" width="12" height="4" rx="1" fill={TEXT} />
+      <rect x="52" y="34" width="12" height="4" rx="1" fill={MUTED} />
+      <rect x="68" y="34" width="16" height="4" rx="1" fill={MUTED} />
+      <rect x="98" y="31" width="17" height="9" rx="2" fill={PRIMARY} />
+    </Frame>
+  ),
+  ImageCarousel: (
+    <Frame>
+      <rect x="8" y="8" width={FRAME_W - 16} height={FRAME_H - 16} rx="4" fill={BG_SOFT} stroke={BORDER} strokeWidth="1" />
+      <circle cx="20" cy="35" r="5" fill={CARD} stroke={BORDER} strokeWidth="1" />
+      <circle cx={FRAME_W - 20} cy="35" r="5" fill={CARD} stroke={BORDER} strokeWidth="1" />
+      <rect x="24" y="44" width="44" height="6" rx="1" fill={TEXT} />
+      <rect x="24" y="53" width="60" height="4" rx="1" fill={MUTED} />
+      <circle cx={FRAME_W / 2 - 8} cy={FRAME_H - 14} r="1.5" fill={PRIMARY} />
+      <circle cx={FRAME_W / 2} cy={FRAME_H - 14} r="1.5" fill={MUTED} />
+      <circle cx={FRAME_W / 2 + 8} cy={FRAME_H - 14} r="1.5" fill={MUTED} />
+    </Frame>
+  ),
   NavigationHeader: (
     <Frame>
       <rect x="10" y="30" width="18" height="8" rx="2" fill={PRIMARY} />
@@ -1148,6 +1173,8 @@ export const BLOCK_DESCRIPTIONS = {
   ImageCaption: 'Single image with caption and optional photo credit.',
   InlineCTA: 'Compact one-line CTA strip — sits between content sections without dominating.',
   ContactHeader: 'Top header with dynamic contact items (phones & emails), centered logo, and configurable actions/login.',
+  ContactNavigationHeader: 'Merged header with top contact strip (phones/emails), brand logo, full navigation menus, and unified mobile drawer.',
+  ImageCarousel: 'Interactive image slider / carousel with autoplay, custom slide captions, overlay styling, and arrow/dot navigation.',
   NavigationHeader: 'Header with logo, horizontal navigation menus, multi-level dropdowns, and mobile drawer.',
   Marquee: 'Scrolling ticker / marquee for news, alerts, and updates with HTML links and ordering.',
   PopupModal: 'Centered popup modal with image, rich text, actions, and auto-open/dismiss triggers.',

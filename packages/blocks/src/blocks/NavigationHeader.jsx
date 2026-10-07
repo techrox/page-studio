@@ -79,7 +79,18 @@ export function NavigationHeaderComponent({
         }
       : undefined);
 
-  const effectiveActivePath = activePath !== undefined ? activePath : currentPath;
+  const effectiveActivePath =
+    activePath !== undefined
+      ? activePath
+      : currentPath !== undefined
+      ? currentPath
+      : studio?.activePath !== undefined
+      ? studio.activePath
+      : studio?.currentPath !== undefined
+      ? studio.currentPath
+      : typeof window !== 'undefined'
+      ? window.location.pathname
+      : undefined;
 
   // Check if a menu item or any of its descendants is currently active
   const checkIsActive = (item) => {
@@ -88,8 +99,29 @@ export function NavigationHeaderComponent({
     }
     if (!effectiveActivePath) return false;
     const itemPath = item.path || item.href;
-    if (itemPath && itemPath === effectiveActivePath) {
-      return true;
+    if (itemPath) {
+      const normalize = (p) => {
+        if (!p) return '';
+        let clean = p.split('?')[0].split('#')[0].replace(/\/+$/, '') || '/';
+        return clean;
+      };
+      const cleanItem = normalize(itemPath);
+      const cleanActive = normalize(effectiveActivePath);
+      if (cleanItem === cleanActive) {
+        return true;
+      }
+      if (
+        cleanItem !== '/' &&
+        (cleanActive.endsWith(cleanItem) || cleanItem.endsWith(cleanActive))
+      ) {
+        return true;
+      }
+      if (
+        (cleanItem === '/home' && cleanActive === '/') ||
+        (cleanItem === '/' && cleanActive === '/home')
+      ) {
+        return true;
+      }
     }
     if (Array.isArray(item.children)) {
       return item.children.some((child) => checkIsActive(child));

@@ -30,6 +30,7 @@ export {
 // whole library is fine in practice — tsup tree-shakes anything not reached
 // by the consumer's import graph.
 export { ContactHeader, ContactHeaderComponent } from './blocks/ContactHeader.jsx';
+export { ContactNavigationHeader, ContactNavigationHeaderComponent } from './blocks/ContactNavigationHeader.jsx';
 export { NavigationHeader, NavigationHeaderComponent } from './blocks/NavigationHeader.jsx';
 export { Marquee, MarqueeComponent } from './blocks/Marquee.jsx';
 export { PopupModal, PopupModalComponent } from './blocks/PopupModal.jsx';
@@ -77,6 +78,7 @@ export { PricingComparison } from './blocks/PricingComparison.jsx';
 export { AwardsBar } from './blocks/AwardsBar.jsx';
 export { CountUpStats } from './blocks/CountUpStats.jsx';
 export { ImageGallery } from './blocks/ImageGallery.jsx';
+export { ImageCarousel, ImageCarouselComponent } from './blocks/ImageCarousel.jsx';
 export { ImageCaption } from './blocks/ImageCaption.jsx';
 export { InlineCTA } from './blocks/InlineCTA.jsx';
 export { AnnouncementBar } from './blocks/AnnouncementBar.jsx';

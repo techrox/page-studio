@@ -7,6 +7,7 @@
 // the library do the same with their own files and pass them via `blocks:`.
 
 import { ContactHeader } from './blocks/ContactHeader';
+import { ContactNavigationHeader } from './blocks/ContactNavigationHeader';
 import { NavigationHeader } from './blocks/NavigationHeader';
 import { Marquee } from './blocks/Marquee';
 import { PopupModal } from './blocks/PopupModal';
@@ -44,6 +45,7 @@ import { PricingComparison } from './blocks/PricingComparison';
 import { AwardsBar } from './blocks/AwardsBar';
 import { CountUpStats } from './blocks/CountUpStats';
 import { ImageGallery } from './blocks/ImageGallery';
+import { ImageCarousel } from './blocks/ImageCarousel';
 import { ImageCaption } from './blocks/ImageCaption';
 import { InlineCTA } from './blocks/InlineCTA';
 import { AnnouncementBar } from './blocks/AnnouncementBar';
@@ -142,13 +144,16 @@ const DEFAULT_REVEAL = {
   PressMentions: 'scale-in',
   Container: 'fade-up',
   ContactHeader: null,
+  ContactNavigationHeader: null,
   NavigationHeader: null,
+  ImageCarousel: 'fade-up',
   Spacer: null,
   RawHtml: null,
 };
 
 export const defaultBlocks = {
   ContactHeader,
+  ContactNavigationHeader,
   NavigationHeader,
   Marquee,
   PopupModal,
@@ -196,6 +201,7 @@ export const defaultBlocks = {
   AwardsBar,
   CountUpStats,
   ImageGallery,
+  ImageCarousel,
   ImageCaption,
   InlineCTA,
   AnnouncementBar,
@@ -220,7 +226,7 @@ export const defaultBlocks = {
 // Sidebar grouping for Puck's components panel. Authors browse by category.
 export const defaultCategories = {
   Headers: {
-    components: ['ContactHeader', 'NavigationHeader', 'Marquee', 'AnnouncementBar'],
+    components: ['NavigationHeader', 'ContactNavigationHeader', 'Marquee', 'AnnouncementBar'],
   },
   'Page sections': {
     components: ['Hero', 'SectionHeader', 'CTABanner', 'Banner', 'InlineCTA'],
@@ -247,7 +253,7 @@ export const defaultCategories = {
     components: ['PopupModal', 'FAQ', 'AccordionBlock', 'TabsBlock', 'Timeline', 'EventsList'],
   },
   Media: {
-    components: ['VideoEmbed', 'ImageGallery', 'ImageCaption', 'MapEmbed'],
+    components: ['VideoEmbed', 'ImageGallery', 'ImageCarousel', 'ImageCaption', 'MapEmbed'],
   },
   Forms: {
     components: [
