@@ -8,6 +8,7 @@
 
 import { ContactHeader } from './blocks/ContactHeader';
 import { ContactNavigationHeader } from './blocks/ContactNavigationHeader';
+import { MastheadHeader } from './blocks/MastheadHeader';
 import { NavigationHeader } from './blocks/NavigationHeader';
 import { Marquee } from './blocks/Marquee';
 import { Notifications } from './blocks/Notifications';
@@ -147,6 +148,7 @@ const DEFAULT_REVEAL = {
   ContactHeader: null,
   ContactNavigationHeader: null,
   NavigationHeader: null,
+  MastheadHeader: null,
   Notifications: 'fade-up',
   ImageCarousel: 'fade-up',
   Spacer: null,
@@ -156,6 +158,7 @@ const DEFAULT_REVEAL = {
 export const defaultBlocks = {
   ContactHeader,
   ContactNavigationHeader,
+  MastheadHeader,
   NavigationHeader,
   Marquee,
   Notifications,
@@ -229,7 +232,7 @@ export const defaultBlocks = {
 // Sidebar grouping for Puck's components panel. Authors browse by category.
 export const defaultCategories = {
   Headers: {
-    components: ['NavigationHeader', 'ContactNavigationHeader', 'Marquee', 'Notifications', 'AnnouncementBar'],
+    components: ['NavigationHeader', 'ContactNavigationHeader', 'MastheadHeader', 'Marquee', 'Notifications', 'AnnouncementBar'],
   },
   'Page sections': {
     components: ['Hero', 'SectionHeader', 'CTABanner', 'Banner', 'InlineCTA'],

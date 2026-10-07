@@ -144,6 +144,35 @@ export interface NavigationHeaderProps {
   renderLogo?: (logo: HeaderLogo) => ReactNode;
 }
 
+export interface MastheadHeaderProps {
+  title?: string;
+  subtitle?: string;
+  title_alt?: string;
+  subtitle_alt?: string;
+  crest_url?: string;
+  crest_alt?: string;
+  crest_href?: string;
+  crest_size?: number;
+  menus?: MenuItem[];
+  bar_color?: string;
+  bar_text_color?: string;
+  title_color?: string;
+  variant?: 'light' | 'soft' | 'transparent';
+  backgroundColor?: string;
+  sticky?: boolean;
+  shrink_on_scroll?: boolean;
+  shrink_after?: number;
+  maxWidth?: string;
+  className?: string;
+  style?: React.CSSProperties;
+  activePath?: string;
+  currentPath?: string;
+  isActive?: (item: MenuItem, activePath?: string) => boolean;
+  onNavigate?: (path: string, item: MenuItem, event: MouseEvent<HTMLElement>) => void;
+  renderLink?: (props: { href: string; children: ReactNode; className?: string; onClick?: (e: any) => void }) => ReactNode;
+  renderCrest?: (crest: { url?: string; alt?: string; href?: string; initials?: string }) => ReactNode;
+}
+
 export interface MarqueeItem {
   id?: string;
   order?: number;

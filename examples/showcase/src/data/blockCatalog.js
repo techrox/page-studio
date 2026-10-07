@@ -41,6 +41,18 @@ export const BLOCK_FIELDS = {
     ['backgroundColor', 'custom background color hex/CSS'],
     ['sticky', 'radio -- sticky header'],
   ],
+  MastheadHeader: [
+    ['title / subtitle', 'primary (left) title and the line under it'],
+    ['title_alt / subtitle_alt', 'secondary (right) title and subtitle, e.g. a translation'],
+    ['crest_url / crest_alt / crest_href', 'centre crest image URL, alt text, link (monogram fallback when empty)'],
+    ['crest_size', 'number -- crest diameter in px'],
+    ['menus', 'array of menu items split either side of the crest, optional child dropdowns'],
+    ['sticky', 'radio -- sticky header'],
+    ['shrink_on_scroll / shrink_after', 'radio -- compact on scroll + scroll distance in px before it kicks in'],
+    ['title_color / bar_color / bar_text_color', 'custom hex or CSS colors (empty = brand default)'],
+    ['variant', 'select -- light / soft / transparent band background'],
+    ['backgroundColor / maxWidth', 'custom band background color and content max width'],
+  ],
   Marquee: [
     ['badge_text', 'text -- optional pill/badge at start of ticker'],
     ['items', 'array -- order (number), text (HTML with links), link_label, link_href'],
@@ -413,6 +425,15 @@ export const BLOCK_GUIDANCE = {
     tips: [
       'Supports nested child menus rendered automatically as accessible dropdowns.',
       'Includes active state highlighting and custom navigation callbacks.',
+    ],
+  },
+  MastheadHeader: {
+    when: 'Institutional masthead -- two titles (often a translated pair) flanking a crest that straddles the nav bar. Use it as the first block on a university, government, or association site.',
+    tips: [
+      'Set `shrink_on_scroll` so the titles and crest compact once the visitor scrolls, keeping the nav reachable.',
+      'Leave `crest_url` empty to get the ringed monogram built from the title initials; paste a URL to use a real seal.',
+      'The menu list is split evenly either side of the crest -- add items in pairs for a balanced bar.',
+      'Recolour the bar per tenant with `bar_color` / `bar_text_color`, or override `--tps-masthead-bar` in the host.',
     ],
   },
   Hero: {

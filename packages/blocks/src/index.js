@@ -31,6 +31,7 @@ export {
 // by the consumer's import graph.
 export { ContactHeader, ContactHeaderComponent } from './blocks/ContactHeader.jsx';
 export { ContactNavigationHeader, ContactNavigationHeaderComponent } from './blocks/ContactNavigationHeader.jsx';
+export { MastheadHeader, MastheadHeaderComponent } from './blocks/MastheadHeader.jsx';
 export { NavigationHeader, NavigationHeaderComponent } from './blocks/NavigationHeader.jsx';
 export { Marquee, MarqueeComponent } from './blocks/Marquee.jsx';
 export { Notifications, NotificationsComponent } from './blocks/Notifications.jsx';

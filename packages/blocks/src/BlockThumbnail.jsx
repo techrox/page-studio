@@ -153,6 +153,20 @@ function getPreviews(c) {
       <rect x="98" y="29" width="17" height="9" rx="2" fill={PRIMARY} />
     </Frame>
   ),
+  MastheadHeader: (
+    <Frame>
+      <rect x="8" y="11" width="34" height="5" rx="1.5" fill={TEXT} />
+      <rect x="8" y="20" width="26" height="3" rx="1.5" fill={MUTED} />
+      <rect x="78" y="11" width="34" height="5" rx="1.5" fill={TEXT} />
+      <rect x="86" y="20" width="26" height="3" rx="1.5" fill={MUTED} />
+      <rect x="0" y="44" width={FRAME_W} height="18" fill={PRIMARY} />
+      <rect x="7" y="50" width="18" height="5" rx="1.5" fill="#ffffff" opacity="0.9" />
+      <rect x="30" y="50" width="14" height="5" rx="1.5" fill="#ffffff" opacity="0.9" />
+      <rect x="76" y="50" width="16" height="5" rx="1.5" fill="#ffffff" opacity="0.9" />
+      <rect x="97" y="50" width="16" height="5" rx="1.5" fill="#ffffff" opacity="0.9" />
+      <circle cx={FRAME_W / 2} cy="44" r="9" fill={CARD} stroke={PRIMARY} strokeWidth="2" />
+    </Frame>
+  ),
   Marquee: (
     <Frame>
       <rect x="10" y="28" width="18" height="12" rx="6" fill={PRIMARY} />
@@ -1192,6 +1206,7 @@ export const BLOCK_DESCRIPTIONS = {
   ContactNavigationHeader: 'Merged header with top contact strip (phones/emails), brand logo, full navigation menus, and unified mobile drawer.',
   ImageCarousel: 'Interactive image slider / carousel with autoplay, custom slide captions, overlay styling, and arrow/dot navigation.',
   NavigationHeader: 'Header with logo, horizontal navigation menus, multi-level dropdowns, and mobile drawer.',
+  MastheadHeader: 'Masthead with two titles flanking a centre crest over the coloured nav bar; compacts as the page scrolls.',
   Marquee: 'Scrolling ticker / marquee for news, alerts, and updates with HTML links and ordering.',
   Notifications: 'Container-based auto-scrolling notifications board with adjustable height, NEW tags, dates, and HTML body.',
   PopupModal: 'Centered popup modal with image, rich text, actions, and auto-open/dismiss triggers.',

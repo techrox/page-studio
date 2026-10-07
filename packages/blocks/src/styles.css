@@ -25,6 +25,12 @@
   --tps-max:           1240px;
   --tps-radius:        14px;
   --tps-radius-lg:     20px;
+
+  /* Masthead header — titles, crest ring and the nav bar behind it. */
+  --tps-masthead-bar:      #4b2e83;
+  --tps-masthead-bar-text: #ffffff;
+  --tps-masthead-title:    #4b2e83;
+  --tps-masthead-font:     Georgia, 'Times New Roman', Times, serif;
 }
 
 /* -------------------------------------------------------------------------
@@ -87,6 +93,7 @@
   --tps-bg:           #ffffff;
   --tps-bg-soft:      #fafaf7;
   --tps-bg-section:   #f8fafc;
+  --tps-masthead-title: #4b2e83;
 }
 
 /* Dark theme. Shared by the container scope and the per-section opt-in. */
@@ -101,6 +108,8 @@
   --tps-bg-soft:      #1a1a1a;
   --tps-bg-section:   #0a0a0a;
   --tps-primary-soft: #1a1a1a;
+  /* Masthead titles sit on the band surface — lift them for contrast. */
+  --tps-masthead-title: #c4b5fd;
 }
 /* A container theme paints its own backdrop; the per-section variant paints
    its surface (it's a section wrapper, not just a token scope). */
@@ -949,6 +958,287 @@
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+}
+
+/* --- Masthead Header (dual titles + centre crest over the nav bar) --- */
+.tps-masthead {
+  --tps-masthead-title-size: 30px;
+  --tps-masthead-sub-size: 13px;
+  --tps-masthead-band-pad: 26px;
+  --tps-masthead-link-pad: 13px;
+  --tps-masthead-crest: var(--tps-masthead-crest-base, 116px);
+  position: relative;
+  width: 100%;
+  background: var(--tps-bg);
+  color: var(--tps-ink);
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+.tps-masthead--soft {
+  background: var(--tps-bg-soft);
+}
+.tps-masthead--transparent {
+  background: transparent;
+}
+.tps-masthead--sticky {
+  position: sticky;
+  top: 0;
+  z-index: 90;
+}
+/* Scrolled state — every size the masthead compacts lives on these vars, so
+   one class toggles the whole shrink (band padding, type scale, crest). */
+.tps-masthead.is-compact {
+  --tps-masthead-title-size: 19px;
+  --tps-masthead-sub-size: 11.5px;
+  --tps-masthead-band-pad: 8px;
+  --tps-masthead-link-pad: 6px;
+  --tps-masthead-crest: calc(var(--tps-masthead-crest-base, 116px) * 0.6);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.14);
+}
+.tps-masthead__band {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(12px, 2vw, 28px);
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--tps-masthead-band-pad) clamp(16px, 3vw, 32px);
+  box-sizing: border-box;
+  transition: padding 0.25s ease;
+}
+.tps-masthead__side {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.tps-masthead__side--start {
+  align-items: flex-start;
+  text-align: left;
+}
+.tps-masthead__side--end {
+  align-items: flex-end;
+  text-align: right;
+}
+.tps-masthead__title {
+  display: block;
+  margin: 0;
+  font-family: var(--tps-masthead-font, Georgia, 'Times New Roman', serif);
+  font-size: var(--tps-masthead-title-size);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--tps-masthead-title, #4b2e83);
+  transition: font-size 0.25s ease;
+}
+.tps-masthead__subtitle {
+  display: block;
+  margin: 0;
+  font-family: var(--tps-masthead-font, Georgia, 'Times New Roman', serif);
+  font-size: var(--tps-masthead-sub-size);
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--tps-masthead-title, #4b2e83);
+  opacity: 0.9;
+  transition: font-size 0.25s ease;
+}
+/* Centre column only reserves the gap — the crest itself is positioned
+   against the band so it straddles the band/bar boundary either way. */
+.tps-masthead__crest-cell {
+  width: var(--tps-masthead-crest);
+  min-width: 0;
+}
+.tps-masthead__crest {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  /* -65% puts the crest centre just above the boundary: most of the disc
+     over the titles, its lower third dipping into the nav bar. */
+  transform: translate(-50%, -65%);
+  width: var(--tps-masthead-crest);
+  height: var(--tps-masthead-crest);
+  z-index: 3;
+  transition: width 0.25s ease, height 0.25s ease;
+}
+.tps-masthead__crest-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--tps-bg);
+  text-decoration: none;
+  box-shadow:
+    0 0 0 3px var(--tps-bg),
+    0 0 0 5px var(--tps-masthead-title, #4b2e83),
+    0 6px 16px rgba(15, 23, 42, 0.18);
+}
+.tps-masthead__crest-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* No crest image yet — a ringed monogram keeps the centre anchored. */
+.tps-masthead__crest-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-family: var(--tps-masthead-font, Georgia, 'Times New Roman', serif);
+  font-size: calc(var(--tps-masthead-crest) * 0.26);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--tps-masthead-title, #4b2e83);
+  background:
+    radial-gradient(circle at 50% 32%, var(--tps-primary-soft, #dbeafe), transparent 62%),
+    var(--tps-bg);
+}
+.tps-masthead__bar {
+  background: var(--tps-masthead-bar, #4b2e83);
+  color: var(--tps-masthead-bar-text, #ffffff);
+}
+.tps-masthead__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 3vw, 32px);
+  box-sizing: border-box;
+  min-height: 48px;
+  transition: min-height 0.25s ease;
+}
+.tps-masthead.is-compact .tps-masthead__nav {
+  min-height: 36px;
+}
+.tps-masthead__menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex: 1 1 0;
+  gap: 4px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* Keeps the two halves clear of the crest that overlaps the bar. */
+.tps-masthead__crest-gap {
+  flex: 0 0 calc(var(--tps-masthead-crest) + 44px);
+}
+.tps-masthead__item {
+  display: flex;
+  align-items: center;
+}
+.tps-masthead__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: var(--tps-masthead-link-pad, 13px) 8px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-family: var(--tps-masthead-font, Georgia, 'Times New Roman', serif);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: opacity 0.15s, padding 0.25s ease;
+}
+.tps-masthead__link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+  text-underline-offset: 7px;
+  text-decoration-thickness: 2px;
+}
+.tps-masthead__link.is-active {
+  text-decoration: underline;
+  text-underline-offset: 7px;
+  text-decoration-thickness: 2px;
+}
+.tps-masthead__chevron {
+  font-size: 10px;
+  opacity: 0.75;
+}
+
+@media (max-width: 900px) {
+  .tps-masthead:not(.is-compact) {
+    --tps-masthead-title-size: 19px;
+    --tps-masthead-sub-size: 11.5px;
+    --tps-masthead-band-pad: 16px;
+    --tps-masthead-crest: min(calc(var(--tps-masthead-crest-base, 116px) * 0.62), 76px);
+  }
+  .tps-masthead.is-compact {
+    --tps-masthead-title-size: 16px;
+    --tps-masthead-sub-size: 11px;
+    --tps-masthead-band-pad: 7px;
+    --tps-masthead-crest: min(calc(var(--tps-masthead-crest-base, 116px) * 0.46), 58px);
+  }
+  .tps-masthead__band {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .tps-masthead__side--end {
+    display: none;
+  }
+  /* No room to straddle on a phone — the crest drops into the flow and
+     sits inline beside the title instead. */
+  .tps-masthead__crest {
+    position: static;
+    transform: none;
+  }
+  .tps-masthead__crest-cell {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .tps-masthead__subtitle {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .tps-masthead__nav {
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding: 0 12px;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(to right, #000 86%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 86%, transparent 100%);
+  }
+  .tps-masthead__nav::-webkit-scrollbar {
+    display: none;
+  }
+  .tps-masthead__menu {
+    flex: 0 0 auto;
+    justify-content: flex-start;
+    gap: 2px;
+    padding-right: 16px;
+  }
+  .tps-masthead__crest-gap {
+    display: none;
+  }
+  .tps-masthead__link {
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tps-masthead,
+  .tps-masthead__band,
+  .tps-masthead__title,
+  .tps-masthead__subtitle,
+  .tps-masthead__crest,
+  .tps-masthead__nav,
+  .tps-masthead__link {
+    transition: none;
+  }
 }
 
 /* --- Image Carousel Slider Component --- */
