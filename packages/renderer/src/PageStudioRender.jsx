@@ -7,6 +7,7 @@
 // `fallback` so the host can still ship a static page when the CMS has
 // no override yet.
 
+import { useEffect, useRef } from 'react';
 import { Render } from '@puckeditor/core';
 import { ConfigProvider } from 'antd';
 import {
@@ -25,6 +26,54 @@ export function PageStudioRender({
   className = '',
   style = {},
 }) {
+  const rootRef = useRef(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const rootEl = rootRef.current;
+    if (!rootEl) return;
+
+    // Add .tps-anim class to html / documentElement if not already present
+    document.documentElement.classList.add('tps-anim');
+
+    // Query all reveal elements within this renderer instance
+    const reveals = rootEl.querySelectorAll('.tps-reveal');
+    if (!reveals || reveals.length === 0) return;
+
+    if (!('IntersectionObserver' in window)) {
+      reveals.forEach((el) => el.classList.add('is-in-view'));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-in-view');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.08,
+        rootMargin: '0px 0px -40px 0px',
+      },
+    );
+
+    reveals.forEach((el) => {
+      // If element is already in viewport, mark immediately
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        el.classList.add('is-in-view');
+      } else {
+        observer.observe(el);
+      }
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [data]);
   if (!data || !Array.isArray(data.content) || data.content.length === 0) {
     return fallback;
   }
@@ -62,7 +111,7 @@ export function PageStudioRender({
   return (
     <ConfigProvider theme={antdTheme}>
       <PageStudioProvider value={studio}>
-        <div className={`tps-renderer-root ${className}`.trim()} style={brandStyle}>
+        <div ref={rootRef} className={`tps-renderer-root ${className}`.trim()} style={brandStyle}>
           <Render config={resolved} data={populated} />
         </div>
       </PageStudioProvider>

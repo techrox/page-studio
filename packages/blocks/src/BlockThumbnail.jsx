@@ -163,6 +163,22 @@ function getPreviews(c) {
       <rect x="112" y="32" width="12" height="4" rx="1" fill={TEXT} />
     </Frame>
   ),
+  Notifications: (
+    <Frame>
+      <rect x="14" y="10" width="92" height="52" rx="3" fill={CARD} stroke={BORDER} strokeWidth="0.8" />
+      <rect x="14" y="10" width="92" height="12" rx="3" fill={BG_SOFT} />
+      <rect x="20" y="13.5" width="22" height="5" rx="2.5" fill={PRIMARY} />
+      <rect x="46" y="14" width="28" height="4" rx="1" fill={TEXT} />
+      {/* Item 1 with NEW tag */}
+      <rect x="20" y="27" width="12" height="4.5" rx="1" fill="#ef4444" />
+      <rect x="36" y="27.5" width="62" height="3.5" rx="1" fill={TEXT} />
+      <line x1="20" y1="36" x2="98" y2="36" stroke={BORDER} strokeWidth="0.5" />
+      {/* Item 2 */}
+      <rect x="20" y="41" width="12" height="4.5" rx="1" fill="#ef4444" />
+      <rect x="36" y="41.5" width="54" height="3.5" rx="1" fill={MUTED} />
+      <line x1="20" y1="50" x2="98" y2="50" stroke={BORDER} strokeWidth="0.5" />
+    </Frame>
+  ),
   PopupModal: (
     <Frame>
       <rect x="25" y="10" width="70" height="50" rx="4" fill={CARD || BG} stroke={PRIMARY} strokeWidth="1.2" />
@@ -1177,6 +1193,7 @@ export const BLOCK_DESCRIPTIONS = {
   ImageCarousel: 'Interactive image slider / carousel with autoplay, custom slide captions, overlay styling, and arrow/dot navigation.',
   NavigationHeader: 'Header with logo, horizontal navigation menus, multi-level dropdowns, and mobile drawer.',
   Marquee: 'Scrolling ticker / marquee for news, alerts, and updates with HTML links and ordering.',
+  Notifications: 'Container-based auto-scrolling notifications board with adjustable height, NEW tags, dates, and HTML body.',
   PopupModal: 'Centered popup modal with image, rich text, actions, and auto-open/dismiss triggers.',
   AnnouncementBar: 'Slim full-width strip for announcements, beta access, event invites — dark / primary / accent variants.',
   Quote: 'Editorial pull-quote with optional attribution. Left-bordered or centered.',

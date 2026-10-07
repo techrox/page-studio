@@ -33,6 +33,7 @@ export { ContactHeader, ContactHeaderComponent } from './blocks/ContactHeader.js
 export { ContactNavigationHeader, ContactNavigationHeaderComponent } from './blocks/ContactNavigationHeader.jsx';
 export { NavigationHeader, NavigationHeaderComponent } from './blocks/NavigationHeader.jsx';
 export { Marquee, MarqueeComponent } from './blocks/Marquee.jsx';
+export { Notifications, NotificationsComponent } from './blocks/Notifications.jsx';
 export { PopupModal, PopupModalComponent } from './blocks/PopupModal.jsx';
 export { Hero } from './blocks/Hero.jsx';
 export { SectionHeader } from './blocks/SectionHeader.jsx';

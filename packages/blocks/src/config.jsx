@@ -10,6 +10,7 @@ import { ContactHeader } from './blocks/ContactHeader';
 import { ContactNavigationHeader } from './blocks/ContactNavigationHeader';
 import { NavigationHeader } from './blocks/NavigationHeader';
 import { Marquee } from './blocks/Marquee';
+import { Notifications } from './blocks/Notifications';
 import { PopupModal } from './blocks/PopupModal';
 import { Hero } from './blocks/Hero';
 import { StatsStrip } from './blocks/StatsStrip';
@@ -146,6 +147,7 @@ const DEFAULT_REVEAL = {
   ContactHeader: null,
   ContactNavigationHeader: null,
   NavigationHeader: null,
+  Notifications: 'fade-up',
   ImageCarousel: 'fade-up',
   Spacer: null,
   RawHtml: null,
@@ -156,6 +158,7 @@ export const defaultBlocks = {
   ContactNavigationHeader,
   NavigationHeader,
   Marquee,
+  Notifications,
   PopupModal,
   Hero,
   SectionHeader,
@@ -226,7 +229,7 @@ export const defaultBlocks = {
 // Sidebar grouping for Puck's components panel. Authors browse by category.
 export const defaultCategories = {
   Headers: {
-    components: ['NavigationHeader', 'ContactNavigationHeader', 'Marquee', 'AnnouncementBar'],
+    components: ['NavigationHeader', 'ContactNavigationHeader', 'Marquee', 'Notifications', 'AnnouncementBar'],
   },
   'Page sections': {
     components: ['Hero', 'SectionHeader', 'CTABanner', 'Banner', 'InlineCTA'],
@@ -250,7 +253,7 @@ export const defaultCategories = {
     components: ['LogoStrip', 'PressMentions', 'AwardsBar', 'TestimonialQuote', 'TestimonialGrid'],
   },
   Interactive: {
-    components: ['PopupModal', 'FAQ', 'AccordionBlock', 'TabsBlock', 'Timeline', 'EventsList'],
+    components: ['PopupModal', 'Notifications', 'FAQ', 'AccordionBlock', 'TabsBlock', 'Timeline', 'EventsList'],
   },
   Media: {
     components: ['VideoEmbed', 'ImageGallery', 'ImageCarousel', 'ImageCaption', 'MapEmbed'],

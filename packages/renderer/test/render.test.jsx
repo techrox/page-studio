@@ -10,6 +10,10 @@ vi.mock('@puckeditor/core', () => ({
   Render: ({ data }) => <div data-testid="puck-render" data-count={data?.content?.length || 0} />,
 }));
 
+vi.mock('antd', () => ({
+  ConfigProvider: ({ children }) => children,
+}));
+
 import { PageStudioRender } from '../src/PageStudioRender.jsx';
 
 describe('PageStudioRender', () => {
