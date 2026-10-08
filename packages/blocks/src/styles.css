@@ -970,6 +970,9 @@
   --tps-masthead-band-pad: 26px;
   --tps-masthead-link-pad: 13px;
   --tps-masthead-crest: var(--tps-masthead-crest-base, 116px);
+  --tps-masthead-bar: var(--tps-primary, #0b60d8);
+  --tps-masthead-title: var(--tps-primary, #0b60d8);
+  --tps-masthead-subtitle: var(--tps-muted, #64748b);
   position: relative;
   width: 100%;
   background: var(--tps-bg);

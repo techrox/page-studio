@@ -85,6 +85,8 @@ export function PageStudioRender({
   const brandStyle = { ...style };
   if (primary) {
     brandStyle['--tps-primary'] = primary;
+    brandStyle['--tps-masthead-bar'] = primary;
+    brandStyle['--tps-masthead-title'] = primary;
     if (!branding?.cssVars?.['--tps-primary-soft']) {
       brandStyle['--tps-primary-soft'] = `${primary}18`;
     }
