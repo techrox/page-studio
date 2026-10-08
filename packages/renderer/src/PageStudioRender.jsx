@@ -107,13 +107,36 @@ export function PageStudioRender({
       }
     : undefined;
 
+  const isDedicatedStickyHeader =
+    Array.isArray(data?.content) &&
+    data.content.length > 0 &&
+    data.content.every((b) =>
+      ['NavigationHeader', 'ContactNavigationHeader', 'ContactHeader', 'MastheadHeader'].includes(b?.type),
+    ) &&
+    data.content.some((b) => {
+      if (b?.type === 'NavigationHeader') return b?.props?.sticky === true;
+      return b?.props?.sticky !== false;
+    });
+
+  if (isDedicatedStickyHeader && brandStyle.position === undefined) {
+    brandStyle.position = 'sticky';
+    brandStyle.top = 0;
+    brandStyle.zIndex = brandStyle.zIndex ?? 900;
+  }
+
+  const stickyHeaderClass = isDedicatedStickyHeader ? 'tps-renderer-root--sticky-header' : '';
+
   // Blocks read site/services/Link/etc. from StudioContext at render time.
   // Wrapping here means the renderer works the same whether the host is
   // server-rendered or hydrating on the client.
   return (
     <ConfigProvider theme={antdTheme}>
       <PageStudioProvider value={studio}>
-        <div ref={rootRef} className={`tps-renderer-root ${className}`.trim()} style={brandStyle}>
+        <div
+          ref={rootRef}
+          className={`tps-renderer-root ${stickyHeaderClass} ${className}`.trim()}
+          style={brandStyle}
+        >
           <Render config={resolved} data={populated} />
         </div>
       </PageStudioProvider>

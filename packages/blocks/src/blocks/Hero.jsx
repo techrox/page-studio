@@ -40,8 +40,30 @@ export const Hero = {
       type: 'radio',
       label: 'Background',
       options: [
-        { label: 'Light', value: 'light' },
+        { label: 'White', value: 'white' },
+        { label: 'Soft', value: 'soft' },
         { label: 'Dark', value: 'dark' },
+      ],
+    },
+    background_image: { type: 'text', label: 'Background image URL (optional)' },
+    background_overlay: {
+      type: 'select',
+      label: 'Image overlay effect',
+      options: [
+        { label: 'Gradient overlay (Recommended)', value: 'gradient' },
+        { label: 'Dark tint (50%)', value: 'dark' },
+        { label: 'Subtle tint (20%)', value: 'subtle' },
+        { label: 'No overlay', value: 'none' },
+      ],
+    },
+    button_style: {
+      type: 'select',
+      label: 'Button style',
+      options: [
+        { label: 'Brand primary (Solid)', value: 'solid' },
+        { label: 'Gradient (Primary to Accent)', value: 'gradient' },
+        { label: 'Gradient (Cyan to Blue)', value: 'gradient-cyan' },
+        { label: 'Gradient (Purple to Pink)', value: 'gradient-purple' },
       ],
     },
   },
@@ -57,7 +79,10 @@ export const Hero = {
     secondary_cta_href: '/about',
     align: 'left',
     variant: 'landing',
-    background: 'light',
+    background: 'white',
+    background_image: '',
+    background_overlay: 'gradient',
+    button_style: 'solid',
   },
   render: ({
     eyebrow,
@@ -69,18 +94,66 @@ export const Hero = {
     secondary_cta_href,
     align,
     variant,
-    background,
+    background = 'white',
+    background_image = '',
+    background_overlay = 'gradient',
+    button_style = 'solid',
   }) => {
     const isLanding = variant === 'landing';
+    const isDark = background === 'dark';
+    const isSoft = background === 'soft';
+
     const sectionClass = `${isLanding ? 'tps-hero' : 'tps-section'}${
-      background === 'dark' ? ' tps-section-dark' : ''
-    }`;
+      isSoft ? ' tps-section-soft' : ''
+    }${isDark ? ' tps-section-dark' : ''}`;
     const innerClass = isLanding ? 'tps-hero-inner' : 'tps-container';
+
+    // Background image & gradient overlay handling
+    const bgUrl = String(background_image || '').trim();
+    const hasBgImage = Boolean(bgUrl);
+
+    let overlayBg = '';
+    if (hasBgImage) {
+      if (background_overlay === 'gradient') {
+        overlayBg = isDark
+          ? 'linear-gradient(180deg, rgba(15, 23, 42, 0.82) 0%, rgba(15, 23, 42, 0.94) 100%)'
+          : 'linear-gradient(180deg, rgba(255, 255, 255, 0.86) 0%, rgba(255, 255, 255, 0.94) 100%)';
+      } else if (background_overlay === 'dark') {
+        overlayBg = 'linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.6))';
+      } else if (background_overlay === 'subtle') {
+        overlayBg = 'linear-gradient(rgba(15, 23, 42, 0.2), rgba(15, 23, 42, 0.2))';
+      }
+    }
+
+    const heroInlineStyle = {
+      ...(isLanding ? { textAlign: align } : { paddingTop: 96, paddingBottom: 56, textAlign: align }),
+      ...(hasBgImage
+        ? {
+            backgroundImage: overlayBg
+              ? `${overlayBg}, url("${bgUrl}")`
+              : `url("${bgUrl}")`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            ...(background_overlay === 'dark' ? { color: '#ffffff' } : {}),
+          }
+        : {
+            background: isDark ? '#0F172A' : isSoft ? undefined : 'var(--tps-bg, #ffffff)',
+          }),
+    };
+
+    // Button style class
+    const buttonClass =
+      button_style === 'gradient'
+        ? 'tps-btn--gradient'
+        : button_style === 'gradient-cyan'
+        ? 'tps-btn--gradient tps-btn--gradient-cyan'
+        : button_style === 'gradient-purple'
+        ? 'tps-btn--gradient tps-btn--gradient-purple'
+        : '';
+
     return (
-      <section
-        className={sectionClass}
-        style={isLanding ? { textAlign: align } : { paddingTop: 96, paddingBottom: 56, textAlign: align }}
-      >
+      <section className={sectionClass} style={heroInlineStyle}>
         <div className={innerClass} style={isLanding ? undefined : { maxWidth: 940 }}>
           {eyebrow && <span className="tps-eyebrow">{eyebrow}</span>}
           {heading_html && (
@@ -115,7 +188,11 @@ export const Hero = {
             >
               {primary_cta_label && (
                 <Link href={primary_cta_href || '/contact'}>
-                  <Button type="primary" size="large">
+                  <Button
+                    type="primary"
+                    size="large"
+                    className={buttonClass}
+                  >
                     {primary_cta_label} <ArrowRightOutlined />
                   </Button>
                 </Link>

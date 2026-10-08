@@ -25,6 +25,8 @@ export function TestimonialQuoteComponent({
   show_arrows = true,
   show_dots = true,
   background = 'soft',
+  background_image = '',
+  background_overlay = 'gradient',
   className = '',
   style = {},
 }) {
@@ -60,6 +62,24 @@ export function TestimonialQuoteComponent({
   const isMultiple = slides.length > 1;
   const isDark = background === 'dark';
   const isSoft = background === 'soft';
+
+  const bgUrl = String(background_image || '').trim();
+  const hasBgImage = Boolean(bgUrl);
+
+  let overlayBg = '';
+  if (hasBgImage) {
+    if (background_overlay === 'gradient') {
+      overlayBg = isDark
+        ? 'linear-gradient(180deg, rgba(15, 23, 42, 0.82) 0%, rgba(15, 23, 42, 0.94) 100%)'
+        : 'linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.95) 100%)';
+    } else if (background_overlay === 'dark') {
+      overlayBg = 'linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.6))';
+    } else if (background_overlay === 'subtle') {
+      overlayBg = 'linear-gradient(rgba(15, 23, 42, 0.2), rgba(15, 23, 42, 0.2))';
+    }
+  }
+
+  const effectiveDark = isDark || (hasBgImage && background_overlay === 'dark');
 
   const renderSingleQuoteContent = (item, idx) => {
     const q = item.quote || '';
@@ -154,12 +174,20 @@ export function TestimonialQuoteComponent({
 
   return (
     <section
-      className={`tps-section ${isSoft ? 'tps-section-soft' : ''}${isDark ? ' tps-section-dark' : ''} ${className}`.trim()}
+      className={`tps-section ${isSoft && !hasBgImage ? 'tps-section-soft' : ''}${effectiveDark ? ' tps-section-dark' : ''} ${className}`.trim()}
       style={{
         paddingTop: 80,
         paddingBottom: 80,
-        background: isDark ? '#0F172A' : isSoft ? undefined : 'var(--tps-bg, #ffffff)',
-        color: isDark ? '#fff' : undefined,
+        background: isDark && !hasBgImage ? '#0F172A' : isSoft && !hasBgImage ? undefined : !hasBgImage ? 'var(--tps-bg, #ffffff)' : undefined,
+        ...(hasBgImage
+          ? {
+              backgroundImage: overlayBg ? `${overlayBg}, url("${bgUrl}")` : `url("${bgUrl}")`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+            }
+          : {}),
+        color: effectiveDark ? '#fff' : undefined,
         position: 'relative',
         overflow: 'hidden',
         ...style,
@@ -286,6 +314,17 @@ export const TestimonialQuote = {
         { label: 'Dark', value: 'dark' },
       ],
     },
+    background_image: { type: 'text', label: 'Background image URL (optional)' },
+    background_overlay: {
+      type: 'select',
+      label: 'Image overlay effect',
+      options: [
+        { label: 'Gradient overlay (Recommended)', value: 'gradient' },
+        { label: 'Dark tint (60%)', value: 'dark' },
+        { label: 'Subtle tint (20%)', value: 'subtle' },
+        { label: 'No overlay', value: 'none' },
+      ],
+    },
   },
   defaultProps: {
     items: [
@@ -319,6 +358,8 @@ export const TestimonialQuote = {
     autoplay: true,
     autoplay_speed: 6,
     background: 'soft',
+    background_image: '',
+    background_overlay: 'gradient',
   },
   render: (props) => <TestimonialQuoteComponent {...props} />,
 };

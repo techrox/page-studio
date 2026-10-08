@@ -100,3 +100,4 @@ export { PressMentions } from './blocks/PressMentions.jsx';
 export { Container } from './blocks/Container.jsx';
 export { Spacer } from './blocks/Spacer.jsx';
 export { RawHtml } from './blocks/RawHtml.jsx';
+export { FooterNavigation, FooterNavigationComponent } from './blocks/FooterNavigation.jsx';

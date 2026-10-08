@@ -71,6 +71,9 @@ export function ImageCarouselComponent({
   maxWidth = 'standard',
   borderRadius = 'medium',
   background = 'white',
+  background_image = '',
+  background_overlay = 'gradient',
+  button_style = 'solid',
   className = '',
   style = {},
 }) {
@@ -152,6 +155,15 @@ export function ImageCarouselComponent({
       ? 'tps-section-dark'
       : '';
 
+  const buttonClass =
+    button_style === 'gradient'
+      ? 'tps-btn--gradient'
+      : button_style === 'gradient-cyan'
+      ? 'tps-btn--gradient tps-btn--gradient-cyan'
+      : button_style === 'gradient-purple'
+      ? 'tps-btn--gradient tps-btn--gradient-purple'
+      : '';
+
   const renderPartitionSide = () => {
     const hasContent = partition_type === 'content' || partition_type === 'both';
     const hasImage = partition_type === 'image' || partition_type === 'both';
@@ -192,6 +204,7 @@ export function ImageCarouselComponent({
                 <Button
                   type={partition_cta_variant === 'default' ? 'default' : 'primary'}
                   size="large"
+                  className={partition_cta_variant !== 'default' ? buttonClass : ''}
                   style={{
                     borderRadius: 8,
                     fontWeight: 600,
@@ -370,6 +383,7 @@ export function ImageCarouselComponent({
                             <Button
                               type="primary"
                               size={layout === 'standard' ? 'large' : 'middle'}
+                              className={buttonClass}
                               style={{
                                 borderRadius: 8,
                                 fontWeight: 600,
@@ -422,19 +436,48 @@ export function ImageCarouselComponent({
     </div>
   );
 
-  return (
-    <section
-      className={`tps-section tps-image-carousel ${
-        isFullWidth ? 'tps-image-carousel--fullwidth' : ''
-      } ${bgClass} ${className}`.trim()}
-      style={{
-        paddingTop: isFullWidth ? (eyebrow || heading || subheading ? 48 : 0) : 48,
-        paddingBottom: isFullWidth ? (eyebrow || heading || subheading ? 48 : 0) : 48,
-        paddingLeft: isFullWidth ? 0 : undefined,
-        paddingRight: isFullWidth ? 0 : undefined,
-        ...style,
-      }}
-    >
+    const bgUrl = String(background_image || '').trim();
+    const hasBgImage = Boolean(bgUrl);
+
+    let overlayBg = '';
+    if (hasBgImage) {
+      if (background_overlay === 'gradient') {
+        overlayBg = background === 'dark'
+          ? 'linear-gradient(180deg, rgba(15, 23, 42, 0.82) 0%, rgba(15, 23, 42, 0.94) 100%)'
+          : 'linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.95) 100%)';
+      } else if (background_overlay === 'dark') {
+        overlayBg = 'linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.6))';
+      } else if (background_overlay === 'subtle') {
+        overlayBg = 'linear-gradient(rgba(15, 23, 42, 0.2), rgba(15, 23, 42, 0.2))';
+      }
+    }
+
+    const carouselSectionStyle = {
+      paddingTop: isFullWidth ? (eyebrow || heading || subheading ? 48 : 0) : 48,
+      paddingBottom: isFullWidth ? (eyebrow || heading || subheading ? 48 : 0) : 48,
+      paddingLeft: isFullWidth ? 0 : undefined,
+      paddingRight: isFullWidth ? 0 : undefined,
+      ...(hasBgImage
+        ? {
+            backgroundImage: overlayBg
+              ? `${overlayBg}, url("${bgUrl}")`
+              : `url("${bgUrl}")`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            ...(background_overlay === 'dark' ? { color: '#ffffff' } : {}),
+          }
+        : {}),
+      ...style,
+    };
+
+    return (
+      <section
+        className={`tps-section tps-image-carousel ${
+          isFullWidth ? 'tps-image-carousel--fullwidth' : ''
+        } ${bgClass} ${className}`.trim()}
+        style={carouselSectionStyle}
+      >
       <div
         className="tps-container"
         style={{
@@ -689,6 +732,27 @@ export const ImageCarousel = {
         { label: 'Dark', value: 'dark' },
       ],
     },
+    background_image: { type: 'text', label: 'Section background image URL (optional)' },
+    background_overlay: {
+      type: 'select',
+      label: 'Image overlay effect',
+      options: [
+        { label: 'Gradient overlay (Recommended)', value: 'gradient' },
+        { label: 'Dark tint (60%)', value: 'dark' },
+        { label: 'Subtle tint (20%)', value: 'subtle' },
+        { label: 'No overlay', value: 'none' },
+      ],
+    },
+    button_style: {
+      type: 'select',
+      label: 'Button style',
+      options: [
+        { label: 'Brand primary (Solid)', value: 'solid' },
+        { label: 'Gradient (Primary to Accent)', value: 'gradient' },
+        { label: 'Gradient (Cyan to Blue)', value: 'gradient-cyan' },
+        { label: 'Gradient (Purple to Pink)', value: 'gradient-purple' },
+      ],
+    },
   },
   defaultProps: {
     layout: 'standard',
@@ -721,6 +785,9 @@ export const ImageCarousel = {
     maxWidth: 'standard',
     borderRadius: 'medium',
     background: 'white',
+    background_image: '',
+    background_overlay: 'gradient',
+    button_style: 'solid',
   },
   render: (props) => <ImageCarouselComponent {...props} />,
 };

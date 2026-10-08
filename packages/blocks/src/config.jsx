@@ -77,6 +77,7 @@ import { Divider } from './blocks/Divider';
 import { ThreeColumn } from './blocks/ThreeColumn';
 import { PressMentions } from './blocks/PressMentions';
 import { Container } from './blocks/Container';
+import { FooterNavigation } from './blocks/FooterNavigation';
 import { withReveal } from './withReveal';
 import { withTheme } from './withTheme';
 import BlockThumbnail, { BLOCK_DESCRIPTIONS } from './BlockThumbnail';
@@ -151,6 +152,7 @@ const DEFAULT_REVEAL = {
   MastheadHeader: null,
   Notifications: 'fade-up',
   ImageCarousel: 'fade-up',
+  FooterNavigation: 'fade-up',
   Spacer: null,
   RawHtml: null,
 };
@@ -160,6 +162,7 @@ export const defaultBlocks = {
   ContactNavigationHeader,
   MastheadHeader,
   NavigationHeader,
+  FooterNavigation,
   Marquee,
   Notifications,
   PopupModal,
@@ -233,6 +236,9 @@ export const defaultBlocks = {
 export const defaultCategories = {
   Headers: {
     components: ['NavigationHeader', 'ContactNavigationHeader', 'MastheadHeader', 'Marquee', 'Notifications', 'AnnouncementBar'],
+  },
+  Footers: {
+    components: ['FooterNavigation'],
   },
   'Page sections': {
     components: ['Hero', 'SectionHeader', 'CTABanner', 'Banner', 'InlineCTA'],

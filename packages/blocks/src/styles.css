@@ -42,6 +42,11 @@
   max-width: 100vw;
   overflow-x: clip;
 }
+.tps-renderer-root--sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+}
 
 .tps-container {
   max-width: var(--tps-max);
@@ -2300,10 +2305,10 @@
    Ensures primary buttons (Login, Read more, Get in touch, Explore, CTAs),
    links, and inputs strictly inherit --tps-primary across both editor & renderer
    ------------------------------------------------------------------------- */
-.tps-renderer-root .ant-btn-primary,
-.psd-builder-page .ant-btn-primary,
-.psd-canvas-body .ant-btn-primary,
-[data-tps-theme] .ant-btn-primary,
+.tps-renderer-root .ant-btn-primary:not(.tps-btn--gradient):not(.tps-btn--custom),
+.psd-builder-page .ant-btn-primary:not(.tps-btn--gradient):not(.tps-btn--custom),
+.psd-canvas-body .ant-btn-primary:not(.tps-btn--gradient):not(.tps-btn--custom),
+[data-tps-theme] .ant-btn-primary:not(.tps-btn--gradient):not(.tps-btn--custom),
 .tps-header-btn.ant-btn-primary,
 .tps-modal-btn.ant-btn-primary {
   background-color: var(--tps-primary, #0b60d8) !important;
@@ -2311,10 +2316,10 @@
   color: #ffffff !important;
 }
 
-.tps-renderer-root .ant-btn-primary:not(:disabled):hover,
-.psd-builder-page .ant-btn-primary:not(:disabled):hover,
-.psd-canvas-body .ant-btn-primary:not(:disabled):hover,
-[data-tps-theme] .ant-btn-primary:not(:disabled):hover,
+.tps-renderer-root .ant-btn-primary:not(.tps-btn--gradient):not(.tps-btn--custom):not(:disabled):hover,
+.psd-builder-page .ant-btn-primary:not(.tps-btn--gradient):not(.tps-btn--custom):not(:disabled):hover,
+.psd-canvas-body .ant-btn-primary:not(.tps-btn--gradient):not(.tps-btn--custom):not(:disabled):hover,
+[data-tps-theme] .ant-btn-primary:not(.tps-btn--gradient):not(.tps-btn--custom):not(:disabled):hover,
 .tps-header-btn.ant-btn-primary:not(:disabled):hover,
 .tps-modal-btn.ant-btn-primary:not(:disabled):hover {
   background-color: var(--tps-primary-dark, var(--tps-primary, #0848a3)) !important;
@@ -2323,14 +2328,44 @@
   opacity: 0.92;
 }
 
-.tps-renderer-root .ant-btn-primary:not(:disabled):active,
-.psd-builder-page .ant-btn-primary:not(:disabled):active,
-.psd-canvas-body .ant-btn-primary:not(:disabled):active,
-[data-tps-theme] .ant-btn-primary:not(:disabled):active,
+.tps-renderer-root .ant-btn-primary:not(.tps-btn--gradient):not(.tps-btn--custom):not(:disabled):active,
+.psd-builder-page .ant-btn-primary:not(.tps-btn--gradient):not(.tps-btn--custom):not(:disabled):active,
+.psd-canvas-body .ant-btn-primary:not(.tps-btn--gradient):not(.tps-btn--custom):not(:disabled):active,
+[data-tps-theme] .ant-btn-primary:not(.tps-btn--gradient):not(.tps-btn--custom):not(:disabled):active,
 .tps-header-btn.ant-btn-primary:not(:disabled):active,
 .tps-modal-btn.ant-btn-primary:not(:disabled):active {
   background-color: var(--tps-primary-dark, var(--tps-primary, #0848a3)) !important;
   border-color: var(--tps-primary-dark, var(--tps-primary, #0848a3)) !important;
+  color: #ffffff !important;
+}
+
+/* Gradient & Custom Button utility styles */
+.tps-btn--gradient {
+  background: linear-gradient(135deg, var(--tps-primary, #0b60d8) 0%, var(--tps-accent, #f59e0b) 100%) !important;
+  border: none !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(11, 96, 216, 0.28) !important;
+  transition: all 0.25s ease !important;
+}
+.tps-btn--gradient:not(:disabled):hover {
+  background: linear-gradient(135deg, var(--tps-primary-dark, #0848a3) 0%, var(--tps-accent-dark, #d97706) 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 18px rgba(11, 96, 216, 0.38) !important;
+  transform: translateY(-1px) scale(1.02);
+}
+.tps-btn--gradient-cyan {
+  background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%) !important;
+  border: none !important;
+  color: #ffffff !important;
+}
+.tps-btn--gradient-purple {
+  background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%) !important;
+  border: none !important;
+  color: #ffffff !important;
+}
+.tps-btn--solid {
+  background-color: var(--tps-primary, #0b60d8) !important;
+  border-color: var(--tps-primary, #0b60d8) !important;
   color: #ffffff !important;
 }
 
@@ -2484,3 +2519,135 @@ html {
     padding: clamp(36px, 7vw, 56px) clamp(14px, 4vw, 20px) clamp(32px, 6vw, 48px);
   }
 }
+
+/* -------------------------------------------------------------------------
+   FooterNavigation Block
+   Multi-column footer matching IntegraMinds style with brand info, page links,
+   social icons, and full-width end-to-end screen support.
+   ------------------------------------------------------------------------- */
+.tps-footer-nav {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tps-footer-nav__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+}
+
+@media (min-width: 900px) {
+  .tps-footer-nav__grid {
+    grid-template-columns: minmax(280px, 1.2fr) minmax(0, 2.8fr);
+    gap: 48px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .tps-footer-nav__grid {
+    grid-template-columns: minmax(300px, 1.3fr) minmax(0, 3fr);
+    gap: 64px;
+  }
+}
+
+.tps-footer-nav__brand {
+  display: flex;
+  flex-direction: column;
+}
+
+.tps-footer-nav__columns-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 32px 24px;
+}
+
+@media (max-width: 600px) {
+  .tps-footer-nav__columns-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px 16px;
+  }
+}
+
+.tps-footer-nav__column {
+  min-width: 0;
+}
+
+.tps-footer-nav__column-title {
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 26px;
+  letter-spacing: -0.01em;
+}
+
+.tps-footer-nav__link-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tps-footer-nav__link {
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1.5;
+  transition: color 0.2s ease, transform 0.2s ease;
+  display: inline-block;
+}
+
+.tps-footer-nav--light .tps-footer-nav__link:hover {
+  color: var(--tps-primary, #0b60d8) !important;
+  transform: translateX(3px);
+}
+
+.tps-footer-nav--dark .tps-footer-nav__link:hover {
+  color: #5eead4 !important;
+  transform: translateX(3px);
+}
+
+.tps-footer-nav__social-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.tps-footer-nav__contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: opacity 0.2s ease;
+}
+
+.tps-footer-nav__contact-link:hover {
+  opacity: 0.85;
+}
+
+.tps-footer-nav__divider {
+  width: 100%;
+  height: 1px;
+}
+
+.tps-footer-nav__bottom {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 14px;
+}
+
+.tps-footer-nav--light .tps-footer-nav__bottom-links a:hover {
+  color: var(--tps-primary, #0b60d8) !important;
+}
+
+.tps-footer-nav--dark .tps-footer-nav__bottom-links a:hover {
+  color: #5eead4 !important;
+}
+

@@ -47,6 +47,27 @@ export const ImageText = {
         { label: 'Dark', value: 'dark' },
       ],
     },
+    background_image: { type: 'text', label: 'Background image URL (optional)' },
+    background_overlay: {
+      type: 'select',
+      label: 'Image overlay effect',
+      options: [
+        { label: 'Gradient overlay (Recommended)', value: 'gradient' },
+        { label: 'Dark tint (60%)', value: 'dark' },
+        { label: 'Subtle tint (20%)', value: 'subtle' },
+        { label: 'No overlay', value: 'none' },
+      ],
+    },
+    button_style: {
+      type: 'select',
+      label: 'Button style',
+      options: [
+        { label: 'Brand primary (Solid)', value: 'solid' },
+        { label: 'Gradient (Primary to Accent)', value: 'gradient' },
+        { label: 'Gradient (Cyan to Blue)', value: 'gradient-cyan' },
+        { label: 'Gradient (Purple to Pink)', value: 'gradient-purple' },
+      ],
+    },
   },
   defaultProps: {
     eyebrow: 'Feature',
@@ -60,6 +81,9 @@ export const ImageText = {
     cta_label: 'Learn more',
     cta_href: '/services',
     background: 'white',
+    background_image: '',
+    background_overlay: 'gradient',
+    button_style: 'solid',
   },
   render: ({
     eyebrow,
@@ -71,7 +95,10 @@ export const ImageText = {
     image_position,
     cta_label,
     cta_href,
-    background,
+    background = 'white',
+    background_image = '',
+    background_overlay = 'gradient',
+    button_style = 'solid',
   }) => {
     // Normalise ratio strings like '16:9' or '16/9' or '16 / 9' into CSS aspect-ratio values ('16 / 9')
     const normalizedRatio = (() => {
@@ -127,6 +154,15 @@ export const ImageText = {
         Image placeholder
       </div>
     );
+    const buttonClass =
+      button_style === 'gradient'
+        ? 'tps-btn--gradient'
+        : button_style === 'gradient-cyan'
+        ? 'tps-btn--gradient tps-btn--gradient-cyan'
+        : button_style === 'gradient-purple'
+        ? 'tps-btn--gradient tps-btn--gradient-purple'
+        : '';
+
     const textEl = (
       <div>
         {eyebrow && <span className="tps-eyebrow">{eyebrow}</span>}
@@ -134,17 +170,60 @@ export const ImageText = {
         {body && <p className="tps-lede">{body}</p>}
         {cta_label && (
           <Link href={cta_href || '/contact'}>
-            <Button type="primary" size="large" style={{ marginTop: 8 }}>
+            <Button
+              type="primary"
+              size="large"
+              className={buttonClass}
+              style={{ marginTop: 8 }}
+            >
               {cta_label} <ArrowRightOutlined />
             </Button>
           </Link>
         )}
       </div>
     );
+
+    const isDark = background === 'dark';
+    const isSoft = background === 'soft';
+
+    const bgUrl = String(background_image || '').trim();
+    const hasBgImage = Boolean(bgUrl);
+
+    let overlayBg = '';
+    if (hasBgImage) {
+      if (background_overlay === 'gradient') {
+        overlayBg = isDark
+          ? 'linear-gradient(180deg, rgba(15, 23, 42, 0.82) 0%, rgba(15, 23, 42, 0.94) 100%)'
+          : 'linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.95) 100%)';
+      } else if (background_overlay === 'dark') {
+        overlayBg = 'linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.6))';
+      } else if (background_overlay === 'subtle') {
+        overlayBg = 'linear-gradient(rgba(15, 23, 42, 0.2), rgba(15, 23, 42, 0.2))';
+      }
+    }
+
+    const sectionStyle = {
+      paddingTop: 56,
+      paddingBottom: 56,
+      ...(hasBgImage
+        ? {
+            backgroundImage: overlayBg
+              ? `${overlayBg}, url("${bgUrl}")`
+              : `url("${bgUrl}")`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            ...(background_overlay === 'dark' ? { color: '#ffffff' } : {}),
+          }
+        : {
+            background: isDark ? '#0F172A' : isSoft ? undefined : 'var(--tps-bg, #ffffff)',
+          }),
+    };
+
     return (
       <section
-        className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`}
-        style={{ paddingTop: 56, paddingBottom: 56 }}
+        className={`tps-section ${isSoft ? 'tps-section-soft' : ''}${isDark ? ' tps-section-dark' : ''}`}
+        style={sectionStyle}
       >
         <div className="tps-container">
           <div

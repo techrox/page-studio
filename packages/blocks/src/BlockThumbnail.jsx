@@ -153,6 +153,41 @@ function getPreviews(c) {
       <rect x="98" y="29" width="17" height="9" rx="2" fill={PRIMARY} />
     </Frame>
   ),
+  FooterNavigation: (
+    <Frame>
+      {/* Brand & address column on left */}
+      <rect x="8" y="10" width="22" height="6" rx="1.5" fill={PRIMARY} />
+      <rect x="8" y="19" width="28" height="2" rx="0.5" fill={MUTED} />
+      <rect x="8" y="23" width="24" height="2" rx="0.5" fill={MUTED} />
+      <rect x="8" y="27" width="20" height="2" rx="0.5" fill={MUTED} />
+      {/* Social circles */}
+      <circle cx="11" cy="35" r="2.5" fill={PRIMARY_SOFT} stroke={PRIMARY} strokeWidth="0.5" />
+      <circle cx="18" cy="35" r="2.5" fill={PRIMARY_SOFT} stroke={PRIMARY} strokeWidth="0.5" />
+      <circle cx="25" cy="35" r="2.5" fill={PRIMARY_SOFT} stroke={PRIMARY} strokeWidth="0.5" />
+      <circle cx="32" cy="35" r="2.5" fill={PRIMARY_SOFT} stroke={PRIMARY} strokeWidth="0.5" />
+
+      {/* Nav columns */}
+      {[44, 68, 92].map((x, i) => (
+        <g key={i}>
+          <rect x={x} y="10" width="18" height="3" rx="0.5" fill={TEXT} />
+          <rect x={x} y="16" width="16" height="2" rx="0.5" fill={MUTED} />
+          <rect x={x} y="20" width="20" height="2" rx="0.5" fill={MUTED} />
+          <rect x={x} y="24" width="14" height="2" rx="0.5" fill={MUTED} />
+          <rect x={x} y="28" width="18" height="2" rx="0.5" fill={MUTED} />
+          <rect x={x} y="32" width="12" height="2" rx="0.5" fill={MUTED} />
+        </g>
+      ))}
+
+      {/* Divider */}
+      <line x1="8" y1="46" x2={FRAME_W - 8} y2="46" stroke={BORDER} strokeWidth="0.6" />
+
+      {/* Bottom copyright & legal links */}
+      <rect x="8" y="52" width="45" height="2" rx="0.5" fill={MUTED} />
+      <rect x={FRAME_W - 48} y="52" width="12" height="2" rx="0.5" fill={MUTED} />
+      <rect x={FRAME_W - 32} y="52" width="12" height="2" rx="0.5" fill={MUTED} />
+      <rect x={FRAME_W - 16} y="52" width="8" height="2" rx="0.5" fill={MUTED} />
+    </Frame>
+  ),
   MastheadHeader: (
     <Frame>
       <rect x="8" y="11" width="34" height="5" rx="1.5" fill={TEXT} />
@@ -1206,6 +1241,7 @@ export const BLOCK_DESCRIPTIONS = {
   ContactNavigationHeader: 'Merged header with top contact strip (phones/emails), brand logo, full navigation menus, and unified mobile drawer.',
   ImageCarousel: 'Interactive image slider / carousel with autoplay, custom slide captions, overlay styling, and arrow/dot navigation.',
   NavigationHeader: 'Header with logo, horizontal navigation menus, multi-level dropdowns, and mobile drawer.',
+  FooterNavigation: 'Multi-column footer with brand logo, address, contact details, social buttons, customizable link columns, and dynamic copyright bar.',
   MastheadHeader: 'Masthead with two titles flanking a centre crest over the coloured nav bar; compacts as the page scrolls.',
   Marquee: 'Scrolling ticker / marquee for news, alerts, and updates with HTML links and ordering.',
   Notifications: 'Container-based auto-scrolling notifications board with adjustable height, NEW tags, dates, and HTML body.',
