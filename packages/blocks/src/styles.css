@@ -27,10 +27,11 @@
   --tps-radius-lg:     20px;
 
   /* Masthead header — titles, crest ring and the nav bar behind it. */
-  --tps-masthead-bar:      #4b2e83;
+  --tps-masthead-bar:      var(--tps-primary, #0b60d8);
   --tps-masthead-bar-text: #ffffff;
-  --tps-masthead-title:    #4b2e83;
-  --tps-masthead-font:     Georgia, 'Times New Roman', Times, serif;
+  --tps-masthead-title:    var(--tps-primary, #0b60d8);
+  --tps-masthead-subtitle: var(--tps-muted, #64748b);
+  --tps-masthead-font:     inherit;
 }
 
 /* -------------------------------------------------------------------------
@@ -93,7 +94,8 @@
   --tps-bg:           #ffffff;
   --tps-bg-soft:      #fafaf7;
   --tps-bg-section:   #f8fafc;
-  --tps-masthead-title: #4b2e83;
+  --tps-masthead-title:    var(--tps-primary, #0b60d8);
+  --tps-masthead-subtitle: var(--tps-muted, #64748b);
 }
 
 /* Dark theme. Shared by the container scope and the per-section opt-in. */
@@ -109,7 +111,8 @@
   --tps-bg-section:   #0a0a0a;
   --tps-primary-soft: #1a1a1a;
   /* Masthead titles sit on the band surface — lift them for contrast. */
-  --tps-masthead-title: #c4b5fd;
+  --tps-masthead-title:    var(--tps-primary-light, #93c5fd);
+  --tps-masthead-subtitle: var(--tps-muted, #94a3b8);
 }
 /* A container theme paints its own backdrop; the per-section variant paints
    its surface (it's a section wrapper, not just a token scope). */
@@ -979,6 +982,10 @@
 .tps-masthead--transparent {
   background: transparent;
 }
+.tps-masthead--dark {
+  background: var(--tps-bg-section, #0a0a0a);
+  color: var(--tps-ink, #f1f5f9);
+}
 .tps-masthead--sticky {
   position: sticky;
   top: 0;
@@ -1023,22 +1030,22 @@
 .tps-masthead__title {
   display: block;
   margin: 0;
-  font-family: var(--tps-masthead-font, Georgia, 'Times New Roman', serif);
+  font-family: var(--tps-masthead-font, inherit);
   font-size: var(--tps-masthead-title-size);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.01em;
-  color: var(--tps-masthead-title, #4b2e83);
+  color: var(--tps-masthead-title, var(--tps-primary, #0b60d8));
   transition: font-size 0.25s ease;
 }
 .tps-masthead__subtitle {
   display: block;
   margin: 0;
-  font-family: var(--tps-masthead-font, Georgia, 'Times New Roman', serif);
+  font-family: var(--tps-masthead-font, inherit);
   font-size: var(--tps-masthead-sub-size);
   font-weight: 500;
   line-height: 1.35;
-  color: var(--tps-masthead-title, #4b2e83);
+  color: var(--tps-masthead-subtitle, var(--tps-muted, #64748b));
   opacity: 0.9;
   transition: font-size 0.25s ease;
 }
@@ -1070,7 +1077,7 @@
   text-decoration: none;
   box-shadow:
     0 0 0 3px var(--tps-bg),
-    0 0 0 5px var(--tps-masthead-title, #4b2e83),
+    0 0 0 5px var(--tps-masthead-title, var(--tps-primary, #0b60d8)),
     0 6px 16px rgba(15, 23, 42, 0.18);
 }
 .tps-masthead__crest-img {
@@ -1086,17 +1093,17 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  font-family: var(--tps-masthead-font, Georgia, 'Times New Roman', serif);
+  font-family: var(--tps-masthead-font, inherit);
   font-size: calc(var(--tps-masthead-crest) * 0.26);
   font-weight: 700;
   letter-spacing: 0.04em;
-  color: var(--tps-masthead-title, #4b2e83);
+  color: var(--tps-masthead-title, var(--tps-primary, #0b60d8));
   background:
     radial-gradient(circle at 50% 32%, var(--tps-primary-soft, #dbeafe), transparent 62%),
     var(--tps-bg);
 }
 .tps-masthead__bar {
-  background: var(--tps-masthead-bar, #4b2e83);
+  background: var(--tps-masthead-bar, var(--tps-primary, #0b60d8));
   color: var(--tps-masthead-bar-text, #ffffff);
 }
 .tps-masthead__nav {
@@ -1141,9 +1148,9 @@
   border: none;
   background: transparent;
   color: inherit;
-  font-family: var(--tps-masthead-font, Georgia, 'Times New Roman', serif);
+  font-family: var(--tps-masthead-font, inherit);
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.2;
   text-decoration: none;
   white-space: nowrap;
@@ -1322,6 +1329,79 @@
 .tps-carousel-main .slick-dots li.slick-active button {
   background: #ffffff !important;
   width: 24px !important;
+}
+
+/* --- Image Carousel Partition & Full Width Styles --- */
+.tps-image-carousel--fullwidth {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+.tps-image-carousel--fullwidth > .tps-container {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin: 0 !important;
+}
+.tps-image-carousel--fullwidth .tps-carousel-wrap:not(.tps-carousel-wrap--boxed) {
+  border-radius: 0 !important;
+}
+
+.tps-carousel-partition-grid {
+  display: grid;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tps-carousel-partition-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.tps-carousel-partition-side--card {
+  background: var(--tps-bg, #ffffff);
+  border: 1px solid var(--tps-line, #e2e8f0);
+  border-radius: var(--tps-radius, 14px);
+  padding: clamp(24px, 4vw, 44px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.tps-carousel-partition-image-wrap {
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.tps-carousel-partition-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.tps-carousel-divider-col {
+  width: 1px;
+  background: var(--tps-line, #e2e8f0);
+  align-self: stretch;
+}
+
+@media (max-width: 860px) {
+  .tps-carousel-partition-grid {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+  .tps-carousel-divider-col {
+    display: none;
+  }
+  .tps-carousel-partition-side--card {
+    padding: 24px;
+  }
 }
 
 @media (max-width: 960px) {

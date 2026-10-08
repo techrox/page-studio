@@ -33,9 +33,8 @@ describe('MastheadHeader component & block', () => {
 
     expect(container.querySelector('.tps-masthead')).not.toBeNull();
     expect(container.querySelector('.tps-masthead__bar')).not.toBeNull();
-    expect(container.textContent).toContain('Tamil Nadu National Law University');
-    expect(container.textContent).toContain('தமிழ்நாடு தேசிய சட்டப்பல்கலைக்கழகம்');
-    expect(container.textContent).toContain('The University');
+    expect(container.textContent).toContain('Academy of Science & Arts');
+    expect(container.textContent).toContain('About');
     expect(container.textContent).toContain('Quick Links');
   });
 
@@ -47,15 +46,15 @@ describe('MastheadHeader component & block', () => {
     const start = container.querySelector('.tps-masthead__menu--start');
     const end = container.querySelector('.tps-masthead__menu--end');
 
-    expect(start.textContent).toContain('The University');
-    expect(start.textContent).toContain('Study');
+    expect(start.textContent).toContain('About');
+    expect(start.textContent).toContain('Academics');
     expect(start.textContent).toContain('Research');
-    expect(start.textContent).not.toContain('Campus Life');
+    expect(start.textContent).not.toContain('News');
 
     expect(end.textContent).toContain('Campus Life');
     expect(end.textContent).toContain('News');
     expect(end.textContent).toContain('Quick Links');
-    expect(end.textContent).not.toContain('The University');
+    expect(end.textContent).not.toContain('About');
 
     expect(container.querySelector('.tps-masthead__crest-gap')).not.toBeNull();
   });
@@ -245,5 +244,31 @@ describe('MastheadHeader component & block', () => {
     expect(container.querySelector('.tps-masthead')).not.toBeNull();
     expect(container.querySelector('.tps-masthead__crest-link')).toBeNull();
     expect(container.querySelectorAll('.tps-masthead__item').length).toBe(0);
+  });
+
+  it('supports dark variant and subtitle_color override', () => {
+    const { container } = render(
+      <Wrap>
+        <MastheadHeaderComponent
+          variant="dark"
+          title_color="#38bdf8"
+          subtitle_color="#94a3b8"
+        />
+      </Wrap>
+    );
+    const header = container.querySelector('.tps-masthead');
+    expect(header.classList.contains('tps-masthead--dark')).toBe(true);
+    expect(header.style.getPropertyValue('--tps-masthead-title').trim()).toBe('#38bdf8');
+    expect(header.style.getPropertyValue('--tps-masthead-subtitle').trim()).toBe('#94a3b8');
+  });
+
+  it('supports custom font_family override', () => {
+    const { container } = render(
+      <Wrap>
+        <MastheadHeaderComponent font_family="monospace" />
+      </Wrap>
+    );
+    const header = container.querySelector('.tps-masthead');
+    expect(header.style.getPropertyValue('--tps-masthead-font').trim()).toBe('monospace');
   });
 });

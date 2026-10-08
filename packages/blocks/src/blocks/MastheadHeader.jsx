@@ -59,6 +59,8 @@ export function MastheadHeaderComponent({
   bar_color = '',
   bar_text_color = '',
   title_color = '',
+  subtitle_color = '',
+  font_family = '',
   variant = 'light',
   backgroundColor = '',
   sticky = true,
@@ -222,12 +224,15 @@ export function MastheadHeaderComponent({
     '--tps-masthead-crest-base': `${Math.max(48, Number(crest_size) || 116)}px`,
   };
   if (title_color) cssVars['--tps-masthead-title'] = title_color;
+  if (subtitle_color) cssVars['--tps-masthead-subtitle'] = subtitle_color;
   if (bar_color) cssVars['--tps-masthead-bar'] = bar_color;
   if (bar_text_color) cssVars['--tps-masthead-bar-text'] = bar_text_color;
+  if (font_family) cssVars['--tps-masthead-font'] = font_family;
 
   const headerClass = [
     'tps-masthead',
     variant === 'soft' && 'tps-masthead--soft',
+    variant === 'dark' && 'tps-masthead--dark',
     variant === 'transparent' && 'tps-masthead--transparent',
     sticky && 'tps-masthead--sticky',
     compact && 'is-compact',
@@ -354,14 +359,25 @@ export const MastheadHeader = {
     },
     shrink_after: { type: 'number', label: 'Shrink after scroll (px)' },
     title_color: { type: 'text', label: 'Title color (empty = brand default)' },
+    subtitle_color: { type: 'text', label: 'Subtitle color (empty = brand default)' },
     bar_color: { type: 'text', label: 'Nav bar color (empty = brand default)' },
     bar_text_color: { type: 'text', label: 'Nav bar text color (empty = brand default)' },
+    font_family: {
+      type: 'select',
+      label: 'Font style',
+      options: [
+        { label: 'Default / Inherit (Match site)', value: '' },
+        { label: 'Serif (Classic university)', value: "Georgia, 'Times New Roman', serif" },
+        { label: 'Monospace', value: 'ui-monospace, monospace' },
+      ],
+    },
     variant: {
       type: 'select',
-      label: 'Band background',
+      label: 'Band background / Color scheme',
       options: [
         { label: 'Light', value: 'light' },
         { label: 'Soft', value: 'soft' },
+        { label: 'Dark', value: 'dark' },
         { label: 'Transparent', value: 'transparent' },
       ],
     },
@@ -369,17 +385,17 @@ export const MastheadHeader = {
     maxWidth: { type: 'text', label: 'Content max width' },
   },
   defaultProps: {
-    title: 'Tamil Nadu National Law University',
-    subtitle: '(A University Established by Tamil Nadu Act No. 9 of 2012)',
-    title_alt: 'தமிழ்நாடு தேசிய சட்டப்பல்கலைக்கழகம்',
-    subtitle_alt: '(தமிழ்நாடு(சட்.எண்) - 9/2012 மூலம் தோற்றுவிக்கப்பட்டது)',
+    title: 'Academy of Science & Arts',
+    subtitle: 'Centre for Higher Education, Research & Innovation',
+    title_alt: '',
+    subtitle_alt: '',
     crest_url: '',
-    crest_alt: 'University crest',
+    crest_alt: 'Institution crest',
     crest_href: '/',
     crest_size: 116,
     menus: [
-      { label: 'The University', path: '/university' },
-      { label: 'Study', path: '/study' },
+      { label: 'About', path: '/about' },
+      { label: 'Academics', path: '/academics' },
       { label: 'Research', path: '/research' },
       { label: 'Campus Life', path: '/campus-life' },
       { label: 'News', path: '/news' },
@@ -389,8 +405,10 @@ export const MastheadHeader = {
     shrink_on_scroll: true,
     shrink_after: 60,
     title_color: '',
+    subtitle_color: '',
     bar_color: '',
     bar_text_color: '',
+    font_family: '',
     variant: 'light',
     backgroundColor: '',
     maxWidth: '100%',
