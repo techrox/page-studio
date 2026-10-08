@@ -50,7 +50,7 @@ export { ApproachSteps } from './blocks/ApproachSteps.jsx';
 export { ServicesGrid } from './blocks/ServicesGrid.jsx';
 export { TeamGrid } from './blocks/TeamGrid.jsx';
 export { LogoStrip } from './blocks/LogoStrip.jsx';
-export { TestimonialQuote } from './blocks/TestimonialQuote.jsx';
+export { TestimonialQuote, TestimonialQuoteComponent } from './blocks/TestimonialQuote.jsx';
 export { TestimonialGrid } from './blocks/TestimonialGrid.jsx';
 export { FAQ } from './blocks/FAQ.jsx';
 export { Timeline } from './blocks/Timeline.jsx';
