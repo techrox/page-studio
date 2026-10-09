@@ -79,7 +79,7 @@ export { PricingTable } from './blocks/PricingTable.jsx';
 export { PricingComparison } from './blocks/PricingComparison.jsx';
 export { AwardsBar } from './blocks/AwardsBar.jsx';
 export { CountUpStats } from './blocks/CountUpStats.jsx';
-export { ImageGallery } from './blocks/ImageGallery.jsx';
+export { ImageGallery, ImageGalleryComponent } from './blocks/ImageGallery.jsx';
 export { ImageCarousel, ImageCarouselComponent } from './blocks/ImageCarousel.jsx';
 export { ImageCaption } from './blocks/ImageCaption.jsx';
 export { InlineCTA } from './blocks/InlineCTA.jsx';
