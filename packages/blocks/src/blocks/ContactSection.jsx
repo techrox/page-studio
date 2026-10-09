@@ -8,7 +8,7 @@
 // schema-rendered contact page.
 
 import { useState } from 'react';
-import { Row, Col, Form, Input, Button, Select, Space, App as AntdApp } from 'antd';
+import { Row, Col, Form, Input, Button, Select, Space, message as antdMessage, App as AntdApp } from 'antd';
 import { SendOutlined, MailOutlined, LinkedinFilled } from '@ant-design/icons';
 
 import { useStudio } from '../context';
@@ -29,7 +29,8 @@ function ContactSectionRender({
   contact_email,
 }) {
   const [form] = Form.useForm();
-  const { message } = AntdApp.useApp();
+  const { message: appMessage } = AntdApp.useApp() || {};
+  const message = appMessage?.error ? appMessage : antdMessage;
   const { services, site, submitLead, track } = useStudio();
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);

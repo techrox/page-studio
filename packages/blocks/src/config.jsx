@@ -413,5 +413,13 @@ export function createPuckConfig({
     const themed = withTheme(withDefaults);
     components[name] = animation ? withReveal(themed, animation) : themed;
   }
-  return { components, categories, root };
+  // Derive categories: filter out any component names that do not exist in components
+  const resolvedCategories = {};
+  for (const [catName, cat] of Object.entries(categories || {})) {
+    const validComponents = (cat?.components || []).filter((c) => components[c]);
+    if (validComponents.length > 0) {
+      resolvedCategories[catName] = { ...cat, components: validComponents };
+    }
+  }
+  return { components, categories: resolvedCategories, root };
 }

@@ -5,7 +5,7 @@
 // the same admin Leads list as contact-form submissions, but are filterable.
 
 import { useState } from 'react';
-import { Button, Input, Form, App as AntdApp } from 'antd';
+import { Button, Input, Form, message as antdMessage, App as AntdApp } from 'antd';
 import { ArrowRightOutlined } from '@ant-design/icons';
 
 import { useStudio } from '../context';
@@ -22,7 +22,8 @@ function NewsletterSignupRender({
   button_style = 'solid',
 }) {
   const [form] = Form.useForm();
-  const { message } = AntdApp.useApp();
+  const { message: appMessage } = AntdApp.useApp() || {};
+  const message = appMessage?.error ? appMessage : antdMessage;
   const { subscribeNewsletter } = useStudio();
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Form, Row, Col, Button, App as AntdApp } from 'antd';
+import { Form, Row, Col, Button, message as antdMessage, App as AntdApp } from 'antd';
 import { SendOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import { useStudio } from '../context';
 import { DynamicFormField } from './_DynamicFormField';
@@ -182,7 +182,8 @@ export function FormBlockBase({
   fields = [],
 }) {
   const [form] = Form.useForm();
-  const { message } = AntdApp.useApp();
+  const { message: appMessage } = AntdApp.useApp() || {};
+  const message = appMessage?.error ? appMessage : antdMessage;
   const { submitLead, track } = useStudio();
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
