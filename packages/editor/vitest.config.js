@@ -9,7 +9,9 @@ import shared, { coverageFloor } from '../../vitest.shared.js';
 // is idle, not real test time. Unit-light packages keep the shared default.
 export default mergeConfig(mergeConfig(shared, coverageFloor({ statements: 75, branches: 46, functions: 77, lines: 75 })), {
   test: {
-    testTimeout: 15000,
-    hookTimeout: 15000,
+    // 60s: Bitbucket's default runner (2 vCPU) plus coverage instrumentation
+    // pushes a Puck mount past 15s; GitHub and laptops finish in a few.
+    testTimeout: 60000,
+    hookTimeout: 60000,
   },
 });
