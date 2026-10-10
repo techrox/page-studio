@@ -250,14 +250,15 @@ export default function PageStudio({
             ? applyConfigDefaults(normalizePuckData(loaded), resolvedConfig)
             : emptyPuckData,
         );
+        // Clear loading alongside setData: the data change re-runs this
+        // effect and marks it cancelled before a .finally() could fire.
+        setLoading(false);
       })
       .catch((err) => {
         if (cancelled) return;
         message.error(err?.message || 'Could not load page.');
         setData(emptyPuckData);
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
+        setLoading(false);
       });
     return () => {
       cancelled = true;
@@ -315,17 +316,6 @@ export default function PageStudio({
     [overrides],
   );
 
-  if (loading || !data) {
-    return (
-      <div
-        className="psd-builder-page psd-builder-page--loading"
-        data-tps-theme={resolvedTheme}
-      >
-        <div className="psd-builder-loading">Loading editor…</div>
-      </div>
-    );
-  }
-
   const mergedStudio = useMemo(
     () => ({
       ...(studio || {}),
@@ -337,6 +327,17 @@ export default function PageStudio({
     }),
     [studio, onFileUpload, uploadFile, uploadMedia, onFilePreview, renderPdfPreview],
   );
+
+  if (loading || !data) {
+    return (
+      <div
+        className="psd-builder-page psd-builder-page--loading"
+        data-tps-theme={resolvedTheme}
+      >
+        <div className="psd-builder-loading">Loading editor…</div>
+      </div>
+    );
+  }
 
   return (
     <PageStudioProvider value={mergedStudio}>

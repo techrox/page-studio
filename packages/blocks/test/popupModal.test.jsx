@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { render, fireEvent, screen, act } from '@testing-library/react';
 import { App as AntdApp } from 'antd';
 
 import { PageStudioProvider } from '../src/context.jsx';
@@ -13,9 +13,26 @@ function Wrap({ children, studio }) {
   );
 }
 
+// The modal opens from a timer (even with delay 0), so flush it after render.
+function renderOpen(ui) {
+  const result = render(ui);
+  act(() => {
+    vi.runOnlyPendingTimers();
+  });
+  return result;
+}
+
 describe('PopupModal component & block', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it('renders correctly on load with defaultProps in Puck format', () => {
-    const { container } = render(
+    const { container } = renderOpen(
       <Wrap>{PopupModal.render(PopupModal.defaultProps)}</Wrap>
     );
 
@@ -31,7 +48,7 @@ describe('PopupModal component & block', () => {
 
   it('closes when close button (x) is clicked and shows the inline preview placeholder', () => {
     const onClose = vi.fn();
-    const { container } = render(
+    const { container } = renderOpen(
       <Wrap>
         <PopupModalComponent
           heading="Summer Discount"
@@ -57,7 +74,7 @@ describe('PopupModal component & block', () => {
 
   it('closes when backdrop overlay is clicked with closeOnBackdrop=true', () => {
     const onClose = vi.fn();
-    const { container } = render(
+    const { container } = renderOpen(
       <Wrap>
         <PopupModalComponent
           heading="Backdrop Test"
@@ -77,7 +94,7 @@ describe('PopupModal component & block', () => {
 
   it('closes when Escape key is pressed with closeOnEsc=true', () => {
     const onClose = vi.fn();
-    const { container } = render(
+    const { container } = renderOpen(
       <Wrap>
         <PopupModalComponent
           heading="ESC Test"
@@ -95,7 +112,7 @@ describe('PopupModal component & block', () => {
   });
 
   it('supports side image layout when image_position is left', () => {
-    const { container } = render(
+    const { container } = renderOpen(
       <Wrap>
         <PopupModalComponent
           heading="Side Image Modal"
@@ -111,7 +128,7 @@ describe('PopupModal component & block', () => {
   });
 
   it('supports custom backgroundColor and dark theme', () => {
-    const { container } = render(
+    const { container } = renderOpen(
       <Wrap>
         <PopupModalComponent
           heading="Dark Modal"
@@ -123,6 +140,6 @@ describe('PopupModal component & block', () => {
 
     const card = container.querySelector('.tps-modal-card');
     expect(card.classList.contains('tps-modal-card--dark')).toBe(true);
-    expect(card.style.backgroundColor).toBe('rgb(17, 34, 51)');
+    expect(card.style.backgroundColor).toBe('#112233');
   });
 });
