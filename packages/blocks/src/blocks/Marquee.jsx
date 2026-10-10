@@ -2,6 +2,7 @@
 
 import { useMemo } from 'react';
 import { StudioLink as Link } from '../context';
+import { stripTags } from '../sanitize.js';
 import { htmlField } from './HtmlField.jsx';
 
 /**
@@ -150,8 +151,7 @@ export const Marquee = {
         link_href: '',
       },
       getItemSummary: (item, i) =>
-        `[#${item?.order ?? i + 1}] ${(item?.text || 'Empty text')
-          .replace(/<[^>]*>/g, '')
+        `[#${item?.order ?? i + 1}] ${stripTags(item?.text || 'Empty text')
           .slice(0, 35)}...`,
     },
     speed: {
