@@ -1,4 +1,4 @@
-// AwardsBar — certifications/awards row. Same shape as LogoStrip but with
+// AwardsBar - certifications/awards row. Same shape as LogoStrip but with
 // a more prominent label per award (year, body) suited for accreditation
 // strips like "ISO 22000 · 2024 · DNV".
 import { TrophyOutlined } from '@ant-design/icons';

@@ -8,7 +8,7 @@ export default function PageList({ pages }) {
     <div className="page-list">
       <h1 style={{ margin: '0 0 6px', fontSize: 26 }}>Sample pages</h1>
       <p style={{ color: 'var(--tps-muted)', margin: '0 0 24px' }}>
-        Each page is a Puck data object — the same shape your CMS would store. We render it through{' '}
+        Each page is a Puck data object - the same shape your CMS would store. We render it through{' '}
         <code>PageStudioRender</code>, passing the current brand's <code>blockDefaults</code> into
         the Puck config so blocks pick up tenant-specific copy.
       </p>

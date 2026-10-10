@@ -1,4 +1,4 @@
-// RichText — paragraph(s) of body copy with custom interactive field editor.
+// RichText - paragraph(s) of body copy with custom interactive field editor.
 // Supports:
 //   - HTML Content vs Rich Text Editor switching
 //   - Full-Screen editor mode

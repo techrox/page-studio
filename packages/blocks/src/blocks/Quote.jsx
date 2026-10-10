@@ -1,4 +1,4 @@
-// Quote — simple pull-quote without testimonial framing. For editorial
+// Quote - simple pull-quote without testimonial framing. For editorial
 // emphasis inside long-form content.
 export const Quote = {
   label: 'Pull quote',
@@ -30,7 +30,7 @@ export const Quote = {
           “{text}”
         </blockquote>
         {cite && (
-          <cite style={{ display: 'block', marginTop: 12, fontStyle: 'normal', fontSize: 14, color: 'var(--tps-muted)' }}>— {cite}</cite>
+          <cite style={{ display: 'block', marginTop: 12, fontStyle: 'normal', fontSize: 14, color: 'var(--tps-muted)' }}>- {cite}</cite>
         )}
       </div>
     </section>

@@ -1,11 +1,11 @@
-// Home page — full marketing landing. Mixes brand-overridden blocks
+// Home page - full marketing landing. Mixes brand-overridden blocks
 // (Hero, PillarsRow, ApproachSteps, CTABanner, TestimonialQuote) with
 // content-rich neutral blocks so the page feels finished out of the box.
 
 export const home = {
   slug: 'home',
   title: 'Home',
-  summary: 'Landing — hero, announcement, stats, pillars, process, proof, FAQ, CTA.',
+  summary: 'Landing - hero, announcement, stats, pillars, process, proof, FAQ, CTA.',
   data: {
     root: { props: { title: 'Home' } },
     content: [

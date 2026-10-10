@@ -1,4 +1,4 @@
-// Brand switcher — colored chips that swap between Techrox, Neutral,
+// Brand switcher - colored chips that swap between Techrox, Neutral,
 // Lumin Labs, and Acme Co. Toggling updates the active brand on App,
 // which re-keys the renderer/editor tree so blocks pick up new defaults.
 //

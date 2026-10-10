@@ -1,6 +1,6 @@
 // Smoke tests for a representative sample of blocks. Each block is an object
 // with `render`, so we just invoke it with defaultProps and assert non-empty
-// output — catches regressions where a refactor drops a required dependency.
+// output - catches regressions where a refactor drops a required dependency.
 
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
@@ -54,7 +54,7 @@ describe('RichText block', () => {
 });
 
 describe('ServicesGrid block', () => {
-  // block.render uses hooks (useStudio) — Puck renders it as a component
+  // block.render uses hooks (useStudio) - Puck renders it as a component
   // internally; tests have to do the same or React rejects the hook call.
   const Block = (props) => ServicesGrid.render(props);
 

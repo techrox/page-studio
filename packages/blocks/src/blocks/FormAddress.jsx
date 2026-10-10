@@ -1,6 +1,6 @@
 import { FormBlockBase, COMMON_FORM_FIELDS, COMMON_FORM_DEFAULTS } from './_FormBlockBase';
 
-// Address / location collection — name, street, city, state, country, postal code.
+// Address / location collection - name, street, city, state, country, postal code.
 export const FormAddress = {
   label: 'Address form',
   fields: COMMON_FORM_FIELDS,

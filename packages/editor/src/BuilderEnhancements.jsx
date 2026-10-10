@@ -30,8 +30,8 @@ export default function BuilderEnhancements({
 
     // Filtering is done via attributes on elements WE own (.tps-block-card
     // and _ComponentList_ groups). CSS in editor/styles.css hides the
-    // matching Puck wrapper via :has(). Writing only attributes — not
-    // inline styles on Puck's wrappers — keeps us out of a fight with
+    // matching Puck wrapper via :has(). Writing only attributes - not
+    // inline styles on Puck's wrappers - keeps us out of a fight with
     // Puck's React reconciler when it re-renders the picker after a drop.
     const matchesQuery = (card, q) => {
       if (!q) return true;
@@ -86,7 +86,7 @@ export default function BuilderEnhancements({
         setAttrIfChanged(card, 'data-psd-hidden', hidden ? 'true' : null);
       });
 
-      // Mark the actual grid cell so it collapses out of layout — not just
+      // Mark the actual grid cell so it collapses out of layout - not just
       // our inner card. Puck's <DrawerItem> renders an unnamed <div> as the
       // direct child of [data-puck-drawer]; that <div> IS the grid cell.
       // Hiding only the .tps-block-card or any class-bearing inner wrapper
@@ -180,7 +180,7 @@ export default function BuilderEnhancements({
         setActive(initial);
       }
 
-      // Search input — visible only when the components tab is active
+      // Search input - visible only when the components tab is active
       // (the [data-psd-active-tab="components"] CSS gate does the toggling).
       let search = sidebar.querySelector('.psd-sidebar-search');
       if (!search) {

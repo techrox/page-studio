@@ -1,4 +1,4 @@
-// App — top-level routing, brand state, and the shared studio context.
+// App - top-level routing, brand state, and the shared studio context.
 //
 // The brand id drives three things:
 //   1. The `blockDefaults` passed to createPuckConfig (and to PageStudio).
@@ -81,7 +81,7 @@ export default function App() {
   const toggleTheme = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))
 
   // Build the Puck config (and so the shared block library) keyed by the
-  // active brand. Memoised so we don't rebuild on every render — only when
+  // active brand. Memoised so we don't rebuild on every render - only when
   // the brand changes. Same config is fed to PageStudioRender (pages,
   // gallery, single-block view).
   const blockConfig = useMemo(
@@ -89,7 +89,7 @@ export default function App() {
     [brand.defaults],
   )
 
-  // Studio context — Link wraps blocks' in-app navigation; services power
+  // Studio context - Link wraps blocks' in-app navigation; services power
   // ServicesGrid + ContactSection's "areas of interest" dropdown. site
   // gives ContactSection an email/phone to show.
   const studio = useMemo(
@@ -134,11 +134,11 @@ export default function App() {
   )
 
   // Branding handed to the editor. We fold the active theme's neutral tokens
-  // into `cssVars` so PageStudio writes them into the Puck iframe's :root —
+  // into `cssVars` so PageStudio writes them into the Puck iframe's :root -
   // the renderer surfaces get their theme from data-tps-theme in the cascade,
   // but the iframe canvas can't see that attribute, so it needs the values.
-  // `theme` (after `...brand`) carries the LIVE theme — the vendor default
-  // overridden by the topbar toggle — so PageStudio stamps it on the editor
+  // `theme` (after `...brand`) carries the LIVE theme - the vendor default
+  // overridden by the topbar toggle - so PageStudio stamps it on the editor
   // root and the chrome (sidebars, field panel, inputs) flips with the canvas.
   const editorBranding = useMemo(
     () => ({ ...brand, theme, cssVars: tokensFor(theme) }),
@@ -189,7 +189,7 @@ export default function App() {
 
 // Best-effort title for the topbar derived from the current URL. We don't
 // have full access to params here (this runs above the nested router) so
-// keep it simple — pages override the title via their own header copy.
+// keep it simple - pages override the title via their own header copy.
 function titleFor() {
   if (typeof window === 'undefined') return 'Page Studio'
   const path = window.location.pathname

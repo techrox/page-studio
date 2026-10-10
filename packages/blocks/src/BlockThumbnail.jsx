@@ -1,10 +1,10 @@
 // SVG layout sketches for each block, shown in Puck's components panel.
 // Each preview is a stylised mini-diagram of the block's visual structure,
-// not a real render — fast, no AntD dependency, looks consistent across the
+// not a real render - fast, no AntD dependency, looks consistent across the
 // picker. The thumbnail viewBox is fixed so all blocks line up at the same
 // size in the picker.
 //
-// The whole palette — brand hues AND neutral surfaces — comes from the active
+// The whole palette - brand hues AND neutral surfaces - comes from the active
 // --tps-* tokens at render time. We read them off the nearest ancestor with a
 // [data-brand] attribute (the showcase / host wrapper), or :root otherwise.
 // That element also carries data-tps-theme, so the tokens already reflect the
@@ -15,7 +15,7 @@
 
 import { useState, useEffect } from 'react';
 
-// Light defaults — used for SSR and as the fallback when a token is unset.
+// Light defaults - used for SSR and as the fallback when a token is unset.
 // BG is the page backdrop, CARD the raised surface on top of it, so a dark
 // theme keeps the same two-tone depth (e.g. #0a0a0a page / #141414 card).
 const DEFAULT_COLORS = {
@@ -50,7 +50,7 @@ function readColors() {
   };
 }
 
-// Refresh when the brand OR theme on the nearest ancestor flips — the showcase
+// Refresh when the brand OR theme on the nearest ancestor flips - the showcase
 // / host toggles data-brand when the user picks a new brand and data-tps-theme
 // when they flip light/dark, so the picker thumbnails need to follow both.
 //
@@ -80,8 +80,19 @@ const FRAME_H = 70;
 
 // PREVIEWS is a function so the live palette (brand hues + themed neutrals)
 // can be passed in fresh on every render. The destructure makes the JSX below
-// identical to the static form — no further per-element changes needed. Frame
+// identical to the static form - no further per-element changes needed. Frame
 // is defined here too so it closes over the themed BG / BG_SOFT / BORDER.
+// Five-point star as polygon points, centred on (cx, cy) with outer radius r.
+function starPoints(cx, cy, r) {
+  const pts = [];
+  for (let i = 0; i < 10; i += 1) {
+    const radius = i % 2 ? r * 0.45 : r;
+    const angle = (Math.PI / 5) * i - Math.PI / 2;
+    pts.push(`${(cx + radius * Math.cos(angle)).toFixed(2)},${(cy + radius * Math.sin(angle)).toFixed(2)}`);
+  }
+  return pts.join(' ');
+}
+
 function getPreviews(c) {
   const { PRIMARY, PRIMARY_SOFT, ACCENT, BG, BG_SOFT, CARD, BORDER, TEXT, MUTED } = c;
 
@@ -812,9 +823,11 @@ function getPreviews(c) {
         <g key={i}>
           <rect x="14" y={y} width="22" height="1.5" rx="0.5" fill={MUTED} />
           {[42, 62, 82].map((cx, j) => (
-            <text key={j} x={cx + 7} y={y + 2} fontSize="5" fill={(i + j) % 2 ? PRIMARY : MUTED} textAnchor="middle" fontFamily="system-ui">
-              {(i + j) % 2 ? '✓' : '·'}
-            </text>
+            (i + j) % 2 ? (
+              <polyline key={j} points={`${cx + 5},${y + 0.5} ${cx + 6.5},${y + 2} ${cx + 9},${y - 1}`} fill="none" stroke={PRIMARY} strokeWidth="0.8" />
+            ) : (
+              <circle key={j} cx={cx + 7} cy={y + 0.75} r="0.6" fill={MUTED} />
+            )
           ))}
         </g>
       ))}
@@ -996,7 +1009,7 @@ function getPreviews(c) {
   Divider: (
     <Frame>
       <line x1="14" y1="35" x2="50" y2="35" stroke={BORDER} strokeWidth="0.8" />
-      <text x="60" y="38" fontSize="6" fill={MUTED} textAnchor="middle" fontWeight="700" fontFamily="system-ui">— OR —</text>
+      <text x="60" y="38" fontSize="6" fill={MUTED} textAnchor="middle" fontWeight="700" fontFamily="system-ui">- OR -</text>
       <line x1="70" y1="35" x2="106" y2="35" stroke={BORDER} strokeWidth="0.8" />
     </Frame>
   ),
@@ -1074,7 +1087,7 @@ function getPreviews(c) {
     <Frame>
       <rect x="14" y="9" width="44" height="3" rx="1" fill={TEXT} />
       {[14, 22, 30, 38, 46].map((x, i) => (
-        <text key={i} x={x} y="22" fontSize="8" fill={i < 4 ? ACCENT : BORDER} fontFamily="system-ui">★</text>
+        <polygon key={i} points={starPoints(x + 3, 19, 3)} fill={i < 4 ? ACCENT : BORDER} />
       ))}
       <rect x="14" y="28" width="92" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
       <text x="100" y="32.5" fontSize="5" fill={MUTED} fontFamily="system-ui">▼</text>
@@ -1086,7 +1099,7 @@ function getPreviews(c) {
     <Frame>
       <rect x="14" y="9" width="40" height="3" rx="1" fill={TEXT} />
       {[14, 22, 30, 38, 46].map((x, i) => (
-        <text key={i} x={x} y="21" fontSize="8" fill={i < 3 ? ACCENT : BORDER} fontFamily="system-ui">★</text>
+        <polygon key={i} points={starPoints(x + 3, 18, 3)} fill={i < 3 ? ACCENT : BORDER} />
       ))}
       {[27, 35, 43, 51].map((y, i) => (
         <g key={i}>
@@ -1202,9 +1215,9 @@ function getPreviews(c) {
 export const BLOCK_DESCRIPTIONS = {
   Hero: 'Eyebrow, large heading, lede, and two CTAs. The opening section of any page.',
   SectionHeader: 'Eyebrow + heading + lede that introduces a major section.',
-  StatsStrip: 'Horizontal row of 3–5 stat cards (number + label).',
-  RichText: 'Body copy with HTML formatting — paragraphs, lists, links, headings.',
-  PillarsRow: '2–4 column grid of icon + title + body cards.',
+  StatsStrip: 'Horizontal row of 3-5 stat cards (number + label).',
+  RichText: 'Body copy with HTML formatting - paragraphs, lists, links, headings.',
+  PillarsRow: '2-4 column grid of icon + title + body cards.',
   ApproachSteps: 'Numbered step-by-step breakdown (e.g. 01 Diagnose / 02 Design).',
   ServicesGrid: 'Auto-rendered grid of all (or first N) service capability cards.',
   CTABanner: 'Full-width call-to-action with tagline, heading, body, and button.',
@@ -1212,30 +1225,30 @@ export const BLOCK_DESCRIPTIONS = {
   TwoColumn: 'Generic side-by-side text columns with editable headings + body.',
   ContactSection: 'Hero + sidebar info cards + lead-capture form. Drops a working contact section in one block.',
   Spacer: 'Pure vertical whitespace between blocks.',
-  RawHtml: 'Escape hatch — paste in any HTML when you need something the library doesn’t cover.',
+  RawHtml: 'Escape hatch - paste in any HTML when you need something the library doesn’t cover.',
   ImageText: 'Image on one side, eyebrow + heading + body + CTA on the other. Flip the image side per section.',
   VideoEmbed: 'Responsive YouTube or Vimeo embed with optional caption.',
   LogoStrip: '"Trusted by" row of client/partner logos. Falls back to brand-name text when no image is set.',
   TestimonialQuote: 'One large pull-quote with author photo, name, role, and company.',
   TestimonialGrid: '2- or 3-column grid of testimonial cards. Use for multi-voice social proof.',
   FAQ: 'Accordion of question / answer items. HTML allowed in answers; one open at a time.',
-  Timeline: 'Vertical chronological list — date + title + body. Useful for company history or "what happens next".',
+  Timeline: 'Vertical chronological list - date + title + body. Useful for company history or "what happens next".',
   NewsletterSignup: 'Single-field email capture. Submits to the leads endpoint with source="newsletter".',
   TeamGrid: '2/3/4-column team cards with photo, role, short bio, and LinkedIn link.',
-  Banner: 'Full-width announcement strip — info / success / warning / dark variants. Optional CTA link.',
-  ArticleFeatured: 'Hero-style featured article — large image + tag + headline + excerpt + byline + CTA.',
+  Banner: 'Full-width announcement strip - info / success / warning / dark variants. Optional CTA link.',
+  ArticleFeatured: 'Hero-style featured article - large image + tag + headline + excerpt + byline + CTA.',
   ArticleGrid: '2- or 3-column article cards (cover + tag + headline + excerpt + byline).',
   ArticleList: 'Text-heavy article list (date + tag + headline + excerpt). Best for archives.',
   IconCards: 'Compact icon + title + 1-line body cards. 2/3/4-col layouts.',
   MetricCards: 'Big-number cards with optional trend arrow + delta. The "by the numbers" section.',
   ImageOverlayCards: 'Full-bleed image cards with text overlay. Click-through "category" / "explore" pattern.',
   PricingTable: '3-tier pricing cards with feature lists and per-tier CTAs. Highlight one tier as popular.',
-  PricingComparison: 'Feature × tier comparison table — checkmarks/Xs or values per cell.',
+  PricingComparison: 'Feature × tier comparison table - checkmarks/Xs or values per cell.',
   AwardsBar: 'Row of certifications/awards with title + body + year. Trust signals for accreditations.',
   CountUpStats: 'Animated stat counters that tick from 0 to value when scrolled into view.',
   ImageGallery: 'Photo grid with click-to-enlarge lightbox. 2/3/4-col layouts.',
   ImageCaption: 'Single image with caption and optional photo credit.',
-  InlineCTA: 'Compact one-line CTA strip — sits between content sections without dominating.',
+  InlineCTA: 'Compact one-line CTA strip - sits between content sections without dominating.',
   ContactHeader: 'Top header with dynamic contact items (phones & emails), centered logo, and configurable actions/login.',
   ContactNavigationHeader: 'Merged header with top contact strip (phones/emails), brand logo, full navigation menus, and unified mobile drawer.',
   ImageCarousel: 'Interactive image slider / carousel with autoplay, custom slide captions, overlay styling, and arrow/dot navigation.',
@@ -1245,14 +1258,14 @@ export const BLOCK_DESCRIPTIONS = {
   Marquee: 'Scrolling ticker / marquee for news, alerts, and updates with HTML links and ordering.',
   Notifications: 'Container-based auto-scrolling notifications board with adjustable height, NEW tags, dates, and HTML body.',
   PopupModal: 'Centered popup modal with image, rich text, actions, and auto-open/dismiss triggers.',
-  AnnouncementBar: 'Slim full-width strip for announcements, beta access, event invites — dark / primary / accent variants.',
+  AnnouncementBar: 'Slim full-width strip for announcements, beta access, event invites - dark / primary / accent variants.',
   Quote: 'Editorial pull-quote with optional attribution. Left-bordered or centered.',
   CodeBlock: 'Monospace code snippet with title bar and language label.',
-  KeyValueList: 'Definition list / specs table — for "what\'s included", deal terms, technical specs.',
+  KeyValueList: 'Definition list / specs table - for "what\'s included", deal terms, technical specs.',
   StepsVertical: 'Large vertical numbered steps with title + body. Heavier than ApproachSteps.',
-  TabsBlock: 'Tabbed content panel — switch between named sections of HTML content.',
+  TabsBlock: 'Tabbed content panel - switch between named sections of HTML content.',
   AccordionBlock: 'Generic accordion (one or many open). For multi-section content beyond strict FAQ.',
-  SocialLinks: 'Row of social-network icon links — LinkedIn, X, YouTube, etc.',
+  SocialLinks: 'Row of social-network icon links - LinkedIn, X, YouTube, etc.',
   ContactInfo: 'Office address + email + phone + hours card. No form, just info.',
   MapEmbed: 'Google Maps iframe embed with caption.',
   EventsList: 'Upcoming events with date pill + title + venue + RSVP CTA.',
@@ -1260,25 +1273,25 @@ export const BLOCK_DESCRIPTIONS = {
   ThreeColumn: 'Generic 3-col text layout. Lighter than PillarsRow.',
   PressMentions: '"As featured in" press logos. Italic serif text fallback when no logos.',
   Container: 'Decorative box (soft / primary / dark / white) wrapping a single titled callout.',
-  FormContact: 'Lightweight contact form — name, email, phone, company, message. No hero or sidebar.',
+  FormContact: 'Lightweight contact form - name, email, phone, company, message. No hero or sidebar.',
   FormLeadCapture: 'Lead-gen form with journey-stage select, capability multi-select, and notes.',
   FormNewsletter: 'Newsletter signup with name, email, and consent checkbox.',
-  FormFeedback: 'Customer feedback — star rating, category select, free-text comment, optional contact.',
-  FormSurvey: 'Configurable survey — defaults to NPS-style with rating, recommend radio, and open text.',
-  FormBooking: 'Demo / appointment request — name, email, company, date picker, time slot, notes.',
-  FormRegistration: 'Event registration — name, contact, role, t-shirt size, dietary select.',
-  FormQuoteRequest: 'Quote request — company, project type, budget range, timeline, requirements.',
-  FormApplication: 'Job / programme application — contact, LinkedIn, portfolio, role, cover note, CV upload.',
-  FormSupport: 'Support ticket — name, email, category, priority, subject, description, attachment.',
-  FormWaitlist: 'Product waitlist — name, email, company, role, intended use case.',
-  FormAddress: 'Address / location form — name, street, city, state, country select, postal code.',
+  FormFeedback: 'Customer feedback - star rating, category select, free-text comment, optional contact.',
+  FormSurvey: 'Configurable survey - defaults to NPS-style with rating, recommend radio, and open text.',
+  FormBooking: 'Demo / appointment request - name, email, company, date picker, time slot, notes.',
+  FormRegistration: 'Event registration - name, contact, role, t-shirt size, dietary select.',
+  FormQuoteRequest: 'Quote request - company, project type, budget range, timeline, requirements.',
+  FormApplication: 'Job / programme application - contact, LinkedIn, portfolio, role, cover note, CV upload.',
+  FormSupport: 'Support ticket - name, email, category, priority, subject, description, attachment.',
+  FormWaitlist: 'Product waitlist - name, email, company, role, intended use case.',
+  FormAddress: 'Address / location form - name, street, city, state, country select, postal code.',
 };
 
 export default function BlockThumbnail({ name }) {
   const colors = useThemeColors();
   const previews = getPreviews(colors);
   if (previews[name]) return previews[name];
-  // Fallback for an unmapped block — a plain framed label, themed to match.
+  // Fallback for an unmapped block - a plain framed label, themed to match.
   return (
     <svg
       viewBox={`0 0 ${FRAME_W} ${FRAME_H}`}

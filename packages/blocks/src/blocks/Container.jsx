@@ -1,4 +1,4 @@
-// Container — styled background + padding container for visually grouping
+// Container - styled background + padding container for visually grouping
 // adjacent blocks. Doesn't accept children blocks (Puck DropZones add too
 // much complexity); instead this is a single decorative wrapper for one
 // title + one body of content.

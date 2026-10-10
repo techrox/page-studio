@@ -1,4 +1,4 @@
-// Timeline — vertical chronological events list. Each item has a date, a
+// Timeline - vertical chronological events list. Each item has a date, a
 // title, and a body. Useful for company history, project milestones, or a
 // "what happens after you contact us" walkthrough.
 

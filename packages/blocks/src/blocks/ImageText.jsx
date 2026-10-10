@@ -1,4 +1,4 @@
-// ImageText — image on one side, heading/body/CTA on the other. Classic
+// ImageText - image on one side, heading/body/CTA on the other. Classic
 // alternating "feature" section. Image position is editable so you can flip
 // it to break visual rhythm.
 
@@ -73,7 +73,7 @@ export const ImageText = {
     eyebrow: 'Feature',
     heading: 'A focused capability',
     body:
-      'Describe what this section is about — what value it delivers, and why it matters to the reader.',
+      'Describe what this section is about - what value it delivers, and why it matters to the reader.',
     image_url: '',
     image_alt: '',
     image_ratio: 'auto',

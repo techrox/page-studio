@@ -54,9 +54,9 @@ describe('ImageCarousel component & Puck block', () => {
         <ImageCarouselComponent
           layout="carousel_right"
           partition_type="content"
-          partition_eyebrow="Campus Life"
+          partition_eyebrow="Featured"
           partition_title="State of the Art Facilities"
-          partition_description="World class campus"
+          partition_description="Built for teams"
           partition_cta_text="Read Details"
         />
       </Wrap>
@@ -67,9 +67,9 @@ describe('ImageCarousel component & Puck block', () => {
 
     const textSide = container.querySelector('.tps-carousel-partition-side');
     expect(textSide).not.toBeNull();
-    expect(textSide.textContent).toContain('Campus Life');
+    expect(textSide.textContent).toContain('Featured');
     expect(textSide.textContent).toContain('State of the Art Facilities');
-    expect(textSide.textContent).toContain('World class campus');
+    expect(textSide.textContent).toContain('Built for teams');
     expect(textSide.textContent).toContain('Read Details');
 
     const carousel = container.querySelector('.tps-carousel-wrap');
@@ -98,16 +98,16 @@ describe('ImageCarousel component & Puck block', () => {
         <ImageCarouselComponent
           layout="carousel_right"
           partition_type="image"
-          partition_image_url="https://example.com/custom-campus.jpg"
-          partition_image_alt="Custom Campus"
+          partition_image_url="https://example.com/custom-image.jpg"
+          partition_image_alt="Custom image"
         />
       </Wrap>
     );
 
     const img = container.querySelector('.tps-carousel-partition-image');
     expect(img).not.toBeNull();
-    expect(img.getAttribute('src')).toBe('https://example.com/custom-campus.jpg');
-    expect(img.getAttribute('alt')).toBe('Custom Campus');
+    expect(img.getAttribute('src')).toBe('https://example.com/custom-image.jpg');
+    expect(img.getAttribute('alt')).toBe('Custom image');
   });
 
   it('renders partitioned layout with Both (Content + Image)', () => {
@@ -116,13 +116,13 @@ describe('ImageCarousel component & Puck block', () => {
         <ImageCarouselComponent
           layout="carousel_right"
           partition_type="both"
-          partition_title="Academic Complex"
+          partition_title="Head Office"
           partition_image_url="https://example.com/complex.jpg"
         />
       </Wrap>
     );
 
-    expect(container.textContent).toContain('Academic Complex');
+    expect(container.textContent).toContain('Head Office');
     const img = container.querySelector('.tps-carousel-partition-image');
     expect(img).not.toBeNull();
     expect(img.getAttribute('src')).toBe('https://example.com/complex.jpg');

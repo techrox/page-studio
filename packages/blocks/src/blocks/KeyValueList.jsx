@@ -1,4 +1,4 @@
-// KeyValueList — definition list / specs table. For "what's included",
+// KeyValueList - definition list / specs table. For "what's included",
 // product specs, deal terms.
 export const KeyValueList = {
   label: 'Key / value list',
@@ -11,7 +11,7 @@ export const KeyValueList = {
         key: { type: 'text', label: 'Key' },
         value: { type: 'text', label: 'Value' },
       },
-      defaultItemProps: { key: 'New row', value: '—' },
+      defaultItemProps: { key: 'New row', value: '-' },
       getItemSummary: (it, i) => it?.key || `Row ${i + 1}`,
     },
     background: {
@@ -22,7 +22,7 @@ export const KeyValueList = {
   defaultProps: {
     eyebrow: '', heading: 'The details',
     items: [
-      { key: 'Duration', value: '4–8 weeks' },
+      { key: 'Duration', value: '4-8 weeks' },
       { key: 'Format', value: 'Remote + on-site' },
       { key: 'Includes', value: 'Discovery · build · launch' },
       { key: 'Starts at', value: 'Talk to us' },

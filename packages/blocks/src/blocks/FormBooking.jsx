@@ -1,6 +1,6 @@
 import { FormBlockBase, COMMON_FORM_FIELDS, COMMON_FORM_DEFAULTS } from './_FormBlockBase';
 
-// Demo / appointment booking — name, email, company, date preference, time slot, notes.
+// Demo / appointment booking - name, email, company, date preference, time slot, notes.
 export const FormBooking = {
   label: 'Booking / demo form',
   fields: COMMON_FORM_FIELDS,
@@ -25,7 +25,7 @@ export const FormBooking = {
         required: 'yes',
         width: 'half',
         validation: 'none',
-        options: 'Morning (9 am – 12 pm)\nAfternoon (12 pm – 5 pm)\nEvening (5 pm – 7 pm)',
+        options: 'Morning (9 am - 12 pm)\nAfternoon (12 pm - 5 pm)\nEvening (5 pm - 7 pm)',
         default_value: '',
         help_text: '',
       },

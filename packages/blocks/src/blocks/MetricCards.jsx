@@ -1,4 +1,4 @@
-// MetricCards — large-number cards with optional trend indicator. The
+// MetricCards - large-number cards with optional trend indicator. The
 // "by the numbers" section. Bigger, bolder, more visual than StatsStrip.
 
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';

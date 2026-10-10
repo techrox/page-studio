@@ -1,4 +1,4 @@
-// ServicesGrid — auto-renders the 10 service capability cards from the
+// ServicesGrid - auto-renders the 10 service capability cards from the
 // services data file. Editor only chooses how many to show + section chrome.
 
 import { StudioLink as Link, useStudio } from '../context';

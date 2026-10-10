@@ -51,7 +51,7 @@ describe('ImageGallery component & Puck block', () => {
     const { container } = render(
       <Wrap>
         <ImageGalleryComponent
-          heading="Campus Gallery"
+          heading="Project Gallery"
           items={sampleItems}
         />
       </Wrap>,
@@ -82,7 +82,7 @@ describe('ImageGallery component & Puck block', () => {
     const { container } = render(
       <Wrap>
         <ImageGalleryComponent
-          heading="Campus Gallery"
+          heading="Project Gallery"
           items={sampleItems}
         />
       </Wrap>,

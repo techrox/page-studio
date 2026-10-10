@@ -1,6 +1,6 @@
 import { FormBlockBase, COMMON_FORM_FIELDS, COMMON_FORM_DEFAULTS } from './_FormBlockBase';
 
-// Support ticket — name, email, category, priority, subject, description, optional attachment.
+// Support ticket - name, email, category, priority, subject, description, optional attachment.
 export const FormSupport = {
   label: 'Support ticket form',
   fields: COMMON_FORM_FIELDS,
@@ -42,7 +42,7 @@ export const FormSupport = {
       },
       { field_type: 'text',     field_key: 'subject',      label: 'Subject',      placeholder: 'One-line summary of the issue',           required: 'yes', width: 'full', validation: 'none', options: '', default_value: '', help_text: '' },
       { field_type: 'textarea', field_key: 'description',  label: 'Description',  placeholder: 'Steps to reproduce, error messages, expected vs actual behaviour…', required: 'yes', width: 'full', validation: 'none', options: '', default_value: '', help_text: '' },
-      { field_type: 'upload',   field_key: 'attachment',   label: 'Attachment',   placeholder: 'Upload a screenshot or file',             required: 'no',  width: 'full', validation: 'none', options: '', default_value: '', help_text: 'Optional — screenshots, logs, or related files' },
+      { field_type: 'upload',   field_key: 'attachment',   label: 'Attachment',   placeholder: 'Upload a screenshot or file',             required: 'no',  width: 'full', validation: 'none', options: '', default_value: '', help_text: 'Optional - screenshots, logs, or related files' },
     ],
   },
   render: (props) => <FormBlockBase {...props} />,

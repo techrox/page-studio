@@ -1,4 +1,4 @@
-// ImageGallery — responsive photo grid with lightweight, non-jumping lightbox.
+// ImageGallery - responsive photo grid with lightweight, non-jumping lightbox.
 'use client';
 
 import { useState, useEffect, useCallback, useMemo } from 'react';

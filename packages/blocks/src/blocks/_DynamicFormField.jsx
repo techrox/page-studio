@@ -173,7 +173,7 @@ export function DynamicFormField({ field }) {
     );
   }
 
-  // DatePicker: don't pass string default_value — incompatible type
+  // DatePicker: don't pass string default_value - incompatible type
   const initialValue =
     field_type === 'date' || field_type === 'rating' ? undefined : default_value || undefined;
 

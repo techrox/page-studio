@@ -1,7 +1,7 @@
 'use client';
 
 // Default top bar for the editor. Replaceable via the `header` prop on
-// <PageStudio /> — if you need full control, pass a render function.
+// <PageStudio /> - if you need full control, pass a render function.
 //
 // Designed to be brand-agnostic: every visible label/color comes from
 // `branding` or sensible neutrals. Account/home/publish are all optional;
@@ -92,7 +92,7 @@ export default function BuilderTopBar({
     : null;
 
   // Locally re-theme AntD so the Publish button + avatar pick up the
-  // configured brand colors regardless of the host's ConfigProvider — the
+  // configured brand colors regardless of the host's ConfigProvider - the
   // top bar should look like the brand, not like the surrounding admin.
   const brandTheme = {
     algorithm: antdTheme.defaultAlgorithm,

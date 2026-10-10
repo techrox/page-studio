@@ -13,7 +13,7 @@ import { htmlField } from './HtmlField.jsx';
 export function PopupModalComponent({
   heading = 'Special Announcement',
   eyebrow = 'Welcome',
-  body_html = '<p>We are thrilled to welcome you to our new portal. Explore our latest courses, updates, and events.</p>',
+  body_html = '<p>We are thrilled to welcome you to our new portal. Explore our latest products, updates, and events.</p>',
   image_url = 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1000&q=80',
   image_alt = 'Announcement Image',
   image_position = 'top',
@@ -391,7 +391,7 @@ export const PopupModal = {
     heading: 'Special Announcement',
     eyebrow: 'Welcome',
     body_html:
-      '<p>Welcome to our official portal! Explore our latest updates, admissions, and upcoming events.</p>',
+      '<p>Welcome! Explore our latest updates, resources, and upcoming events.</p>',
     image_url:
       'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1000&q=80',
     image_alt: 'Welcome Banner',

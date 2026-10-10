@@ -22,8 +22,8 @@ describe('Marquee component & block', () => {
     const marquee = container.querySelector('.tps-marquee');
     expect(marquee).not.toBeNull();
     expect(marquee.textContent).toContain('Updates');
-    expect(marquee.textContent).toContain('Admissions open');
-    expect(container.querySelector('a[href="/admissions"]')).not.toBeNull();
+    expect(marquee.textContent).toContain('New platform update');
+    expect(container.querySelector('a[href="/updates"]')).not.toBeNull();
   });
 
   it('sorts items in ascending order based on the order prop', () => {

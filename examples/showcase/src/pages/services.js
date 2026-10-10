@@ -1,4 +1,4 @@
-// Services page — capability-focused. Header, capability grid, metrics,
+// Services page - capability-focused. Header, capability grid, metrics,
 // pricing, testimonial, FAQ, and inline + closing CTAs.
 
 export const services = {
@@ -50,7 +50,7 @@ export const services = {
           ],
           // Per-block theme: this one section renders dark while the rest of
           // the page stays light. `theme` re-scopes the --tps-* tokens on just
-          // this block via data-tps-theme — independent of the page/site theme.
+          // this block via data-tps-theme - independent of the page/site theme.
           theme: 'dark',
         },
       },
@@ -100,7 +100,7 @@ export const services = {
         type: 'InlineCTA',
         props: {
           headline: 'Have a project in mind?',
-          body: 'Tell us where you are — we’ll write back within a business day.',
+          body: 'Tell us where you are - we’ll write back within a business day.',
           button_label: 'Get in touch',
           button_href: '/pages/contact',
           background: 'primary',

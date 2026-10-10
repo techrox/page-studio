@@ -1,4 +1,4 @@
-// TestimonialGrid — 2 or 3 testimonial cards in a row. Used when you want
+// TestimonialGrid - 2 or 3 testimonial cards in a row. Used when you want
 // social proof from multiple voices without a single quote dominating.
 
 export const TestimonialGrid = {

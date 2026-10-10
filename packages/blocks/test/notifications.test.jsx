@@ -23,8 +23,8 @@ describe('Notifications component & block', () => {
     expect(notif).not.toBeNull();
     expect(notif.textContent).toContain('Notifications & Announcements');
     expect(notif.textContent).toContain('Notice Board');
-    expect(notif.textContent).toContain('B.A. LL.B. (Hons)');
-    expect(container.querySelector('a[href="/admissions"]')).not.toBeNull();
+    expect(notif.textContent).toContain('System upgrade scheduled');
+    expect(container.querySelector('a[href="/announcements"]')).not.toBeNull();
   });
 
   it('renders NEW tag badge when is_new is true', () => {
@@ -33,7 +33,7 @@ describe('Notifications component & block', () => {
         order: 1,
         is_new: true,
         new_badge_text: 'NEW',
-        text: 'Admissions 2026',
+        text: 'Release 2026',
       },
       {
         order: 2,

@@ -1,4 +1,4 @@
-/* @techrox/page-studio — editor chrome (top bar, sidebar tabs, loading state).
+/* @techrox/page-studio - editor chrome (top bar, sidebar tabs, loading state).
  * Block styling lives in @techrox/page-studio-blocks/styles.css. Both
  * stylesheets share the same `--tps-*` CSS variables; override them at
  * :root in your host (or let PageStudio's `branding` prop inject them) to
@@ -28,7 +28,7 @@
 /* --- Top bar ------------------------------------------------------------ */
 /* With `overrides.header`, Puck renders our component directly as a child
  * of `_PuckLayout-inner_`. That layout is a 3-column CSS grid with named
- * areas "header header header" / "left editor right" — so unless our bar
+ * areas "header header header" / "left editor right" - so unless our bar
  * is explicitly placed in `grid-area: header`, it auto-flows into a single
  * cell and only spans the left sidebar's column. The grid-area assignment
  * here is what makes the bar span the full row width. */
@@ -41,7 +41,7 @@
   padding: 6px 16px;
   /* The builder bar stays a dark surface in every theme. It reads a chrome
    * token (not --tps-ink) so it doesn't invert when the block ink flips for
-   * dark mode — the dark scope below just retargets --psd-bar-bg. */
+   * dark mode - the dark scope below just retargets --psd-bar-bg. */
   background: var(--psd-bar-bg, var(--tps-ink, #0f172a));
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   font-size: 13px;
@@ -113,7 +113,7 @@
   border-bottom-color: var(--tps-primary, #0f766e);
 }
 
-/* Tab visibility — driven by data-attr the script sets on the sidebar.
+/* Tab visibility - driven by data-attr the script sets on the sidebar.
  * Use a descendant (not child) combinator: Puck's legacySideBarPlugin
  * wraps both SidebarSections in an intermediate <div style="overflowY: auto">,
  * so the sections are grandchildren of _Sidebar--left, not direct children. */
@@ -129,7 +129,7 @@
   display: none !important;
 }
 
-/* Block search — sticky under the tab bar; visible only on the Blocks tab. */
+/* Block search - sticky under the tab bar; visible only on the Blocks tab. */
 .psd-sidebar-search {
   position: sticky;
   top: 41px; /* below the .psd-sidebar-tabs (40px content + 1px border) */
@@ -160,11 +160,11 @@
   border-color: var(--tps-primary, #0b60d8);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--tps-primary, #0b60d8) 15%, transparent);
 }
-/* Strip native search clear button — Puck cards aren't full-width either,
+/* Strip native search clear button - Puck cards aren't full-width either,
  * so the trailing UI feels out of place. */
 .psd-sidebar-search__input::-webkit-search-cancel-button { -webkit-appearance: none; }
 
-/* Search filter — collapse the actual grid cell so visible matches reflow
+/* Search filter - collapse the actual grid cell so visible matches reflow
  * up to the top-left of the picker.
  *
  * Puck v0.21 (<DrawerItem>) renders an unnamed <div> as the direct child
@@ -180,28 +180,28 @@
 [class*='_ComponentList_'][data-psd-empty='true'] { display: none !important; }
 
 /* -------------------------------------------------------------------------
-   Themes — editor chrome
+   Themes - editor chrome
    -------------------------------------------------------------------------
    PageStudio stamps `data-tps-theme="<name>"` on `.psd-builder-page` (the
    element that wraps the whole editor). A theme is the same idea here as in
    the block library: a re-scope of tokens, repainting descendants through
-   the CSS cascade — no per-component code.
+   the CSS cascade - no per-component code.
 
    Two token families are retargeted under the dark scope:
-     1. --tps-*   — our own chrome (top bar, sidebar tabs, search, badges).
-     2. --puck-*  — Puck's grey/azure ramp, defined on :root by puck.css.
+     1. --tps-*   - our own chrome (top bar, sidebar tabs, search, badges).
+     2. --puck-*  - Puck's grey/azure ramp, defined on :root by puck.css.
         Because `.psd-builder-page` sits between :root and every Puck panel,
         redefining the ramp here re-themes Puck's left side nav, blocks
         drawer, layers, the right field panel and ALL its inputs at once.
 
    The canvas iframe is a separate document and never inherits this
-   attribute — it is themed through branding.cssVars (see PageStudio.jsx).
+   attribute - it is themed through branding.cssVars (see PageStudio.jsx).
 
    To add a theme (e.g. "sepia"): copy this block, rename the selector, and
    change the values. Nothing in the editor components needs to know. */
 [data-tps-theme="dark"].psd-builder-page,
 [data-tps-theme="dark"] .psd-builder-page {
-  /* Chrome neutrals — mirrors @techrox/page-studio-blocks dark tokens so the
+  /* Chrome neutrals - mirrors @techrox/page-studio-blocks dark tokens so the
      chrome self-themes from the attribute alone, even when a host passes no
      branding.cssVars. */
   --tps-ink:          #f1f5f9;
@@ -216,7 +216,7 @@
   /* The builder bar stays dark regardless of theme (see .psd-builder-bar). */
   --psd-bar-bg:       #0a0a0a;
 
-  /* Puck ramp — backgrounds (light end) flip to dark surfaces, the text end
+  /* Puck ramp - backgrounds (light end) flip to dark surfaces, the text end
      flips to light, mid-greys stay readable on dark. */
   --puck-color-white:    #141414;
   --puck-color-grey-12:  #1a1a1a;
@@ -233,8 +233,8 @@
   --puck-color-grey-01:  #f1f1f1;
   --puck-color-black:    #f8fafc;
 
-  /* Azure light tints are used as selected-row backgrounds — keep them dark
-     so a selection doesn't flash near-white. The saturated end (01–08, used
+  /* Azure light tints are used as selected-row backgrounds - keep them dark
+     so a selection doesn't flash near-white. The saturated end (01-08, used
      for primary buttons / active accents) reads fine on dark, left as-is. */
   --puck-color-azure-12: #0f1b2d;
   --puck-color-azure-11: #11203a;

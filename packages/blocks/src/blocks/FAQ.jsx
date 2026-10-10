@@ -1,6 +1,6 @@
 'use client';
 
-// FAQ — accordion of question / answer items. Uses AntD Collapse so it gets
+// FAQ - accordion of question / answer items. Uses AntD Collapse so it gets
 // the accessibility + keyboard handling for free.
 
 import { Collapse } from 'antd';

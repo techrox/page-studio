@@ -1,4 +1,4 @@
-// withTheme tests — per-block theme field + data-tps-theme stamping.
+// withTheme tests - per-block theme field + data-tps-theme stamping.
 
 import { describe, it, expect } from 'vitest';
 import { withTheme } from '../src/withTheme.jsx';

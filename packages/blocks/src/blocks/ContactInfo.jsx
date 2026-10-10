@@ -1,4 +1,4 @@
-// ContactInfo — office address + email + phone + hours card. No form;
+// ContactInfo - office address + email + phone + hours card. No form;
 // for a contact page or footer-adjacent placement.
 import { MailOutlined, PhoneOutlined, EnvironmentOutlined, ClockCircleOutlined } from '@ant-design/icons';
 
@@ -21,7 +21,7 @@ export const ContactInfo = {
     email: 'hello@example.com',
     phone: '',
     address: 'Your street\nYour city, Country',
-    hours: 'Mon–Fri · 09:00–18:00',
+    hours: 'Mon-Fri · 09:00-18:00',
     background: 'soft',
   },
   render: ({ eyebrow, heading, email, phone, address, hours, background }) => (

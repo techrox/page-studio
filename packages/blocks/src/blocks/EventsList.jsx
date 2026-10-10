@@ -1,4 +1,4 @@
-// EventsList — upcoming events list. Date pill + title + venue + CTA.
+// EventsList - upcoming events list. Date pill + title + venue + CTA.
 import { StudioLink as Link } from '../context';
 import { CalendarOutlined, EnvironmentOutlined } from '@ant-design/icons';
 

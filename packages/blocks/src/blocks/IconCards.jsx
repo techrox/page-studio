@@ -1,5 +1,5 @@
-// IconCards — small icon + title + 1-line body, in a 3 / 4-column grid.
-// Lighter than PillarsRow — meant for sub-features or quick "what you get"
+// IconCards - small icon + title + 1-line body, in a 3 / 4-column grid.
+// Lighter than PillarsRow - meant for sub-features or quick "what you get"
 // rundowns under a primary section.
 
 import {
@@ -62,7 +62,7 @@ export const IconCards = {
       defaultItemProps: {
         icon: 'CheckCircleOutlined',
         title: 'Card title',
-        body: 'A short description (1–2 lines).',
+        body: 'A short description (1-2 lines).',
       },
       getItemSummary: (item, i) => item?.title || `Card ${i + 1}`,
     },

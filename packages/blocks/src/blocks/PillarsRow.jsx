@@ -1,4 +1,4 @@
-// PillarsRow — 2/3/4-column grid of icon + title + body cards.
+// PillarsRow - 2/3/4-column grid of icon + title + body cards.
 
 import {
   ApartmentOutlined,

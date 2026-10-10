@@ -1,11 +1,11 @@
 // Custom TipTap node extensions for the Page Studio admin editor:
-//   • CiqImage — image with width + align attributes (overrides @tiptap/extension-image
+//   • CiqImage - image with width + align attributes (overrides @tiptap/extension-image
 //     with extra attrs and richer renderHTML).
-//   • Columns — a container of N columns (N is configurable: 2 or 3).
-//   • Column — the per-column slot (only used as a child of Columns).
-//   • Callout — a tone-colored info / warning / success card with editable body.
-//   • ShareBlock — leaf node, renders as social share buttons on the public site.
-//   • SubscribeBlock — leaf node, renders as a newsletter form.
+//   • Columns - a container of N columns (N is configurable: 2 or 3).
+//   • Column - the per-column slot (only used as a child of Columns).
+//   • Callout - a tone-colored info / warning / success card with editable body.
+//   • ShareBlock - leaf node, renders as social share buttons on the public site.
+//   • SubscribeBlock - leaf node, renders as a newsletter form.
 //
 // All blocks emit semantic HTML with stable `tps-block-*` classes. The same
 // classes are styled both inside the editor canvas and on the public site
@@ -48,7 +48,7 @@ export const CiqTableHeader = TableHeader.extend({
 // ---------------------------------------------------------------------------
 export const CiqImage = Image.extend({
   name: 'ciqImage',
-  // Inline images don't get alignment — we use block images so we can wrap
+  // Inline images don't get alignment - we use block images so we can wrap
   // them in a container div and apply text-align.
   inline: false,
   group: 'block',
@@ -106,12 +106,12 @@ export const CiqImage = Image.extend({
 });
 
 // ---------------------------------------------------------------------------
-// Column slot — a wrapper for content. Lives only inside Columns.
+// Column slot - a wrapper for content. Lives only inside Columns.
 // ---------------------------------------------------------------------------
 export const Column = Node.create({
   name: 'column',
   group: 'column',
-  // Allow any block content inside — paragraphs, headings, lists, images.
+  // Allow any block content inside - paragraphs, headings, lists, images.
   content: 'block+',
   isolating: true,
   defining: true,
@@ -135,7 +135,7 @@ export const Column = Node.create({
 export const Columns = Node.create({
   name: 'columns',
   group: 'block',
-  content: 'column{2,4}', // 2–4 columns
+  content: 'column{2,4}', // 2-4 columns
   defining: true,
 
   addAttributes() {
@@ -185,7 +185,7 @@ export const Columns = Node.create({
 });
 
 // ---------------------------------------------------------------------------
-// Callout — info / warning / success card
+// Callout - info / warning / success card
 // ---------------------------------------------------------------------------
 export const Callout = Node.create({
   name: 'callout',
@@ -239,7 +239,7 @@ export const Callout = Node.create({
 });
 
 // ---------------------------------------------------------------------------
-// Share block — leaf, renders as social share buttons (rendered statically
+// Share block - leaf, renders as social share buttons (rendered statically
 // on the public site, no JS needed).
 // ---------------------------------------------------------------------------
 export const ShareBlock = Node.create({
@@ -267,7 +267,7 @@ export const ShareBlock = Node.create({
     const label = HTMLAttributes['data-label'] || 'Share this page';
     // Static markup; client-side share URLs use the canonical page URL via
     // window.location at render time (in the public-side hydration script,
-    // future work) — for now, links use a generic share intent.
+    // future work) - for now, links use a generic share intent.
     return [
       'div',
       mergeAttributes(HTMLAttributes, { class: 'tps-block-share' }),
@@ -318,7 +318,7 @@ export const ShareBlock = Node.create({
 });
 
 // ---------------------------------------------------------------------------
-// Subscribe block — newsletter signup. Posts to /api/leads with
+// Subscribe block - newsletter signup. Posts to /api/leads with
 // source=newsletter; the existing leads endpoint accepts that.
 // ---------------------------------------------------------------------------
 export const SubscribeBlock = Node.create({
@@ -336,7 +336,7 @@ export const SubscribeBlock = Node.create({
         renderHTML: (attrs) => ({ 'data-heading': attrs.heading }),
       },
       body: {
-        default: 'One short email when we publish — never more.',
+        default: 'One short email when we publish - never more.',
         parseHTML: (el) => el.getAttribute('data-body') || '',
         renderHTML: (attrs) => ({ 'data-body': attrs.body }),
       },

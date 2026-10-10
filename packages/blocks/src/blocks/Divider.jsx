@@ -1,4 +1,4 @@
-// Divider — horizontal divider with optional centered label.
+// Divider - horizontal divider with optional centered label.
 export const Divider = {
   label: 'Divider',
   fields: {

@@ -1,4 +1,4 @@
-// withReveal — wraps a Puck block's render so it gets a default subtle
+// withReveal - wraps a Puck block's render so it gets a default subtle
 // "fade up on scroll" entrance animation in production, with zero FOUC.
 //
 // SSR-safety: blocks render with `opacity: 1` in the initial HTML (no
@@ -19,7 +19,7 @@ import { Children, cloneElement, isValidElement } from 'react';
 export function withReveal(component, animation = 'fade-up') {
   const RenderWrapped = (props) => {
     const node = component.render(props);
-    // In the editor canvas, render plain — no animation chrome on top.
+    // In the editor canvas, render plain - no animation chrome on top.
     if (props?.puck?.isEditing) return node;
     if (!isValidElement(node)) return node;
     // Add the data attribute the IO hook reads on the OUTER element of
@@ -36,5 +36,5 @@ export function withReveal(component, animation = 'fade-up') {
 }
 
 // Expose Children as a convenience if a block needs to wrap multiple
-// roots — keeps consumers off React internals.
+// roots - keeps consumers off React internals.
 export const _Children = Children;

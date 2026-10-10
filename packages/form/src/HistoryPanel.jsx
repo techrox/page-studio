@@ -314,7 +314,7 @@ function RevisionDetail({ revision, currentPage, view, setView, onRestore, resto
 
 function SummaryView({ summary }) {
   if (!summary.length) {
-    return <Alert type="info" showIcon message="No differences — this revision matches the current page." />;
+    return <Alert type="info" showIcon message="No differences - this revision matches the current page." />;
   }
   return (
     <Space direction="vertical" size={10} style={{ width: '100%' }}>
@@ -509,11 +509,11 @@ function equal(a, b) {
 }
 
 function formatScalar(v) {
-  if (v === undefined || v === null) return '—';
-  if (typeof v === 'string') return v || '—';
+  if (v === undefined || v === null) return '-';
+  if (typeof v === 'string') return v || '-';
   if (typeof v === 'boolean') return v ? 'true' : 'false';
   if (Array.isArray(v) && v.every((x) => typeof x === 'string')) {
-    return v.length ? v.join('\n') : '—';
+    return v.length ? v.join('\n') : '-';
   }
   return JSON.stringify(v, null, 2);
 }

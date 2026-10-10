@@ -1,4 +1,4 @@
-// StatsStrip — horizontal row of stat cards (value + label).
+// StatsStrip - horizontal row of stat cards (value + label).
 
 export const StatsStrip = {
   label: 'Stats strip',
@@ -28,7 +28,7 @@ export const StatsStrip = {
       { value: '120+', label: 'Happy customers' },
       { value: '24/7', label: 'Support, always on' },
       { value: '99.9%', label: 'Uptime, year after year' },
-      { value: '5★', label: 'Average review' },
+      { value: '5/5', label: 'Average review' },
     ],
     background: 'soft',
   },

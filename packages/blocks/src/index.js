@@ -27,7 +27,7 @@ export {
 } from './BlockThumbnail.jsx';
 
 // Re-export every block by name so consumers can cherry-pick. Importing the
-// whole library is fine in practice — tsup tree-shakes anything not reached
+// whole library is fine in practice - tsup tree-shakes anything not reached
 // by the consumer's import graph.
 export { ContactHeader, ContactHeaderComponent } from './blocks/ContactHeader.jsx';
 export { ContactNavigationHeader, ContactNavigationHeaderComponent } from './blocks/ContactNavigationHeader.jsx';

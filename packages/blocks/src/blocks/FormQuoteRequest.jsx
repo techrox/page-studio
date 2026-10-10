@@ -1,6 +1,6 @@
 import { FormBlockBase, COMMON_FORM_FIELDS, COMMON_FORM_DEFAULTS } from './_FormBlockBase';
 
-// Quote / pricing request — company, contact, project type, budget range, requirements, timeline.
+// Quote / pricing request - company, contact, project type, budget range, requirements, timeline.
 export const FormQuoteRequest = {
   label: 'Quote request form',
   fields: COMMON_FORM_FIELDS,
@@ -38,7 +38,7 @@ export const FormQuoteRequest = {
         required: 'no',
         width: 'half',
         validation: 'none',
-        options: 'Under $5k\n$5k – $20k\n$20k – $50k\n$50k – $100k\n$100k+\nNot sure yet',
+        options: 'Under $5k\n$5k - $20k\n$20k - $50k\n$50k - $100k\n$100k+\nNot sure yet',
         default_value: '',
         help_text: '',
       },
@@ -50,11 +50,11 @@ export const FormQuoteRequest = {
         required: 'no',
         width: 'full',
         validation: 'none',
-        options: 'As soon as possible\n1 – 3 months\n3 – 6 months\n6+ months\nFlexible',
+        options: 'As soon as possible\n1 - 3 months\n3 - 6 months\n6+ months\nFlexible',
         default_value: '',
         help_text: '',
       },
-      { field_type: 'textarea', field_key: 'requirements', label: 'Project requirements', placeholder: 'Describe what you need — features, integrations, constraints, goals…', required: 'yes', width: 'full', validation: 'none', options: '', default_value: '', help_text: '' },
+      { field_type: 'textarea', field_key: 'requirements', label: 'Project requirements', placeholder: 'Describe what you need - features, integrations, constraints, goals…', required: 'yes', width: 'full', validation: 'none', options: '', default_value: '', help_text: '' },
     ],
   },
   render: (props) => <FormBlockBase {...props} />,

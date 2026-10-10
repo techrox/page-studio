@@ -1,4 +1,4 @@
-// Techrox — the in-house brand the page-studio packages ship under. Crisp
+// Techrox - the in-house brand the page-studio packages ship under. Crisp
 // product-led copy with a confident technology register. Used as the
 // out-of-the-box brand on the showcase so visitors see the package's own
 // identity first before exploring the per-tenant overrides.
@@ -8,7 +8,7 @@ export const techroxDefaults = {
     eyebrow: 'Techrox · Page Studio',
     heading_html: 'Marketing pages your team can <em>actually</em> ship.',
     lede:
-      'A schema-first block library and visual editor that drop into any React app. Bring your brand, your CMS, your stack — keep the speed.',
+      'A schema-first block library and visual editor that drop into any React app. Bring your brand, your CMS, your stack - keep the speed.',
     primary_cta_label: 'Try the editor',
     primary_cta_href: '/editor',
     secondary_cta_label: 'Browse the blocks',
@@ -31,9 +31,9 @@ export const techroxDefaults = {
   PillarsRow: {
     columns: 3,
     items: [
-      { icon: 'AppstoreOutlined', title: 'Block-first', text: 'Fifty plus production blocks covering heroes, pricing, articles, contact — all themable.' },
+      { icon: 'AppstoreOutlined', title: 'Block-first', text: 'Fifty plus production blocks covering heroes, pricing, articles, contact - all themable.' },
       { icon: 'ApiOutlined', title: 'Headless-ready', text: 'Pages serialise to JSON. Render them anywhere with the SSR-safe renderer.' },
-      { icon: 'BgColorsOutlined', title: 'Per-tenant defaults', text: 'Same blocks, different brand. Pass a defaults object — the editor and renderer pick it up.' },
+      { icon: 'BgColorsOutlined', title: 'Per-tenant defaults', text: 'Same blocks, different brand. Pass a defaults object - the editor and renderer pick it up.' },
     ],
   },
   ApproachSteps: {
@@ -41,7 +41,7 @@ export const techroxDefaults = {
       { n: '01', title: 'Install', text: 'pnpm add @techrox/page-studio-blocks and a renderer of your choice.' },
       { n: '02', title: 'Theme', text: 'Override the CSS variables and pass your brand-defaults map.' },
       { n: '03', title: 'Compose', text: 'Drop the editor wherever your CMS lives. Pages are plain JSON.' },
-      { n: '04', title: 'Render', text: 'Serve the JSON through PageStudioRender — server or client, your call.' },
+      { n: '04', title: 'Render', text: 'Serve the JSON through PageStudioRender - server or client, your call.' },
     ],
   },
   PrinciplesList: {
@@ -50,9 +50,9 @@ export const techroxDefaults = {
     lede: 'A short list of rules we hold the packages to.',
     label: 'EVERY BLOCK IS:',
     items: [
-      { text: 'SSR-safe — no window references in the render path' },
-      { text: 'Schema-driven — fields and defaults declared, never inferred' },
-      { text: 'Style-tokenised — colours, radii, and spacing through CSS variables' },
+      { text: 'SSR-safe - no window references in the render path' },
+      { text: 'Schema-driven - fields and defaults declared, never inferred' },
+      { text: 'Style-tokenised - colours, radii, and spacing through CSS variables' },
     ],
   },
   ContactSection: {
@@ -85,7 +85,7 @@ export const techroxDefaults = {
 export const techroxBranding = {
   id: 'techrox',
   name: 'Techrox',
-  description: 'Page Studio default — product-led technology brand.',
+  description: 'Page Studio default - product-led technology brand.',
   primaryColor: '#0B60D8',
   accentColor: '#F59E0B',
   inkColor: '#0F172A',

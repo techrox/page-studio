@@ -1,5 +1,5 @@
 // Baseline contract for every registered block. Loops over `defaultBlocks`,
-// so a new block is covered the moment it lands in config.jsx — no opt-in.
+// so a new block is covered the moment it lands in config.jsx - no opt-in.
 // Behaviour-specific tests still live in each block's own test file.
 
 import { describe, it, expect, vi, afterEach } from 'vitest';

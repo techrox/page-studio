@@ -1,4 +1,4 @@
-// AnnouncementBar — top-of-page slim strip. For event announcements,
+// AnnouncementBar - top-of-page slim strip. For event announcements,
 // new product, beta access etc. Compact and dismissible-looking but
 // statically rendered.
 import { StudioLink as Link } from '../context';
@@ -27,7 +27,7 @@ export const AnnouncementBar = {
   render: ({ text, link_label, link_href, variant }) => {
     // `dark` is an inverse strip: bg uses the ink token, fg the bg token, so
     // it stays a dark-on-light bar in a light theme and flips to a light-on-dark
-    // bar in a dark theme — readable either way (the old fixed '#fff' fg turned
+    // bar in a dark theme - readable either way (the old fixed '#fff' fg turned
     // invisible once --tps-ink flipped light). `accent` keeps dark text since
     // the amber bg is light in both themes.
     const palette = {

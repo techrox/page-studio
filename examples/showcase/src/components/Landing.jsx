@@ -1,10 +1,10 @@
-// Landing — the showcase's index page. Designed as a one-screen marketing
+// Landing - the showcase's index page. Designed as a one-screen marketing
 // surface for @techrox/page-studio: brand lockup, what's-in-the-box, tour
 // cards, quickstart code, and credits to the upstream packages. Voice
-// mirrors BRAND.md — short sentences, field names in monospace, no
+// mirrors BRAND.md - short sentences, field names in monospace, no
 // consultancy register.
 //
-// Brand assets are loaded from /brand/* — those SVGs are copied to the
+// Brand assets are loaded from /brand/* - those SVGs are copied to the
 // build output verbatim from examples/showcase/public/brand/.
 
 import { Link } from 'react-router-dom'
@@ -43,13 +43,13 @@ const TOUR = [
     to: '/pages',
     tag: 'Sample pages',
     title: 'Prebuilt pages',
-    body: 'Home, About, Services, Contact — composed from blocks and rendered through PageStudioRender.',
+    body: 'Home, About, Services, Contact - composed from blocks and rendered through PageStudioRender.',
   },
   {
     to: '/editor',
     tag: 'Live editor',
     title: 'Drag-and-drop',
-    body: 'The PageStudio editor preloaded with the home page. Saves to in-memory state — no backend needed.',
+    body: 'The PageStudio editor preloaded with the home page. Saves to in-memory state - no backend needed.',
   },
   {
     to: null,
@@ -60,9 +60,9 @@ const TOUR = [
 ]
 
 const PRINCIPLES = [
-  { title: 'Block-first', body: 'Fifty production blocks covering heroes, pricing, articles, contact — every prop themable through CSS variables.' },
-  { title: 'Headless-ready', body: 'Pages serialise to plain JSON. Render them anywhere with the SSR-safe renderer — server or client, your call.' },
-  { title: 'Per-tenant defaults', body: 'Same blocks, different brand. Pass a blockDefaults object — the editor and renderer pick it up.' },
+  { title: 'Block-first', body: 'Fifty production blocks covering heroes, pricing, articles, contact - every prop themable through CSS variables.' },
+  { title: 'Headless-ready', body: 'Pages serialise to plain JSON. Render them anywhere with the SSR-safe renderer - server or client, your call.' },
+  { title: 'Per-tenant defaults', body: 'Same blocks, different brand. Pass a blockDefaults object - the editor and renderer pick it up.' },
 ]
 
 const CREDITS = [
@@ -87,7 +87,7 @@ export default function Landing() {
             Page Studio is a visual page builder for React, in four small packages.
             The editor lives in your admin. The renderer lives on your site.
             Fifty production blocks in the box, a <code>blockDefaults</code> map per
-            tenant, and every page serialises to plain JSON — store it where you want,
+            tenant, and every page serialises to plain JSON - store it where you want,
             render it anywhere.
           </p>
           <div className="landing-ctas">
@@ -196,7 +196,7 @@ import '@techrox/page-studio-blocks/styles.css';
           <h2 className="landing-h2">Thanks and credits.</h2>
           <p className="landing-section-lede">
             Page Studio is a thin opinionated wrapper. The heavy lifting is done by the
-            libraries below — go give them a star.
+            libraries below - go give them a star.
           </p>
         </header>
         <ul className="landing-credits">

@@ -1,4 +1,4 @@
-// PressMentions — "As featured in" press logos. Same pattern as
+// PressMentions - "As featured in" press logos. Same pattern as
 // LogoStrip but the heading copy and visual treatment match journalism.
 export const PressMentions = {
   label: 'Press mentions',

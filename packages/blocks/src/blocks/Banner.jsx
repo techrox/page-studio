@@ -1,4 +1,4 @@
-// Banner — full-width announcement strip. Use for "we're hiring", a new
+// Banner - full-width announcement strip. Use for "we're hiring", a new
 // service launch, an event invite, etc. Variant controls the colour
 // scheme; the optional link turns it into a clickable strip.
 

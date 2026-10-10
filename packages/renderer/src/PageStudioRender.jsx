@@ -1,6 +1,6 @@
 // Server-safe renderer for Puck output. Designed to be dropped into a
 // Next.js/Remix/Astro server component so the block HTML lands in the SSR
-// response — no client-side render flash.
+// response - no client-side render flash.
 //
 // `data` is the Puck JSON saved by the editor (typically stored on the
 // page row in your CMS). If `data` is missing or empty we render the
@@ -146,7 +146,7 @@ export function PageStudioRender({
 
 // Puck keys rendered blocks by `props.id`. Hand-written or imported JSON
 // often omits it, which trips React's missing-key warning. Fill gaps with
-// `<type>-<index>` — deterministic, so server and client markup match.
+// `<type>-<index>` - deterministic, so server and client markup match.
 function withStableIds(data) {
   if (!data || !Array.isArray(data.content)) return data;
   let mutated = false;
