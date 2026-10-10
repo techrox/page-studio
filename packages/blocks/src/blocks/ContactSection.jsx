@@ -9,7 +9,7 @@
 
 import { useState } from 'react';
 import { Row, Col, Form, Input, Button, Select, Space, message as antdMessage, App as AntdApp } from 'antd';
-import { SendOutlined, MailOutlined, LinkedinFilled } from '@ant-design/icons';
+import { SendOutlined, MailOutlined, PhoneOutlined, LinkedinFilled } from '@ant-design/icons';
 
 import { useStudio } from '../context';
 import { htmlField } from './HtmlField.jsx';
@@ -27,6 +27,9 @@ function ContactSectionRender({
   success_body,
   stages,
   contact_email,
+  contact_phone,
+  linkedin_url,
+  linkedin_label,
 }) {
   const [form] = Form.useForm();
   const { message: appMessage } = AntdApp.useApp() || {};
@@ -38,6 +41,16 @@ function ContactSectionRender({
 
   const stagesList = Array.isArray(stages) ? stages.filter(Boolean) : [];
   const email = contact_email || site.email;
+  const phone = contact_phone || site.phone;
+  const resolvedLinkedinUrl =
+    linkedin_url !== undefined && linkedin_url !== null
+      ? linkedin_url
+      : site.social?.linkedin || '';
+  const resolvedLinkedinLabel =
+    linkedin_label ||
+    site.social?.linkedin_label ||
+    (site.name ? site.name : resolvedLinkedinUrl && resolvedLinkedinUrl !== '#' ? 'LinkedIn' : '');
+  const showLinkedin = Boolean(resolvedLinkedinUrl && resolvedLinkedinUrl !== '#' && resolvedLinkedinUrl.trim() !== '');
 
   const onFirstInteraction = () => {
     if (started) return;
@@ -99,46 +112,72 @@ function ContactSectionRender({
           <Row gutter={[48, 48]}>
             <Col xs={24} md={9}>
               {sidebar_heading && <h2 className="tps-h3">{sidebar_heading}</h2>}
-              <Space direction="vertical" size={20} style={{ width: '100%', marginTop: 24 }}>
-                <a
-                  href={`mailto:${email}`}
-                  style={{
-                    display: 'flex',
-                    gap: 14,
-                    padding: 16,
-                    border: '1px solid var(--tps-line)',
-                    borderRadius: 'var(--tps-radius)',
-                    textDecoration: 'none',
-                    color: 'var(--tps-ink)',
-                  }}
-                >
-                  <MailOutlined style={{ fontSize: 22, color: 'var(--tps-primary)' }} />
-                  <div>
-                    <div style={{ fontSize: 12, color: 'var(--tps-muted)' }}>Email</div>
-                    <div style={{ fontSize: 15, fontWeight: 600 }}>{email}</div>
-                  </div>
-                </a>
-                <a
-                  href={site.social?.linkedin || '#'}
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{
-                    display: 'flex',
-                    gap: 14,
-                    padding: 16,
-                    border: '1px solid var(--tps-line)',
-                    borderRadius: 'var(--tps-radius)',
-                    textDecoration: 'none',
-                    color: 'var(--tps-ink)',
-                  }}
-                >
-                  <LinkedinFilled style={{ fontSize: 22, color: 'var(--tps-primary)' }} />
-                  <div>
-                    <div style={{ fontSize: 12, color: 'var(--tps-muted)' }}>LinkedIn</div>
-                    <div style={{ fontSize: 15, fontWeight: 600 }}>Page Studio</div>
-                  </div>
-                </a>
-              </Space>
+              {(email || phone || showLinkedin) && (
+                <Space direction="vertical" size={20} style={{ width: '100%', marginTop: 24 }}>
+                  {email && (
+                    <a
+                      href={`mailto:${email}`}
+                      style={{
+                        display: 'flex',
+                        gap: 14,
+                        padding: 16,
+                        border: '1px solid var(--tps-line)',
+                        borderRadius: 'var(--tps-radius)',
+                        textDecoration: 'none',
+                        color: 'var(--tps-ink)',
+                      }}
+                    >
+                      <MailOutlined style={{ fontSize: 22, color: 'var(--tps-primary)' }} />
+                      <div>
+                        <div style={{ fontSize: 12, color: 'var(--tps-muted)' }}>Email</div>
+                        <div style={{ fontSize: 15, fontWeight: 600 }}>{email}</div>
+                      </div>
+                    </a>
+                  )}
+                  {phone && (
+                    <a
+                      href={`tel:${phone}`}
+                      style={{
+                        display: 'flex',
+                        gap: 14,
+                        padding: 16,
+                        border: '1px solid var(--tps-line)',
+                        borderRadius: 'var(--tps-radius)',
+                        textDecoration: 'none',
+                        color: 'var(--tps-ink)',
+                      }}
+                    >
+                      <PhoneOutlined style={{ fontSize: 22, color: 'var(--tps-primary)' }} />
+                      <div>
+                        <div style={{ fontSize: 12, color: 'var(--tps-muted)' }}>Phone</div>
+                        <div style={{ fontSize: 15, fontWeight: 600 }}>{phone}</div>
+                      </div>
+                    </a>
+                  )}
+                  {showLinkedin && (
+                    <a
+                      href={resolvedLinkedinUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{
+                        display: 'flex',
+                        gap: 14,
+                        padding: 16,
+                        border: '1px solid var(--tps-line)',
+                        borderRadius: 'var(--tps-radius)',
+                        textDecoration: 'none',
+                        color: 'var(--tps-ink)',
+                      }}
+                    >
+                      <LinkedinFilled style={{ fontSize: 22, color: 'var(--tps-primary)' }} />
+                      <div>
+                        <div style={{ fontSize: 12, color: 'var(--tps-muted)' }}>LinkedIn</div>
+                        <div style={{ fontSize: 15, fontWeight: 600 }}>{resolvedLinkedinLabel}</div>
+                      </div>
+                    </a>
+                  )}
+                </Space>
+              )}
 
               {(response_label || response_body) && (
                 <div
@@ -344,6 +383,9 @@ export const ContactSection = {
       getItemSummary: (item, i) => item?.text || `Stage ${i + 1}`,
     },
     contact_email: { type: 'text', label: 'Public email' },
+    contact_phone: { type: 'text', label: 'Public phone' },
+    linkedin_url: { type: 'text', label: 'LinkedIn URL' },
+    linkedin_label: { type: 'text', label: 'LinkedIn label' },
   },
   defaultProps: {
     hero_eyebrow: 'Contact',
@@ -368,6 +410,9 @@ export const ContactSection = {
       { text: 'Other' },
     ],
     contact_email: '',
+    contact_phone: '',
+    linkedin_url: '',
+    linkedin_label: '',
   },
   render: (props) => <ContactSectionRender {...props} />,
 };
