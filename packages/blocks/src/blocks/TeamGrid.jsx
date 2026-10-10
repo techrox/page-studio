@@ -41,6 +41,7 @@ export const TeamGrid = {
       options: [
         { label: 'White', value: 'white' },
         { label: 'Soft', value: 'soft' },
+        { label: 'Dark', value: 'dark' },
       ],
     },
   },
@@ -75,7 +76,7 @@ export const TeamGrid = {
   },
   render: ({ eyebrow, heading, columns, members, background }) => (
     <section
-      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`}
+      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`}
       style={{ paddingTop: 64, paddingBottom: 64 }}
     >
       <div className="tps-container">
@@ -98,7 +99,7 @@ export const TeamGrid = {
             <div
               key={i}
               style={{
-                background: '#fff',
+                background: 'var(--tps-bg)',
                 border: '1px solid var(--tps-line)',
                 borderRadius: 'var(--tps-radius)',
                 overflow: 'hidden',
@@ -108,7 +109,7 @@ export const TeamGrid = {
                 style={{
                   width: '100%',
                   aspectRatio: '4 / 3',
-                  background: m.image_url ? `url(${m.image_url}) center/cover` : '#E2E8F0',
+                  background: m.image_url ? `url(${m.image_url}) center/cover` : 'var(--tps-line)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',

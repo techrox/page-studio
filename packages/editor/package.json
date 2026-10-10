@@ -1,6 +1,6 @@
 {
   "name": "@techrox/page-studio",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Drag-and-drop visual page builder for React, built on Puck. Adapter-driven persistence, brand theming, sidebar block library, replaceable top bar.",
   "license": "MIT",
   "author": "techrox",
@@ -37,7 +37,8 @@
     "dev": "tsup --watch",
     "test": "vitest run",
     "test:watch": "vitest",
-    "prepublishOnly": "pnpm run build"
+    "prepublishOnly": "pnpm run build && pnpm run test",
+    "test:coverage": "vitest run --coverage"
   },
   "peerDependencies": {
     "@ant-design/icons": ">=5",

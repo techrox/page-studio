@@ -19,6 +19,7 @@ export const StatsStrip = {
       options: [
         { label: 'Soft', value: 'soft' },
         { label: 'White', value: 'white' },
+        { label: 'Dark', value: 'dark' },
       ],
     },
   },
@@ -33,7 +34,7 @@ export const StatsStrip = {
   },
   render: ({ items, background }) => (
     <section
-      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`}
+      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`}
       style={{ paddingTop: 32, paddingBottom: 32 }}
     >
       <div className="tps-container">

@@ -48,7 +48,10 @@ export const services = {
             { value: '8 wks', label: 'Median time to launch', delta: '−2 from 2024', trend: 'down' },
             { value: '92%', label: 'Repeat-client rate', delta: '+4 pts', trend: 'up' },
           ],
-          background: 'white',
+          // Per-block theme: this one section renders dark while the rest of
+          // the page stays light. `theme` re-scopes the --tps-* tokens on just
+          // this block via data-tps-theme — independent of the page/site theme.
+          theme: 'dark',
         },
       },
       {

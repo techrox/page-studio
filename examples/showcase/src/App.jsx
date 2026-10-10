@@ -10,7 +10,7 @@
 
 import { useMemo, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { ConfigProvider } from 'antd'
+import { ConfigProvider, theme as antdTheme } from 'antd'
 
 import { createPuckConfig, PageStudioProvider } from '@techrox/page-studio-blocks'
 
@@ -27,19 +27,24 @@ import { techroxDefaults, techroxBranding } from './brands/techrox.js'
 import { neutralDefaults, neutralBranding } from './brands/neutral.js'
 import { luminDefaults, luminBranding } from './brands/lumin.js'
 import { acmeDefaults, acmeBranding } from './brands/acme.js'
+import { pulsarDefaults, pulsarBranding } from './brands/pulsar.js'
+
+import { tokensFor } from './themeTokens.js'
 
 import { home } from './pages/home.js'
 import { about } from './pages/about.js'
 import { services } from './pages/services.js'
 import { contact } from './pages/contact.js'
+import { pulsar } from './pages/pulsar.js'
 
 const BRANDS = [
   { ...techroxBranding, defaults: techroxDefaults },
   { ...neutralBranding, defaults: neutralDefaults },
   { ...luminBranding, defaults: luminDefaults },
   { ...acmeBranding, defaults: acmeDefaults },
+  { ...pulsarBranding, defaults: pulsarDefaults },
 ]
-const PAGES = [home, about, services, contact]
+const PAGES = [home, about, services, contact, pulsar]
 
 // Lightweight services array so ServicesGrid + ContactSection's interest
 // dropdown have something to render against. Each entry mirrors the
@@ -63,6 +68,17 @@ const DEMO_SERVICES = [
 export default function App() {
   const [brandId, setBrandId] = useState('techrox')
   const brand = BRANDS.find((b) => b.id === brandId) || BRANDS[0]
+
+  // Theme is a vendor-level default that the user can override live. Switching
+  // brand re-seeds the theme to that vendor's default (light unless the brand
+  // declares `theme: 'dark'`); the toggle then flips it independently.
+  const [theme, setTheme] = useState(brand.theme || 'light')
+  const handleBrandChange = (id) => {
+    setBrandId(id)
+    const next = BRANDS.find((b) => b.id === id)
+    setTheme((next && next.theme) || 'light')
+  }
+  const toggleTheme = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))
 
   // Build the Puck config (and so the shared block library) keyed by the
   // active brand. Memoised so we don't rebuild on every render — only when
@@ -101,8 +117,11 @@ export default function App() {
   // AntD theme follows the active brand so buttons / inputs inside blocks
   // pick up the brand's primary color (matches the rest of the UI, which
   // reads --tps-primary off the .showcase root).
-  const antdTheme = useMemo(
+  const antdThemeConfig = useMemo(
     () => ({
+      // Follow the active theme so AntD form controls (ContactSection,
+      // NewsletterSignup, …) and the showcase chrome flip with it.
+      algorithm: theme === 'dark' ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
       token: {
         colorPrimary: brand.primaryColor,
         colorInfo: brand.primaryColor,
@@ -111,7 +130,19 @@ export default function App() {
           "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
       },
     }),
-    [brand.primaryColor],
+    [brand.primaryColor, theme],
+  )
+
+  // Branding handed to the editor. We fold the active theme's neutral tokens
+  // into `cssVars` so PageStudio writes them into the Puck iframe's :root —
+  // the renderer surfaces get their theme from data-tps-theme in the cascade,
+  // but the iframe canvas can't see that attribute, so it needs the values.
+  // `theme` (after `...brand`) carries the LIVE theme — the vendor default
+  // overridden by the topbar toggle — so PageStudio stamps it on the editor
+  // root and the chrome (sidebars, field panel, inputs) flips with the canvas.
+  const editorBranding = useMemo(
+    () => ({ ...brand, theme, cssVars: tokensFor(theme) }),
+    [brand, theme],
   )
 
   // Wrap everything in PageStudioProvider so client-only blocks that call
@@ -119,17 +150,17 @@ export default function App() {
   // resolve their host primitives. The renderer also wraps internally, but
   // wrapping here keeps the editor preview consistent.
   return (
-    <ConfigProvider theme={antdTheme}>
+    <ConfigProvider theme={antdThemeConfig}>
     <PageStudioProvider value={studio}>
       <Routes>
         <Route
           path="/editor"
           element={
-            <Layout brands={BRANDS} brandId={brandId} onBrandChange={setBrandId} title="Live editor">
+            <Layout brands={BRANDS} brandId={brandId} onBrandChange={handleBrandChange} theme={theme} onThemeToggle={toggleTheme} title="Live editor">
               <EditorView
                 initialData={home.data}
                 studio={studio}
-                branding={brand}
+                branding={editorBranding}
                 blockDefaults={brand.defaults}
                 brandId={brand.id}
               />
@@ -139,7 +170,7 @@ export default function App() {
         <Route
           path="*"
           element={
-            <Layout brands={BRANDS} brandId={brandId} onBrandChange={setBrandId} title={titleFor()}>
+            <Layout brands={BRANDS} brandId={brandId} onBrandChange={handleBrandChange} theme={theme} onThemeToggle={toggleTheme} title={titleFor()}>
               <Routes>
                 <Route path="/" element={<Landing />} />
                 <Route path="/blocks" element={<BlockGallery key={brandId} studio={studio} blockConfig={blockConfig} />} />

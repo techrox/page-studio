@@ -9,5 +9,17 @@ export default defineConfig({
     globals: true,
     setupFiles: ['../../vitest.setup.js'],
     css: false,
+    // `pnpm test:coverage` enforces each package's floor (set in its own
+    // vitest.config.js). Raise a floor when coverage goes up; never lower it.
+    coverage: {
+      provider: 'v8',
+      include: ['src/**'],
+      reporter: ['text-summary', 'lcov'],
+    },
   },
 });
+
+// Per-package coverage floor, merged over the shared config.
+export function coverageFloor(thresholds) {
+  return { test: { coverage: { thresholds } } };
+}

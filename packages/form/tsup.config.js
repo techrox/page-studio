@@ -14,7 +14,7 @@ export default defineConfig({
     '@ant-design/icons',
     /^@dnd-kit\//,
     /^@tiptap\//,
-    'dayjs',
+    /^dayjs/,
     'diff',
   ],
   esbuildOptions(options) {

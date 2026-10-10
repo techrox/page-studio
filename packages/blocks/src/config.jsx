@@ -6,6 +6,13 @@
 // to `defaultBlocks` + (optionally) a category. Consumers who want to extend
 // the library do the same with their own files and pass them via `blocks:`.
 
+import { ContactHeader } from './blocks/ContactHeader';
+import { ContactNavigationHeader } from './blocks/ContactNavigationHeader';
+import { MastheadHeader } from './blocks/MastheadHeader';
+import { NavigationHeader } from './blocks/NavigationHeader';
+import { Marquee } from './blocks/Marquee';
+import { Notifications } from './blocks/Notifications';
+import { PopupModal } from './blocks/PopupModal';
 import { Hero } from './blocks/Hero';
 import { StatsStrip } from './blocks/StatsStrip';
 import { SectionHeader } from './blocks/SectionHeader';
@@ -40,6 +47,7 @@ import { PricingComparison } from './blocks/PricingComparison';
 import { AwardsBar } from './blocks/AwardsBar';
 import { CountUpStats } from './blocks/CountUpStats';
 import { ImageGallery } from './blocks/ImageGallery';
+import { ImageCarousel } from './blocks/ImageCarousel';
 import { ImageCaption } from './blocks/ImageCaption';
 import { InlineCTA } from './blocks/InlineCTA';
 import { AnnouncementBar } from './blocks/AnnouncementBar';
@@ -52,12 +60,26 @@ import { AccordionBlock } from './blocks/AccordionBlock';
 import { SocialLinks } from './blocks/SocialLinks';
 import { ContactInfo } from './blocks/ContactInfo';
 import { MapEmbed } from './blocks/MapEmbed';
+import { FormContact } from './blocks/FormContact';
+import { FormLeadCapture } from './blocks/FormLeadCapture';
+import { FormNewsletter } from './blocks/FormNewsletter';
+import { FormFeedback } from './blocks/FormFeedback';
+import { FormSurvey } from './blocks/FormSurvey';
+import { FormBooking } from './blocks/FormBooking';
+import { FormRegistration } from './blocks/FormRegistration';
+import { FormQuoteRequest } from './blocks/FormQuoteRequest';
+import { FormApplication } from './blocks/FormApplication';
+import { FormSupport } from './blocks/FormSupport';
+import { FormWaitlist } from './blocks/FormWaitlist';
+import { FormAddress } from './blocks/FormAddress';
 import { EventsList } from './blocks/EventsList';
 import { Divider } from './blocks/Divider';
 import { ThreeColumn } from './blocks/ThreeColumn';
 import { PressMentions } from './blocks/PressMentions';
 import { Container } from './blocks/Container';
+import { FooterNavigation } from './blocks/FooterNavigation';
 import { withReveal } from './withReveal';
+import { withTheme } from './withTheme';
 import BlockThumbnail, { BLOCK_DESCRIPTIONS } from './BlockThumbnail';
 
 // Default reveal animation per block. Heavier "section" blocks fade up;
@@ -84,6 +106,18 @@ const DEFAULT_REVEAL = {
   VideoEmbed: 'scale-in',
   ContactSection: 'fade-up',
   NewsletterSignup: 'fade-up',
+  FormContact: 'fade-up',
+  FormLeadCapture: 'fade-up',
+  FormNewsletter: 'fade-up',
+  FormFeedback: 'fade-up',
+  FormSurvey: 'fade-up',
+  FormBooking: 'fade-up',
+  FormRegistration: 'fade-up',
+  FormQuoteRequest: 'fade-up',
+  FormApplication: 'fade-up',
+  FormSupport: 'fade-up',
+  FormWaitlist: 'fade-up',
+  FormAddress: 'fade-up',
   ArticleFeatured: 'fade-up',
   ArticleGrid: 'fade-up',
   ArticleList: 'fade-up',
@@ -112,11 +146,26 @@ const DEFAULT_REVEAL = {
   ThreeColumn: 'fade-up',
   PressMentions: 'scale-in',
   Container: 'fade-up',
+  ContactHeader: null,
+  ContactNavigationHeader: null,
+  NavigationHeader: null,
+  MastheadHeader: null,
+  Notifications: 'fade-up',
+  ImageCarousel: 'fade-up',
+  FooterNavigation: 'fade-up',
   Spacer: null,
   RawHtml: null,
 };
 
 export const defaultBlocks = {
+  ContactHeader,
+  ContactNavigationHeader,
+  MastheadHeader,
+  NavigationHeader,
+  FooterNavigation,
+  Marquee,
+  Notifications,
+  PopupModal,
   Hero,
   SectionHeader,
   CTABanner,
@@ -138,6 +187,18 @@ export const defaultBlocks = {
   VideoEmbed,
   ContactSection,
   NewsletterSignup,
+  FormContact,
+  FormLeadCapture,
+  FormNewsletter,
+  FormFeedback,
+  FormSurvey,
+  FormBooking,
+  FormRegistration,
+  FormQuoteRequest,
+  FormApplication,
+  FormSupport,
+  FormWaitlist,
+  FormAddress,
   ArticleFeatured,
   ArticleGrid,
   ArticleList,
@@ -149,6 +210,7 @@ export const defaultBlocks = {
   AwardsBar,
   CountUpStats,
   ImageGallery,
+  ImageCarousel,
   ImageCaption,
   InlineCTA,
   AnnouncementBar,
@@ -172,8 +234,14 @@ export const defaultBlocks = {
 
 // Sidebar grouping for Puck's components panel. Authors browse by category.
 export const defaultCategories = {
+  Headers: {
+    components: ['NavigationHeader', 'ContactHeader', 'ContactNavigationHeader', 'MastheadHeader', 'Marquee', 'Notifications', 'AnnouncementBar'],
+  },
+  Footers: {
+    components: ['FooterNavigation'],
+  },
   'Page sections': {
-    components: ['Hero', 'SectionHeader', 'CTABanner', 'Banner', 'AnnouncementBar', 'InlineCTA'],
+    components: ['Hero', 'SectionHeader', 'CTABanner', 'Banner', 'InlineCTA'],
   },
   Content: {
     components: ['RichText', 'PrinciplesList', 'TwoColumn', 'ThreeColumn', 'ImageText', 'Quote', 'KeyValueList', 'Container', 'CodeBlock'],
@@ -194,13 +262,30 @@ export const defaultCategories = {
     components: ['LogoStrip', 'PressMentions', 'AwardsBar', 'TestimonialQuote', 'TestimonialGrid'],
   },
   Interactive: {
-    components: ['FAQ', 'AccordionBlock', 'TabsBlock', 'Timeline', 'EventsList'],
+    components: ['PopupModal', 'Notifications', 'FAQ', 'AccordionBlock', 'TabsBlock', 'Timeline', 'EventsList'],
   },
   Media: {
-    components: ['VideoEmbed', 'ImageGallery', 'ImageCaption', 'MapEmbed'],
+    components: ['VideoEmbed', 'ImageGallery', 'ImageCarousel', 'ImageCaption', 'MapEmbed'],
   },
   Forms: {
-    components: ['ContactSection', 'NewsletterSignup', 'ContactInfo', 'SocialLinks'],
+    components: [
+      'ContactSection',
+      'NewsletterSignup',
+      'ContactInfo',
+      'SocialLinks',
+      'FormContact',
+      'FormLeadCapture',
+      'FormNewsletter',
+      'FormFeedback',
+      'FormSurvey',
+      'FormBooking',
+      'FormRegistration',
+      'FormQuoteRequest',
+      'FormApplication',
+      'FormSupport',
+      'FormWaitlist',
+      'FormAddress',
+    ],
   },
   Layout: {
     components: ['Spacer', 'Divider', 'RawHtml'],
@@ -322,7 +407,19 @@ export function createPuckConfig({
     const withDefaults = override
       ? { ...block, defaultProps: { ...(block.defaultProps || {}), ...override } }
       : block;
-    components[name] = animation ? withReveal(withDefaults, animation) : withDefaults;
+    // Every block gets a per-block `theme` field + data-tps-theme stamping.
+    // Wrapped INSIDE withReveal so both clones land on the same root element
+    // and the theme is visible on the editor canvas (reveal isn't).
+    const themed = withTheme(withDefaults);
+    components[name] = animation ? withReveal(themed, animation) : themed;
   }
-  return { components, categories, root };
+  // Derive categories: filter out any component names that do not exist in components
+  const resolvedCategories = {};
+  for (const [catName, cat] of Object.entries(categories || {})) {
+    const validComponents = (cat?.components || []).filter((c) => components[c]);
+    if (validComponents.length > 0) {
+      resolvedCategories[catName] = { ...cat, components: validComponents };
+    }
+  }
+  return { components, categories: resolvedCategories, root };
 }

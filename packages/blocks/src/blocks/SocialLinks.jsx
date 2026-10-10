@@ -39,7 +39,7 @@ export const SocialLinks = {
     },
     background: {
       type: 'radio', label: 'Background',
-      options: [{ label: 'White', value: 'white' }, { label: 'Soft', value: 'soft' }],
+      options: [{ label: 'White', value: 'white' }, { label: 'Soft', value: 'soft' }, { label: 'Dark', value: 'dark' }],
     },
   },
   defaultProps: {
@@ -52,7 +52,7 @@ export const SocialLinks = {
     background: 'white',
   },
   render: ({ label, align, items, background }) => (
-    <section className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`} style={{ paddingTop: 32, paddingBottom: 32 }}>
+    <section className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`} style={{ paddingTop: 32, paddingBottom: 32 }}>
       <div className="tps-container" style={{ textAlign: align }}>
         {label && <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: 1.5, color: 'var(--tps-muted)', textTransform: 'uppercase', marginBottom: 12 }}>{label}</div>}
         <div style={{ display: 'inline-flex', gap: 14 }}>
