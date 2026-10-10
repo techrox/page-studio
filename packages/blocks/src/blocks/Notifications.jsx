@@ -2,6 +2,7 @@
 
 import { useMemo } from 'react';
 import { StudioLink as Link } from '../context';
+import { stripTags } from '../sanitize.js';
 import { htmlField } from './HtmlField.jsx';
 
 /**
@@ -226,8 +227,7 @@ export const Notifications = {
         link_href: '#',
       },
       getItemSummary: (item, i) =>
-        `${item?.is_new ? '[NEW] ' : ''}[#${item?.order ?? i + 1}] ${(item?.text || 'Notification')
-          .replace(/<[^>]*>/g, '')
+        `${item?.is_new ? '[NEW] ' : ''}[#${item?.order ?? i + 1}] ${stripTags(item?.text || 'Notification')
           .slice(0, 30)}...`,
     },
     direction: {

@@ -12,6 +12,7 @@
 // `{ url }`.
 
 import { useEffect, useMemo, useState } from 'react';
+import { safeUrl } from './safeUrl.js';
 import {
   useEditor,
   EditorContent,
@@ -888,8 +889,9 @@ function LinkModal({ open, onClose, editor }) {
     if (open) setHref(editor.getAttributes('link').href || '');
   }, [open, editor]);
   const apply = () => {
-    if (!href) editor.chain().focus().unsetLink().run();
-    else editor.chain().focus().extendMarkRange('link').setLink({ href }).run();
+    const safeHref = safeUrl(href, 'link');
+    if (!safeHref) editor.chain().focus().unsetLink().run();
+    else editor.chain().focus().extendMarkRange('link').setLink({ href: safeHref }).run();
     onClose();
   };
   return (
@@ -915,10 +917,11 @@ function ImageModal({ open, onClose, editor, uploadMedia }) {
   }, [open]);
 
   const apply = () => {
-    if (!src) return;
+    const safeSrc = safeUrl(src, 'image');
+    if (!safeSrc) return;
     editor.chain().focus().insertContent({
       type: 'ciqImage',
-      attrs: { src, alt, align: 'center', width: 'medium' },
+      attrs: { src: safeSrc, alt, align: 'center', width: 'medium' },
     }).run();
     onClose();
   };
@@ -987,7 +990,7 @@ function ImageModal({ open, onClose, editor, uploadMedia }) {
       {src && (
         <div style={{ marginTop: 12, border: '1px solid var(--tps-line)', padding: 8, borderRadius: 6 }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={src} alt={alt} style={{ maxWidth: '100%', display: 'block' }} />
+          <img src={safeUrl(src, 'image')} alt={alt} style={{ maxWidth: '100%', display: 'block' }} />
         </div>
       )}
     </Modal>

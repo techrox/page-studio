@@ -18,12 +18,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Dropdown } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { StudioLink as Link, useStudio } from '../context';
-
-function normalizePath(path) {
-  if (!path) return '';
-  const clean = String(path).split('?')[0].split('#')[0].replace(/\/+$/, '');
-  return clean || '/';
-}
+import { normalizePath } from '../sanitize.js';
 
 function initialsOf(...candidates) {
   for (const candidate of candidates) {
