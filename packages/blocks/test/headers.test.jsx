@@ -216,7 +216,7 @@ describe('NavigationHeader component & block', () => {
       </Wrap>
     );
     const contactHeader = contactContainer.querySelector('.tps-contact-header');
-    expect(contactHeader.style.backgroundColor).toBe('rgb(18, 52, 86)');
+    expect(contactHeader.style.backgroundColor).toBe('#123456');
 
     const { container: navContainer } = render(
       <Wrap>
@@ -224,7 +224,7 @@ describe('NavigationHeader component & block', () => {
       </Wrap>
     );
     const navHeader = navContainer.querySelector('.tps-nav-header');
-    expect(navHeader.style.backgroundColor).toBe('rgb(101, 67, 33)');
+    expect(navHeader.style.backgroundColor).toBe('#654321');
   });
 
   it('replaces Login button with Profile icon when isLoggedIn is true in NavigationHeader', () => {

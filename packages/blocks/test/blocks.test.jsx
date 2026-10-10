@@ -42,9 +42,12 @@ describe('Spacer block', () => {
 });
 
 describe('RichText block', () => {
+  // RichText.render uses hooks, so render it as a component (as Puck does).
+  const RichTextBlock = (props) => RichText.render(props);
+
   it('respects custom HTML', () => {
     const { container } = render(
-      <Wrap>{RichText.render({ html: '<p>hi <strong>there</strong></p>', align: 'left', maxWidth: 0 })}</Wrap>,
+      <Wrap><RichTextBlock html="<p>hi <strong>there</strong></p>" align="left" maxWidth={0} /></Wrap>,
     );
     expect(container.textContent).toContain('hi there');
   });

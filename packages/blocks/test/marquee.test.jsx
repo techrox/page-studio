@@ -89,8 +89,8 @@ describe('Marquee component & block', () => {
     );
 
     const marquee = container.querySelector('.tps-marquee');
-    expect(marquee.style.backgroundColor).toBe('rgb(34, 51, 68)');
-    expect(marquee.style.color).toBe('rgb(238, 221, 204)');
+    expect(marquee.style.backgroundColor).toBe('#223344');
+    expect(marquee.style.color).toBe('#eeddcc');
 
     const track = container.querySelector('.tps-marquee__track');
     expect(track.style.animationDuration).toBe('15s');
