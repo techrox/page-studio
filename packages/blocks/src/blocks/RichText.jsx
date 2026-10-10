@@ -63,6 +63,7 @@ import {
   SettingOutlined,
 } from '@ant-design/icons';
 import { useStudio } from '../context';
+import { escapeHtml, safeUrl } from '../sanitize.js';
 
 const { Text } = Typography;
 
@@ -405,7 +406,7 @@ export function RichTextCustomField({ value = '', onChange, readOnly }) {
           const res = await executeUpload(file, 'image');
           if (res?.url) {
             insertHtmlAtSelection(
-              `<p><img src="${res.url}" alt="${res.name || file.name}" style="max-width: 100%; height: auto; border-radius: 8px; margin: 16px auto; display: block;" /></p>`,
+              createImageHtml(res.url, res.name || file.name, '16px auto'),
             );
             message.success({ content: 'Image uploaded', key: 'dropUpload' });
           }
@@ -439,7 +440,7 @@ export function RichTextCustomField({ value = '', onChange, readOnly }) {
         const res = await executeUpload(file, 'image');
         if (res?.url) {
           insertHtmlAtSelection(
-            `<p><img src="${res.url}" alt="${res.name || 'Pasted image'}" style="max-width: 100%; height: auto; border-radius: 8px; margin: 16px auto; display: block;" /></p>`,
+            createImageHtml(res.url, res.name || 'Pasted image', '16px auto'),
           );
           message.success({ content: 'Image uploaded', key: 'pasteUpload' });
         }
@@ -561,7 +562,7 @@ export function RichTextCustomField({ value = '', onChange, readOnly }) {
           console.error('Failed to resolve preview URL:', err);
         }
       }
-      setPreviewPdf({ fid, url, title });
+      setPreviewPdf({ fid, url: safeUrl(url, 'pdf'), title });
       return;
     }
 
@@ -700,7 +701,7 @@ export function RichTextCustomField({ value = '', onChange, readOnly }) {
                   console.error('Failed to resolve preview URL:', err);
                 }
               }
-              setPreviewPdf({ fid, url, title });
+              setPreviewPdf({ fid, url: safeUrl(url, 'pdf'), title });
             }}
             onDeselect={() => setSelectedPdfEl(null)}
           />
@@ -983,7 +984,8 @@ export function RichTextCustomField({ value = '', onChange, readOnly }) {
         onCancel={() => setLinkOpen(false)}
         onOk={() => {
           const url = (document.getElementById('tps_link_input'))?.value;
-          if (url) exec('createLink', url);
+          const href = safeUrl(url, 'link');
+          if (href) exec('createLink', href);
           setLinkOpen(false);
         }}
         okText="Insert Link"
@@ -1032,7 +1034,7 @@ export function RichTextCustomField({ value = '', onChange, readOnly }) {
             <Button
               type="primary"
               icon={<DownloadOutlined />}
-              href={previewPdf.url}
+              href={safeUrl(previewPdf.url, 'pdf')}
               target="_blank"
               rel="noopener noreferrer"
               download={previewPdf.title}
@@ -1048,7 +1050,7 @@ export function RichTextCustomField({ value = '', onChange, readOnly }) {
           ) : (
             <div style={{ width: '100%', height: '100%', minHeight: 500, background: '#f8fafc' }}>
               <iframe
-                src={previewPdf.url}
+                src={safeUrl(previewPdf.url, 'pdf')}
                 title={previewPdf.title}
                 style={{ width: '100%', height: '100%', minHeight: 'calc(100vh - 120px)', border: 'none' }}
               />
@@ -1133,9 +1135,19 @@ export function RichTextCustomField({ value = '', onChange, readOnly }) {
   );
 }
 
-function createPdfCardHtml(url, title, size, fid = '') {
-  const docTitle = title || 'Document.pdf';
-  const fidAttr = fid ? ` data-pdf-fid="${fid}"` : '';
+// Image markup inserted into the editor. Returns '' when the URL isn't a
+// safe image source. Every interpolated value is escaped.
+function createImageHtml(src, alt, margin) {
+  const url = safeUrl(src, 'image');
+  if (!url) return '';
+  return `<p><img src="${escapeHtml(url)}" alt="${escapeHtml(alt)}" style="max-width: 100%; height: auto; border-radius: 8px; margin: ${margin}; display: block;" /></p>`;
+}
+
+function createPdfCardHtml(rawUrl, rawTitle, rawSize, rawFid = '') {
+  const url = escapeHtml(safeUrl(rawUrl, 'pdf'));
+  const docTitle = escapeHtml(rawTitle || 'Document.pdf');
+  const size = escapeHtml(rawSize || '');
+  const fidAttr = rawFid ? ` data-pdf-fid="${escapeHtml(rawFid)}"` : '';
   return `<div class="tps-block-pdf-card"${fidAttr} data-pdf-url="${url || ''}" data-pdf-title="${docTitle}" data-pdf-size="${size || ''}" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; margin: 16px 0; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;">
   <div style="display: flex; align-items: center; gap: 12px; min-width: 0;">
     <span style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: #fee2e2; color: #dc2626; border-radius: 6px; font-weight: 700; font-size: 11px;">PDF</span>
@@ -1706,8 +1718,8 @@ function ImageModal({ open, onClose, onInsert, onUpload }) {
   }, [open]);
 
   const apply = () => {
-    if (!src) return;
-    const imgHtml = `<p><img src="${src}" alt="${alt || 'Image'}" style="max-width: 100%; height: auto; border-radius: 8px; margin: 12px 0; display: block;" /></p>`;
+    const imgHtml = createImageHtml(src, alt || 'Image', '12px 0');
+    if (!imgHtml) return;
     onInsert(imgHtml);
   };
 
@@ -1785,7 +1797,7 @@ function ImageModal({ open, onClose, onInsert, onUpload }) {
                     </div>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={src}
+                      src={safeUrl(src, 'image')}
                       alt={alt || 'Preview'}
                       style={{
                         maxWidth: '100%',
@@ -1821,7 +1833,7 @@ function ImageModal({ open, onClose, onInsert, onUpload }) {
                   <div style={{ marginTop: 8, padding: 12, border: '1px solid #e2e8f0', borderRadius: 8, background: '#f8fafc', textAlign: 'center' }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={src}
+                      src={safeUrl(src, 'image')}
                       alt={alt || 'Preview'}
                       style={{
                         maxWidth: '100%',
@@ -2047,7 +2059,7 @@ export const RichText = {
             console.error('Failed to resolve preview URL in block:', err);
           }
         }
-        setPreviewPdf({ fid, url, title });
+        setPreviewPdf({ fid, url: safeUrl(url, 'pdf'), title });
         return;
       }
 
@@ -2104,7 +2116,7 @@ export const RichText = {
                 <Button
                   type="primary"
                   icon={<DownloadOutlined />}
-                  href={previewPdf.url}
+                  href={safeUrl(previewPdf.url, 'pdf')}
                   target="_blank"
                   rel="noopener noreferrer"
                   download={previewPdf.title}
@@ -2119,7 +2131,7 @@ export const RichText = {
             ) : (
               <div style={{ width: '100%', height: '100%', minHeight: 500, background: '#f8fafc' }}>
                 <iframe
-                  src={previewPdf.url}
+                  src={safeUrl(previewPdf.url, 'pdf')}
                   title={previewPdf.title}
                   style={{ width: '100%', height: '100%', minHeight: 'calc(100vh - 120px)', border: 'none' }}
                 />

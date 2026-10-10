@@ -11,6 +11,7 @@ import {
   LoginOutlined,
 } from '@ant-design/icons';
 import { StudioLink as Link, useStudio } from '../context';
+import { normalizePath } from '../sanitize.js';
 
 /**
  * Pure React component for the Navigation Header.
@@ -100,13 +101,8 @@ export function NavigationHeaderComponent({
     if (!effectiveActivePath) return false;
     const itemPath = item.path || item.href;
     if (itemPath) {
-      const normalize = (p) => {
-        if (!p) return '';
-        let clean = p.split('?')[0].split('#')[0].replace(/\/+$/, '') || '/';
-        return clean;
-      };
-      const cleanItem = normalize(itemPath);
-      const cleanActive = normalize(effectiveActivePath);
+      const cleanItem = normalizePath(itemPath);
+      const cleanActive = normalizePath(effectiveActivePath);
       if (cleanItem === cleanActive) {
         return true;
       }

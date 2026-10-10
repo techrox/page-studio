@@ -15,6 +15,7 @@ import {
   SendOutlined,
 } from '@ant-design/icons';
 import { StudioLink as Link, useStudio } from '../context';
+import { normalizePath } from '../sanitize.js';
 
 /**
  * Merged Contact + Navigation Header Component.
@@ -117,12 +118,8 @@ export function ContactNavigationHeaderComponent({
     if (!effectiveActivePath) return false;
     const itemPath = item.path || item.href;
     if (itemPath) {
-      const normalize = (p) => {
-        if (!p) return '';
-        return p.split('?')[0].split('#')[0].replace(/\/+$/, '') || '/';
-      };
-      const cleanItem = normalize(itemPath);
-      const cleanActive = normalize(effectiveActivePath);
+      const cleanItem = normalizePath(itemPath);
+      const cleanActive = normalizePath(effectiveActivePath);
       if (cleanItem === cleanActive) return true;
       if (cleanItem !== '/' && (cleanActive.endsWith(cleanItem) || cleanItem.endsWith(cleanActive))) {
         return true;

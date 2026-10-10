@@ -152,10 +152,15 @@ export default function BuilderEnhancements({
       if (!tabs) {
         tabs = document.createElement('div');
         tabs.className = 'psd-sidebar-tabs';
-        tabs.innerHTML = `
-          <button type="button" class="psd-sidebar-tab" data-tab="components">${blocksLabel}</button>
-          <button type="button" class="psd-sidebar-tab" data-tab="outline">${layersLabel}</button>
-        `;
+        // Build with textContent, not innerHTML: the labels come from the host.
+        [['components', blocksLabel], ['outline', layersLabel]].forEach(([tab, label]) => {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'psd-sidebar-tab';
+          button.setAttribute('data-tab', tab);
+          button.textContent = label;
+          tabs.appendChild(button);
+        });
         sidebar.insertBefore(tabs, sidebar.firstChild);
 
         const setActive = (which) => {
