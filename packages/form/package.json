@@ -37,7 +37,8 @@
     "dev": "tsup --watch",
     "test": "vitest run",
     "test:watch": "vitest",
-    "prepublishOnly": "pnpm run build"
+    "prepublishOnly": "pnpm run build && pnpm run test",
+    "test:coverage": "vitest run --coverage"
   },
   "peerDependencies": {
     "@ant-design/icons": ">=5",
