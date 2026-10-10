@@ -37,6 +37,13 @@ const DEFAULTS = {
   // First-party analytics hook. Default no-op so dropping an instrumented
   // block in a host that doesn't track anything is silent.
   track: noop,
+  // Generic file upload hooks: (file, options) => Promise<{ url, name, size }>
+  uploadFile: null,
+  onFileUpload: null,
+  uploadMedia: null,
+  // Optional PDF preview hooks
+  onFilePreview: null,
+  renderPdfPreview: null,
 };
 
 const StudioContext = createContext(DEFAULTS);

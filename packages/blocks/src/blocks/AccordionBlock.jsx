@@ -3,6 +3,7 @@
 // for product features lists, multi-section content. (FAQ block is the
 // strict question/answer variant.)
 import { Collapse } from 'antd';
+import { htmlField } from './HtmlField.jsx';
 
 export const AccordionBlock = {
   label: 'Accordion',
@@ -13,7 +14,7 @@ export const AccordionBlock = {
       type: 'array', label: 'Sections',
       arrayFields: {
         title: { type: 'text', label: 'Title' },
-        content_html: { type: 'textarea', label: 'Content (HTML)', rows: 5 },
+        content_html: htmlField('Content (HTML)'),
       },
       defaultItemProps: { title: 'New section', content_html: '<p>Content.</p>' },
       getItemSummary: (it, i) => it?.title || `Section ${i + 1}`,

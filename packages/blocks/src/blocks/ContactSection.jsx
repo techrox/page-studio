@@ -8,10 +8,11 @@
 // schema-rendered contact page.
 
 import { useState } from 'react';
-import { Row, Col, Form, Input, Button, Select, Space, App as AntdApp } from 'antd';
+import { Row, Col, Form, Input, Button, Select, Space, message as antdMessage, App as AntdApp } from 'antd';
 import { SendOutlined, MailOutlined, LinkedinFilled } from '@ant-design/icons';
 
 import { useStudio } from '../context';
+import { htmlField } from './HtmlField.jsx';
 
 function ContactSectionRender({
   hero_eyebrow,
@@ -28,7 +29,8 @@ function ContactSectionRender({
   contact_email,
 }) {
   const [form] = Form.useForm();
-  const { message } = AntdApp.useApp();
+  const { message: appMessage } = AntdApp.useApp() || {};
+  const message = appMessage?.error ? appMessage : antdMessage;
   const { services, site, submitLead, track } = useStudio();
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -329,10 +331,7 @@ export const ContactSection = {
     response_label: { type: 'text', label: 'Response card label' },
     response_body: { type: 'textarea', label: 'Response card body' },
     form_submit_label: { type: 'text', label: 'Submit button label' },
-    form_privacy_html: {
-      type: 'textarea',
-      label: 'Privacy footer (HTML allowed)',
-    },
+    form_privacy_html: htmlField('Privacy footer (HTML allowed)'),
     success_heading: { type: 'text', label: 'Success heading' },
     success_body: { type: 'textarea', label: 'Success body' },
     stages: {

@@ -23,6 +23,7 @@ types), when to reach for it, and short tips.
 
 | Category | Blocks |
 |---|---|
+| **Headers** | NavigationHeader · ContactNavigationHeader · MastheadHeader · Marquee · Notifications · AnnouncementBar |
 | **Page sections** | Hero · SectionHeader · CTABanner · Banner · AnnouncementBar · InlineCTA |
 | **Content** | RichText · PrinciplesList · TwoColumn · ThreeColumn · ImageText · Quote · KeyValueList · Container · CodeBlock |
 | **Cards** | IconCards · MetricCards · ImageOverlayCards |
@@ -34,6 +35,24 @@ types), when to reach for it, and short tips.
 | **Media** | VideoEmbed · ImageGallery · ImageCaption · MapEmbed |
 | **Forms** | ContactSection · NewsletterSignup · ContactInfo · SocialLinks |
 | **Layout** | Spacer · Divider · RawHtml |
+
+---
+
+## Headers
+
+### MastheadHeader
+> Institutional masthead — primary + translated titles flanking a centre crest that straddles the coloured nav bar. Compacts on scroll.
+
+**Category:** Headers
+**Fields:** `title` / `subtitle` (text — left), `title_alt` / `subtitle_alt` (text — right), `crest_url` / `crest_alt` / `crest_href` (text + URL), `crest_size` (number), `menus` (array — labels, paths, optional child dropdowns), `sticky` (radio), `shrink_on_scroll` / `shrink_after` (radio + number), `title_color` / `bar_color` / `bar_text_color` (text — empty keeps the brand default), `variant` (select — light / soft / transparent), `backgroundColor` (text), `maxWidth` (text)
+
+**When to use:** First block of a university, government, or association site where the wordmark appears in two scripts (or a wordmark + tagline pair) and the navigation sits on a solid brand bar.
+
+**Tips:**
+- `shrink_on_scroll` is on by default: past `shrink_after` px the titles drop a size, the crest scales down and the band tightens, so the nav stays pinned and readable.
+- Leave `crest_url` empty to get a ringed monogram built from the title initials — paste a seal URL when you have one.
+- `menus` are split evenly either side of the crest; add them in pairs so the bar stays balanced.
+- Recolour per tenant with `bar_color` / `bar_text_color`, or override `--tps-masthead-bar` / `--tps-masthead-title` in host CSS.
 
 ---
 

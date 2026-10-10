@@ -108,6 +108,137 @@ function getPreviews(c) {
   );
 
   return {
+  ContactHeader: (
+    <Frame>
+      <rect x="10" y="32" width="28" height="4" rx="1" fill={MUTED} />
+      <line x1="42" y1="31" x2="42" y2="37" stroke={BORDER} strokeWidth="1" />
+      <rect x="46" y="32" width="22" height="4" rx="1" fill={MUTED} />
+      <rect x="52" y="16" width="16" height="8" rx="2" fill={PRIMARY} />
+      <rect x="86" y="30" width="12" height="8" rx="2" fill="none" stroke={BORDER} strokeWidth="0.8" />
+      <rect x="101" y="30" width="14" height="8" rx="2" fill={PRIMARY} />
+    </Frame>
+  ),
+  ContactNavigationHeader: (
+    <Frame>
+      <rect x="0" y="0" width={FRAME_W} height="16" fill={PRIMARY} />
+      <rect x="10" y="6" width="22" height="4" rx="1" fill="#ffffff" opacity="0.9" />
+      <rect x="36" y="6" width="22" height="4" rx="1" fill="#ffffff" opacity="0.9" />
+      <rect x="96" y="5" width="18" height="6" rx="1" fill="#ffffff" opacity="0.25" />
+      <rect x="10" y="32" width="18" height="8" rx="2" fill={PRIMARY} />
+      <rect x="36" y="34" width="12" height="4" rx="1" fill={TEXT} />
+      <rect x="52" y="34" width="12" height="4" rx="1" fill={MUTED} />
+      <rect x="68" y="34" width="16" height="4" rx="1" fill={MUTED} />
+      <rect x="98" y="31" width="17" height="9" rx="2" fill={PRIMARY} />
+    </Frame>
+  ),
+  ImageCarousel: (
+    <Frame>
+      <rect x="8" y="8" width={FRAME_W - 16} height={FRAME_H - 16} rx="4" fill={BG_SOFT} stroke={BORDER} strokeWidth="1" />
+      <circle cx="20" cy="35" r="5" fill={CARD} stroke={BORDER} strokeWidth="1" />
+      <circle cx={FRAME_W - 20} cy="35" r="5" fill={CARD} stroke={BORDER} strokeWidth="1" />
+      <rect x="24" y="44" width="44" height="6" rx="1" fill={TEXT} />
+      <rect x="24" y="53" width="60" height="4" rx="1" fill={MUTED} />
+      <circle cx={FRAME_W / 2 - 8} cy={FRAME_H - 14} r="1.5" fill={PRIMARY} />
+      <circle cx={FRAME_W / 2} cy={FRAME_H - 14} r="1.5" fill={MUTED} />
+      <circle cx={FRAME_W / 2 + 8} cy={FRAME_H - 14} r="1.5" fill={MUTED} />
+    </Frame>
+  ),
+  NavigationHeader: (
+    <Frame>
+      <rect x="10" y="30" width="18" height="8" rx="2" fill={PRIMARY} />
+      <rect x="36" y="32" width="12" height="4" rx="1" fill={TEXT} />
+      <rect x="52" y="32" width="12" height="4" rx="1" fill={MUTED} />
+      <rect x="68" y="32" width="16" height="4" rx="1" fill={MUTED} />
+      <polygon points="86,33 89,33 87.5,36" fill={MUTED} />
+      <rect x="98" y="29" width="17" height="9" rx="2" fill={PRIMARY} />
+    </Frame>
+  ),
+  FooterNavigation: (
+    <Frame>
+      {/* Brand & address column on left */}
+      <rect x="8" y="10" width="22" height="6" rx="1.5" fill={PRIMARY} />
+      <rect x="8" y="19" width="28" height="2" rx="0.5" fill={MUTED} />
+      <rect x="8" y="23" width="24" height="2" rx="0.5" fill={MUTED} />
+      <rect x="8" y="27" width="20" height="2" rx="0.5" fill={MUTED} />
+      {/* Social circles */}
+      <circle cx="11" cy="35" r="2.5" fill={PRIMARY_SOFT} stroke={PRIMARY} strokeWidth="0.5" />
+      <circle cx="18" cy="35" r="2.5" fill={PRIMARY_SOFT} stroke={PRIMARY} strokeWidth="0.5" />
+      <circle cx="25" cy="35" r="2.5" fill={PRIMARY_SOFT} stroke={PRIMARY} strokeWidth="0.5" />
+      <circle cx="32" cy="35" r="2.5" fill={PRIMARY_SOFT} stroke={PRIMARY} strokeWidth="0.5" />
+
+      {/* Nav columns */}
+      {[44, 68, 92].map((x, i) => (
+        <g key={i}>
+          <rect x={x} y="10" width="18" height="3" rx="0.5" fill={TEXT} />
+          <rect x={x} y="16" width="16" height="2" rx="0.5" fill={MUTED} />
+          <rect x={x} y="20" width="20" height="2" rx="0.5" fill={MUTED} />
+          <rect x={x} y="24" width="14" height="2" rx="0.5" fill={MUTED} />
+          <rect x={x} y="28" width="18" height="2" rx="0.5" fill={MUTED} />
+          <rect x={x} y="32" width="12" height="2" rx="0.5" fill={MUTED} />
+        </g>
+      ))}
+
+      {/* Divider */}
+      <line x1="8" y1="46" x2={FRAME_W - 8} y2="46" stroke={BORDER} strokeWidth="0.6" />
+
+      {/* Bottom copyright & legal links */}
+      <rect x="8" y="52" width="45" height="2" rx="0.5" fill={MUTED} />
+      <rect x={FRAME_W - 48} y="52" width="12" height="2" rx="0.5" fill={MUTED} />
+      <rect x={FRAME_W - 32} y="52" width="12" height="2" rx="0.5" fill={MUTED} />
+      <rect x={FRAME_W - 16} y="52" width="8" height="2" rx="0.5" fill={MUTED} />
+    </Frame>
+  ),
+  MastheadHeader: (
+    <Frame>
+      <rect x="8" y="11" width="34" height="5" rx="1.5" fill={TEXT} />
+      <rect x="8" y="20" width="26" height="3" rx="1.5" fill={MUTED} />
+      <rect x="78" y="11" width="34" height="5" rx="1.5" fill={TEXT} />
+      <rect x="86" y="20" width="26" height="3" rx="1.5" fill={MUTED} />
+      <rect x="0" y="44" width={FRAME_W} height="18" fill={PRIMARY} />
+      <rect x="7" y="50" width="18" height="5" rx="1.5" fill="#ffffff" opacity="0.9" />
+      <rect x="30" y="50" width="14" height="5" rx="1.5" fill="#ffffff" opacity="0.9" />
+      <rect x="76" y="50" width="16" height="5" rx="1.5" fill="#ffffff" opacity="0.9" />
+      <rect x="97" y="50" width="16" height="5" rx="1.5" fill="#ffffff" opacity="0.9" />
+      <circle cx={FRAME_W / 2} cy="44" r="9" fill={CARD} stroke={PRIMARY} strokeWidth="2" />
+    </Frame>
+  ),
+  Marquee: (
+    <Frame>
+      <rect x="10" y="28" width="18" height="12" rx="6" fill={PRIMARY} />
+      <rect x="34" y="32" width="22" height="4" rx="1" fill={TEXT} />
+      <circle cx="62" cy="34" r="1.5" fill={MUTED} />
+      <rect x="70" y="32" width="28" height="4" rx="1" fill={TEXT} />
+      <circle cx="104" cy="34" r="1.5" fill={MUTED} />
+      <rect x="112" y="32" width="12" height="4" rx="1" fill={TEXT} />
+    </Frame>
+  ),
+  Notifications: (
+    <Frame>
+      <rect x="14" y="10" width="92" height="52" rx="3" fill={CARD} stroke={BORDER} strokeWidth="0.8" />
+      <rect x="14" y="10" width="92" height="12" rx="3" fill={BG_SOFT} />
+      <rect x="20" y="13.5" width="22" height="5" rx="2.5" fill={PRIMARY} />
+      <rect x="46" y="14" width="28" height="4" rx="1" fill={TEXT} />
+      {/* Item 1 with NEW tag */}
+      <rect x="20" y="27" width="12" height="4.5" rx="1" fill="#ef4444" />
+      <rect x="36" y="27.5" width="62" height="3.5" rx="1" fill={TEXT} />
+      <line x1="20" y1="36" x2="98" y2="36" stroke={BORDER} strokeWidth="0.5" />
+      {/* Item 2 */}
+      <rect x="20" y="41" width="12" height="4.5" rx="1" fill="#ef4444" />
+      <rect x="36" y="41.5" width="54" height="3.5" rx="1" fill={MUTED} />
+      <line x1="20" y1="50" x2="98" y2="50" stroke={BORDER} strokeWidth="0.5" />
+    </Frame>
+  ),
+  PopupModal: (
+    <Frame>
+      <rect x="25" y="10" width="70" height="50" rx="4" fill={CARD || BG} stroke={PRIMARY} strokeWidth="1.2" />
+      <rect x="30" y="14" width="60" height="14" rx="2" fill={PRIMARY} opacity="0.8" />
+      <rect x="30" y="32" width="45" height="4" rx="1" fill={TEXT} />
+      <rect x="30" y="39" width="55" height="3" rx="0.5" fill={MUTED} />
+      <rect x="30" y="44" width="40" height="3" rx="0.5" fill={MUTED} />
+      <rect x="30" y="50" width="22" height="6" rx="2" fill={PRIMARY} />
+      <circle cx="88" cy="17" r="2.5" fill={MUTED} opacity="0.8" />
+    </Frame>
+  ),
   Hero: (
     <Frame>
       <rect x="14" y="14" width="20" height="3" rx="1" fill={PRIMARY} opacity="0.7" />
@@ -1106,6 +1237,15 @@ export const BLOCK_DESCRIPTIONS = {
   ImageGallery: 'Photo grid with click-to-enlarge lightbox. 2/3/4-col layouts.',
   ImageCaption: 'Single image with caption and optional photo credit.',
   InlineCTA: 'Compact one-line CTA strip — sits between content sections without dominating.',
+  ContactHeader: 'Top header with dynamic contact items (phones & emails), centered logo, and configurable actions/login.',
+  ContactNavigationHeader: 'Merged header with top contact strip (phones/emails), brand logo, full navigation menus, and unified mobile drawer.',
+  ImageCarousel: 'Interactive image slider / carousel with autoplay, custom slide captions, overlay styling, and arrow/dot navigation.',
+  NavigationHeader: 'Header with logo, horizontal navigation menus, multi-level dropdowns, and mobile drawer.',
+  FooterNavigation: 'Multi-column footer with brand logo, address, contact details, social buttons, customizable link columns, and dynamic copyright bar.',
+  MastheadHeader: 'Masthead with two titles flanking a centre crest over the coloured nav bar; compacts as the page scrolls.',
+  Marquee: 'Scrolling ticker / marquee for news, alerts, and updates with HTML links and ordering.',
+  Notifications: 'Container-based auto-scrolling notifications board with adjustable height, NEW tags, dates, and HTML body.',
+  PopupModal: 'Centered popup modal with image, rich text, actions, and auto-open/dismiss triggers.',
   AnnouncementBar: 'Slim full-width strip for announcements, beta access, event invites — dark / primary / accent variants.',
   Quote: 'Editorial pull-quote with optional attribution. Left-bordered or centered.',
   CodeBlock: 'Monospace code snippet with title bar and language label.',

@@ -29,6 +29,13 @@ export {
 // Re-export every block by name so consumers can cherry-pick. Importing the
 // whole library is fine in practice — tsup tree-shakes anything not reached
 // by the consumer's import graph.
+export { ContactHeader, ContactHeaderComponent } from './blocks/ContactHeader.jsx';
+export { ContactNavigationHeader, ContactNavigationHeaderComponent } from './blocks/ContactNavigationHeader.jsx';
+export { MastheadHeader, MastheadHeaderComponent } from './blocks/MastheadHeader.jsx';
+export { NavigationHeader, NavigationHeaderComponent } from './blocks/NavigationHeader.jsx';
+export { Marquee, MarqueeComponent } from './blocks/Marquee.jsx';
+export { Notifications, NotificationsComponent } from './blocks/Notifications.jsx';
+export { PopupModal, PopupModalComponent } from './blocks/PopupModal.jsx';
 export { Hero } from './blocks/Hero.jsx';
 export { SectionHeader } from './blocks/SectionHeader.jsx';
 export { CTABanner } from './blocks/CTABanner.jsx';
@@ -43,7 +50,7 @@ export { ApproachSteps } from './blocks/ApproachSteps.jsx';
 export { ServicesGrid } from './blocks/ServicesGrid.jsx';
 export { TeamGrid } from './blocks/TeamGrid.jsx';
 export { LogoStrip } from './blocks/LogoStrip.jsx';
-export { TestimonialQuote } from './blocks/TestimonialQuote.jsx';
+export { TestimonialQuote, TestimonialQuoteComponent } from './blocks/TestimonialQuote.jsx';
 export { TestimonialGrid } from './blocks/TestimonialGrid.jsx';
 export { FAQ } from './blocks/FAQ.jsx';
 export { Timeline } from './blocks/Timeline.jsx';
@@ -72,7 +79,8 @@ export { PricingTable } from './blocks/PricingTable.jsx';
 export { PricingComparison } from './blocks/PricingComparison.jsx';
 export { AwardsBar } from './blocks/AwardsBar.jsx';
 export { CountUpStats } from './blocks/CountUpStats.jsx';
-export { ImageGallery } from './blocks/ImageGallery.jsx';
+export { ImageGallery, ImageGalleryComponent } from './blocks/ImageGallery.jsx';
+export { ImageCarousel, ImageCarouselComponent } from './blocks/ImageCarousel.jsx';
 export { ImageCaption } from './blocks/ImageCaption.jsx';
 export { InlineCTA } from './blocks/InlineCTA.jsx';
 export { AnnouncementBar } from './blocks/AnnouncementBar.jsx';
@@ -92,3 +100,4 @@ export { PressMentions } from './blocks/PressMentions.jsx';
 export { Container } from './blocks/Container.jsx';
 export { Spacer } from './blocks/Spacer.jsx';
 export { RawHtml } from './blocks/RawHtml.jsx';
+export { FooterNavigation, FooterNavigationComponent } from './blocks/FooterNavigation.jsx';

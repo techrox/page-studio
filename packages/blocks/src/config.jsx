@@ -6,6 +6,13 @@
 // to `defaultBlocks` + (optionally) a category. Consumers who want to extend
 // the library do the same with their own files and pass them via `blocks:`.
 
+import { ContactHeader } from './blocks/ContactHeader';
+import { ContactNavigationHeader } from './blocks/ContactNavigationHeader';
+import { MastheadHeader } from './blocks/MastheadHeader';
+import { NavigationHeader } from './blocks/NavigationHeader';
+import { Marquee } from './blocks/Marquee';
+import { Notifications } from './blocks/Notifications';
+import { PopupModal } from './blocks/PopupModal';
 import { Hero } from './blocks/Hero';
 import { StatsStrip } from './blocks/StatsStrip';
 import { SectionHeader } from './blocks/SectionHeader';
@@ -40,6 +47,7 @@ import { PricingComparison } from './blocks/PricingComparison';
 import { AwardsBar } from './blocks/AwardsBar';
 import { CountUpStats } from './blocks/CountUpStats';
 import { ImageGallery } from './blocks/ImageGallery';
+import { ImageCarousel } from './blocks/ImageCarousel';
 import { ImageCaption } from './blocks/ImageCaption';
 import { InlineCTA } from './blocks/InlineCTA';
 import { AnnouncementBar } from './blocks/AnnouncementBar';
@@ -69,6 +77,7 @@ import { Divider } from './blocks/Divider';
 import { ThreeColumn } from './blocks/ThreeColumn';
 import { PressMentions } from './blocks/PressMentions';
 import { Container } from './blocks/Container';
+import { FooterNavigation } from './blocks/FooterNavigation';
 import { withReveal } from './withReveal';
 import { withTheme } from './withTheme';
 import BlockThumbnail, { BLOCK_DESCRIPTIONS } from './BlockThumbnail';
@@ -137,11 +146,26 @@ const DEFAULT_REVEAL = {
   ThreeColumn: 'fade-up',
   PressMentions: 'scale-in',
   Container: 'fade-up',
+  ContactHeader: null,
+  ContactNavigationHeader: null,
+  NavigationHeader: null,
+  MastheadHeader: null,
+  Notifications: 'fade-up',
+  ImageCarousel: 'fade-up',
+  FooterNavigation: 'fade-up',
   Spacer: null,
   RawHtml: null,
 };
 
 export const defaultBlocks = {
+  ContactHeader,
+  ContactNavigationHeader,
+  MastheadHeader,
+  NavigationHeader,
+  FooterNavigation,
+  Marquee,
+  Notifications,
+  PopupModal,
   Hero,
   SectionHeader,
   CTABanner,
@@ -186,6 +210,7 @@ export const defaultBlocks = {
   AwardsBar,
   CountUpStats,
   ImageGallery,
+  ImageCarousel,
   ImageCaption,
   InlineCTA,
   AnnouncementBar,
@@ -209,8 +234,14 @@ export const defaultBlocks = {
 
 // Sidebar grouping for Puck's components panel. Authors browse by category.
 export const defaultCategories = {
+  Headers: {
+    components: ['NavigationHeader', 'ContactNavigationHeader', 'MastheadHeader', 'Marquee', 'Notifications', 'AnnouncementBar'],
+  },
+  Footers: {
+    components: ['FooterNavigation'],
+  },
   'Page sections': {
-    components: ['Hero', 'SectionHeader', 'CTABanner', 'Banner', 'AnnouncementBar', 'InlineCTA'],
+    components: ['Hero', 'SectionHeader', 'CTABanner', 'Banner', 'InlineCTA'],
   },
   Content: {
     components: ['RichText', 'PrinciplesList', 'TwoColumn', 'ThreeColumn', 'ImageText', 'Quote', 'KeyValueList', 'Container', 'CodeBlock'],
@@ -231,10 +262,10 @@ export const defaultCategories = {
     components: ['LogoStrip', 'PressMentions', 'AwardsBar', 'TestimonialQuote', 'TestimonialGrid'],
   },
   Interactive: {
-    components: ['FAQ', 'AccordionBlock', 'TabsBlock', 'Timeline', 'EventsList'],
+    components: ['PopupModal', 'Notifications', 'FAQ', 'AccordionBlock', 'TabsBlock', 'Timeline', 'EventsList'],
   },
   Media: {
-    components: ['VideoEmbed', 'ImageGallery', 'ImageCaption', 'MapEmbed'],
+    components: ['VideoEmbed', 'ImageGallery', 'ImageCarousel', 'ImageCaption', 'MapEmbed'],
   },
   Forms: {
     components: [
@@ -382,5 +413,13 @@ export function createPuckConfig({
     const themed = withTheme(withDefaults);
     components[name] = animation ? withReveal(themed, animation) : themed;
   }
-  return { components, categories, root };
+  // Derive categories: filter out any component names that do not exist in components
+  const resolvedCategories = {};
+  for (const [catName, cat] of Object.entries(categories || {})) {
+    const validComponents = (cat?.components || []).filter((c) => components[c]);
+    if (validComponents.length > 0) {
+      resolvedCategories[catName] = { ...cat, components: validComponents };
+    }
+  }
+  return { components, categories: resolvedCategories, root };
 }

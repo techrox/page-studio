@@ -10,6 +10,15 @@ vi.mock('@puckeditor/core', () => ({
   Render: ({ data }) => <div data-testid="puck-render" data-count={data?.content?.length || 0} />,
 }));
 
+vi.mock('antd', () => ({
+  ConfigProvider: ({ children }) => children,
+  Typography: {
+    Text: ({ children }) => <span>{children}</span>,
+    Title: ({ children }) => <h1>{children}</h1>,
+    Paragraph: ({ children }) => <p>{children}</p>,
+  },
+}));
+
 import { PageStudioRender } from '../src/PageStudioRender.jsx';
 
 describe('PageStudioRender', () => {
@@ -42,5 +51,19 @@ describe('PageStudioRender', () => {
     expect(container.querySelector('[data-testid="fallback"]')).toBeNull();
     expect(container.querySelector('[data-testid="puck-render"]')).not.toBeNull();
     expect(container.querySelector('[data-testid="puck-render"]').dataset.count).toBe('1');
+  });
+
+  it('applies sticky positioning and sticky class for dedicated sticky header feeds', () => {
+    const data = {
+      root: { props: { title: '' } },
+      content: [{ type: 'ContactNavigationHeader', props: { sticky: true } }],
+      zones: {},
+    };
+    const { container } = render(<PageStudioRender data={data} />);
+    const rootEl = container.querySelector('.tps-renderer-root');
+    expect(rootEl).not.toBeNull();
+    expect(rootEl.classList.contains('tps-renderer-root--sticky-header')).toBe(true);
+    expect(rootEl.style.position).toBe('sticky');
+    expect(rootEl.style.top).toBe('0px');
   });
 });

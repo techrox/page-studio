@@ -1,6 +1,7 @@
 'use client';
 // TabsBlock — tabbed content panel. Each tab has a label + HTML body.
 import { Tabs as AntTabs } from 'antd';
+import { htmlField } from './HtmlField.jsx';
 
 export const TabsBlock = {
   label: 'Tabs',
@@ -11,7 +12,7 @@ export const TabsBlock = {
       type: 'array', label: 'Tabs',
       arrayFields: {
         label: { type: 'text', label: 'Tab label' },
-        content_html: { type: 'textarea', label: 'Tab content (HTML)', rows: 6 },
+        content_html: htmlField('Tab content (HTML)'),
       },
       defaultItemProps: { label: 'New tab', content_html: '<p>Tab content.</p>' },
       getItemSummary: (it, i) => it?.label || `Tab ${i + 1}`,
