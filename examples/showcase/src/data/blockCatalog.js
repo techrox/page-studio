@@ -21,6 +21,51 @@ export const BLOCK_CATEGORY = (() => {
 // Kept in this file (not derived from the source) so the docs stay
 // human-readable when a block adds an obscure internal field.
 export const BLOCK_FIELDS = {
+  ContactNavigationHeader: [
+    ['showTopBar', 'radio -- show the contact bar above the nav'],
+    ['phones / emails', 'arrays shown in the top bar and the mobile drawer'],
+    ['timing_text', 'text -- office hours or a short announcement badge'],
+    ['topBarVariant / topBarBackgroundColor', 'select -- primary / dark / soft / light, or a custom colour'],
+    ['logo_url / logo_alt / logo_text / logo_href / logo_height', 'logo image, alt text, brand text fallback, link, height'],
+    ['menus', 'array of menu items with optional child dropdowns'],
+    ['login_label / login_href', 'login button label and link'],
+    ['cta_label / cta_href', 'optional CTA button label and link'],
+    ['variant / backgroundColor', 'select -- nav bar theme, plus a custom background colour'],
+    ['sticky', 'radio -- sticky header'],
+  ],
+  FooterNavigation: [
+    ['fullWidth', 'radio -- run the footer edge to edge'],
+    ['background / backgroundColor', 'select -- dark / white / soft / navy / gradient / custom, plus a custom value'],
+    ['accentColor / textColor', 'colour overrides for link hover, icons and text'],
+    ['logo_url / logo_alt / logo_text / logo_href / logo_height', 'logo image, alt text, brand text fallback, link, height'],
+    ['legal_name / address / email / phone', 'organisation details; email and phone are clickable'],
+    ['social_links', 'array of social profile links'],
+    ['columns', 'array of link columns, each with a heading and links'],
+    ['show_divider', 'radio -- line above the bottom bar'],
+    ['copyright_text / bottom_links', 'copyright line and small legal links'],
+  ],
+  Notifications: [
+    ['title / badge_text', 'card title and header pill (e.g. "Notice board")'],
+    ['items', "array -- text, 'NEW' tag, order, date, optional action link"],
+    ['direction / speed / pauseOnHover', 'auto-scroll up / down / left / right, seconds per cycle, pause on hover'],
+    ['height / maxWidth', 'scroll area height and card width'],
+    ['variant / showBorder / headerBackground', 'card theme, border, header colour'],
+    ['viewAllLink / viewAllText', 'optional "View all" link'],
+    ['backgroundColor / textColor', 'custom colours'],
+  ],
+  ImageCarousel: [
+    ['layout', 'select -- carousel only, or split with side content left or right'],
+    ['partition_type / partition_ratio', 'side content (content / image / both) and split ratio'],
+    ['partition_eyebrow / partition_title / partition_description', 'side content copy'],
+    ['partition_cta_* / partition_secondary_cta_*', 'side content buttons'],
+    ['partition_image_url / partition_image_alt', 'side image'],
+    ['eyebrow / heading / subheading', 'optional section header above the carousel'],
+    ['items', 'array of slides -- image, caption, link'],
+    ['height / autoplay / autoplaySpeed / effect', 'slide height, autoplay and its interval, slide or fade'],
+    ['arrows / dots / overlay', 'navigation controls and image overlay'],
+    ['fullWidth / maxWidth / borderRadius', 'width and corner radius'],
+    ['background / background_image / background_overlay', 'section background'],
+  ],
   ContactHeader: [
     ['phones', 'array of phone numbers (max 3)'],
     ['emails', 'array of email addresses (max 3)'],
@@ -412,6 +457,34 @@ export const BLOCK_FIELDS = {
 
 // "When to use" + tips. Designer-audience, written in our own voice.
 export const BLOCK_GUIDANCE = {
+  ContactNavigationHeader: {
+    when: 'Header with a contact strip (phones, emails, hours) above the main nav. Use it when visitors call or email more than they browse.',
+    tips: [
+      'Turn `showTopBar` off on small sites -- the nav stands on its own.',
+      'Keep `timing_text` short; it sits in a badge.',
+    ],
+  },
+  FooterNavigation: {
+    when: 'Site-wide footer -- logo, contact details, link columns, social links and a copyright bar. Put it last on every page.',
+    tips: [
+      'Three or four `columns` read best on desktop; they stack on mobile.',
+      'Use `background: custom` with `backgroundColor` for a tenant colour.',
+    ],
+  },
+  Notifications: {
+    when: 'Auto-scrolling notice board for circulars, admissions dates or alerts. Common on school and government sites.',
+    tips: [
+      'Use `order` to pin the most important notice to the top.',
+      "Tag fresh items with the 'NEW' badge and clear it after a week or two.",
+    ],
+  },
+  ImageCarousel: {
+    when: 'Rotating image slider, alone or split with a content panel beside it. Good for campus photos, product shots or event highlights.',
+    tips: [
+      'Keep slides the same aspect ratio so the height does not jump.',
+      'Use a split `layout` when the slides need a headline and CTA beside them.',
+    ],
+  },
   ContactHeader: {
     when: 'Top-of-site header displaying contact phone numbers, emails, brand logo, and authentication/action buttons.',
     tips: [

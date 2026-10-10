@@ -78,7 +78,7 @@ export function PageStudioRender({
     return fallback;
   }
   const resolved = config || createPuckConfig();
-  const populated = applyConfigDefaults(data, resolved);
+  const populated = withStableIds(applyConfigDefaults(data, resolved));
 
   // Compute CSS variable overrides from branding
   const primary = branding?.primaryColor || branding?.brandColor || brandColor;
@@ -142,4 +142,18 @@ export function PageStudioRender({
       </PageStudioProvider>
     </ConfigProvider>
   );
+}
+
+// Puck keys rendered blocks by `props.id`. Hand-written or imported JSON
+// often omits it, which trips React's missing-key warning. Fill gaps with
+// `<type>-<index>` — deterministic, so server and client markup match.
+function withStableIds(data) {
+  if (!data || !Array.isArray(data.content)) return data;
+  let mutated = false;
+  const content = data.content.map((item, index) => {
+    if (!item || typeof item !== 'object' || item.props?.id) return item;
+    mutated = true;
+    return { ...item, props: { ...(item.props || {}), id: `${item.type}-${index}` } };
+  });
+  return mutated ? { ...data, content } : data;
 }

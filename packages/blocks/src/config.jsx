@@ -235,7 +235,7 @@ export const defaultBlocks = {
 // Sidebar grouping for Puck's components panel. Authors browse by category.
 export const defaultCategories = {
   Headers: {
-    components: ['NavigationHeader', 'ContactNavigationHeader', 'MastheadHeader', 'Marquee', 'Notifications', 'AnnouncementBar'],
+    components: ['NavigationHeader', 'ContactHeader', 'ContactNavigationHeader', 'MastheadHeader', 'Marquee', 'Notifications', 'AnnouncementBar'],
   },
   Footers: {
     components: ['FooterNavigation'],

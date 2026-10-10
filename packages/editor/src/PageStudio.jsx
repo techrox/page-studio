@@ -17,7 +17,6 @@ import {
   useEffect,
   useMemo,
   useState,
-  useTransition,
 } from 'react';
 import { Puck, useGetPuck, legacySideBarPlugin } from '@puckeditor/core';
 import { App as AntdApp } from 'antd';
@@ -193,7 +192,7 @@ export default function PageStudio({
   iframe = { enabled: true },
 }) {
   const { message } = AntdApp.useApp();
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
   const [savedAt, setSavedAt] = useState(null);
 
   // Resolve the config ONCE on first mount and freeze the reference. Puck
@@ -270,15 +269,20 @@ export default function PageStudio({
       message.error('No savePage adapter configured.');
       return;
     }
-    startTransition(async () => {
-      try {
-        await adapter.savePage(pageKey, nextData);
+    // Plain async + pending flag, not startTransition: React 18 transitions
+    // don't support async callbacks, and running the host's savePage inside
+    // one deferred its state updates and toasts (AntD's notice list looped).
+    setPending(true);
+    Promise.resolve()
+      .then(() => adapter.savePage(pageKey, nextData))
+      .then(() => {
         setSavedAt(new Date().toISOString());
         message.success('Published.');
-      } catch (err) {
+      })
+      .catch((err) => {
         message.error(err?.message || 'Save failed.');
-      }
-    });
+      })
+      .finally(() => setPending(false));
   };
 
   // Live values consumed by the stable header override via context. The

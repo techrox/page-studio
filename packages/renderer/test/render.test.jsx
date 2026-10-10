@@ -7,7 +7,13 @@ import { describe, it, expect, vi } from 'vitest';
 import { render } from '@testing-library/react';
 
 vi.mock('@puckeditor/core', () => ({
-  Render: ({ data }) => <div data-testid="puck-render" data-count={data?.content?.length || 0} />,
+  Render: ({ data }) => (
+    <div
+      data-testid="puck-render"
+      data-count={data?.content?.length || 0}
+      data-ids={(data?.content || []).map((b) => b.props?.id).join(',')}
+    />
+  ),
 }));
 
 vi.mock('antd', () => ({
@@ -65,5 +71,18 @@ describe('PageStudioRender', () => {
     expect(rootEl.classList.contains('tps-renderer-root--sticky-header')).toBe(true);
     expect(rootEl.style.position).toBe('sticky');
     expect(rootEl.style.top).toBe('0px');
+  });
+
+  it('gives blocks without an id a stable <type>-<index> id', () => {
+    const data = {
+      root: { props: {} },
+      content: [
+        { type: 'Spacer', props: {} },
+        { type: 'Spacer', props: { id: 'kept' } },
+        { type: 'Divider' },
+      ],
+    };
+    const { getByTestId } = render(<PageStudioRender data={data} />);
+    expect(getByTestId('puck-render').dataset.ids).toBe('Spacer-0,kept,Divider-2');
   });
 });
