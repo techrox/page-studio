@@ -1,6 +1,7 @@
 'use client';
-// TabsBlock — tabbed content panel. Each tab has a label + HTML body.
+// TabsBlock - tabbed content panel. Each tab has a label + HTML body.
 import { Tabs as AntTabs } from 'antd';
+import { htmlField } from './HtmlField.jsx';
 
 export const TabsBlock = {
   label: 'Tabs',
@@ -11,14 +12,14 @@ export const TabsBlock = {
       type: 'array', label: 'Tabs',
       arrayFields: {
         label: { type: 'text', label: 'Tab label' },
-        content_html: { type: 'textarea', label: 'Tab content (HTML)', rows: 6 },
+        content_html: htmlField('Tab content (HTML)'),
       },
       defaultItemProps: { label: 'New tab', content_html: '<p>Tab content.</p>' },
       getItemSummary: (it, i) => it?.label || `Tab ${i + 1}`,
     },
     background: {
       type: 'radio', label: 'Background',
-      options: [{ label: 'White', value: 'white' }, { label: 'Soft', value: 'soft' }],
+      options: [{ label: 'White', value: 'white' }, { label: 'Soft', value: 'soft' }, { label: 'Dark', value: 'dark' }],
     },
   },
   defaultProps: {
@@ -31,7 +32,7 @@ export const TabsBlock = {
     background: 'white',
   },
   render: ({ eyebrow, heading, items, background }) => (
-    <section className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`} style={{ paddingTop: 56, paddingBottom: 56 }}>
+    <section className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`} style={{ paddingTop: 56, paddingBottom: 56 }}>
       <div className="tps-container" style={{ maxWidth: 920 }}>
         {(eyebrow || heading) && (
           <div style={{ marginBottom: 32 }}>

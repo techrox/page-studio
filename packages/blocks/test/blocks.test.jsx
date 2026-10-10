@@ -1,6 +1,6 @@
 // Smoke tests for a representative sample of blocks. Each block is an object
 // with `render`, so we just invoke it with defaultProps and assert non-empty
-// output — catches regressions where a refactor drops a required dependency.
+// output - catches regressions where a refactor drops a required dependency.
 
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
@@ -42,16 +42,19 @@ describe('Spacer block', () => {
 });
 
 describe('RichText block', () => {
+  // RichText.render uses hooks, so render it as a component (as Puck does).
+  const RichTextBlock = (props) => RichText.render(props);
+
   it('respects custom HTML', () => {
     const { container } = render(
-      <Wrap>{RichText.render({ html: '<p>hi <strong>there</strong></p>', align: 'left', maxWidth: 0 })}</Wrap>,
+      <Wrap><RichTextBlock html="<p>hi <strong>there</strong></p>" align="left" maxWidth={0} /></Wrap>,
     );
     expect(container.textContent).toContain('hi there');
   });
 });
 
 describe('ServicesGrid block', () => {
-  // block.render uses hooks (useStudio) — Puck renders it as a component
+  // block.render uses hooks (useStudio) - Puck renders it as a component
   // internally; tests have to do the same or React rejects the hook call.
   const Block = (props) => ServicesGrid.render(props);
 

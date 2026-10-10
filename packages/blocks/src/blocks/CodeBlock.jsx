@@ -1,4 +1,4 @@
-// CodeBlock — code snippet with optional title bar. No syntax highlighting
+// CodeBlock - code snippet with optional title bar. No syntax highlighting
 // (no extra dependency); plain monospace with line wrapping.
 export const CodeBlock = {
   label: 'Code block',

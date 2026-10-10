@@ -1,4 +1,4 @@
-// StatsStrip — horizontal row of stat cards (value + label).
+// StatsStrip - horizontal row of stat cards (value + label).
 
 export const StatsStrip = {
   label: 'Stats strip',
@@ -19,6 +19,7 @@ export const StatsStrip = {
       options: [
         { label: 'Soft', value: 'soft' },
         { label: 'White', value: 'white' },
+        { label: 'Dark', value: 'dark' },
       ],
     },
   },
@@ -27,13 +28,13 @@ export const StatsStrip = {
       { value: '120+', label: 'Happy customers' },
       { value: '24/7', label: 'Support, always on' },
       { value: '99.9%', label: 'Uptime, year after year' },
-      { value: '5★', label: 'Average review' },
+      { value: '5/5', label: 'Average review' },
     ],
     background: 'soft',
   },
   render: ({ items, background }) => (
     <section
-      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`}
+      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`}
       style={{ paddingTop: 32, paddingBottom: 32 }}
     >
       <div className="tps-container">

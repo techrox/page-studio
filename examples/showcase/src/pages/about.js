@@ -1,4 +1,4 @@
-// About page — narrative-shaped. Hero + principles + history + team +
+// About page - narrative-shaped. Hero + principles + history + team +
 // timeline + awards + count-up stats + testimonial grid + CTA.
 
 export const about = {

@@ -1,4 +1,4 @@
-// MapEmbed — Google Maps iframe embed. Author pastes a Maps embed URL
+// MapEmbed - Google Maps iframe embed. Author pastes a Maps embed URL
 // (the long iframe src from Maps "Share > Embed a map > HTML").
 export const MapEmbed = {
   label: 'Map (Google Maps)',

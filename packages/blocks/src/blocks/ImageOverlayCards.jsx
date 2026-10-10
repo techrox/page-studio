@@ -1,4 +1,4 @@
-// ImageOverlayCards — full-bleed image cards with text overlay. The
+// ImageOverlayCards - full-bleed image cards with text overlay. The
 // "category" / "explore" pattern. Click-through to a destination URL.
 
 import { StudioLink as Link } from '../context';
@@ -42,6 +42,7 @@ export const ImageOverlayCards = {
       options: [
         { label: 'White', value: 'white' },
         { label: 'Soft', value: 'soft' },
+        { label: 'Dark', value: 'dark' },
       ],
     },
   },
@@ -58,7 +59,7 @@ export const ImageOverlayCards = {
   },
   render: ({ eyebrow, heading, columns, items, background }) => (
     <section
-      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`}
+      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`}
       style={{ paddingTop: 64, paddingBottom: 64 }}
     >
       <div className="tps-container">

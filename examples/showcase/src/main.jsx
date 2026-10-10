@@ -1,4 +1,4 @@
-// Entry point — mounts the React tree under the AntD App wrapper so
+// Entry point - mounts the React tree under the AntD App wrapper so
 // AntdApp.useApp() (which PageStudio calls internally for toasts) resolves.
 // The brand-aware <ConfigProvider> lives inside <App> so colorPrimary can
 // switch when the user picks a different brand.

@@ -1,4 +1,4 @@
-// Page view — renders one sample page via PageStudioRender, with the
+// Page view - renders one sample page via PageStudioRender, with the
 // brand's block defaults baked into the Puck config.
 
 import { useParams, Link } from 'react-router-dom'

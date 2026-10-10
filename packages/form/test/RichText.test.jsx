@@ -1,4 +1,4 @@
-// RichText smoke test — verifies the component renders without throwing
+// RichText smoke test - verifies the component renders without throwing
 // and accepts the uploadMedia prop. We don't drive TipTap interactions
 // (the editor + ProseMirror are too heavy for happy-dom to simulate
 // reliably), so this is intentionally surface-only.

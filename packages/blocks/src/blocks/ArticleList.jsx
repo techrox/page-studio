@@ -1,4 +1,4 @@
-// ArticleList — text-heavy chronological list (no images). Best for an
+// ArticleList - text-heavy chronological list (no images). Best for an
 // archive page or sidebar "more posts" rail. Each row is a date + headline
 // + one-line excerpt.
 
@@ -6,7 +6,7 @@ import { StudioLink as Link } from '../context';
 import { ArrowRightOutlined } from '@ant-design/icons';
 
 export const ArticleList = {
-  label: 'Article — list',
+  label: 'Article - list',
   fields: {
     eyebrow: { type: 'text', label: 'Section eyebrow' },
     heading: { type: 'text', label: 'Section heading' },
@@ -35,6 +35,7 @@ export const ArticleList = {
       options: [
         { label: 'White', value: 'white' },
         { label: 'Soft', value: 'soft' },
+        { label: 'Dark', value: 'dark' },
       ],
     },
   },
@@ -51,7 +52,7 @@ export const ArticleList = {
   },
   render: ({ eyebrow, heading, items, background }) => (
     <section
-      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`}
+      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`}
       style={{ paddingTop: 56, paddingBottom: 56 }}
     >
       <div className="tps-container" style={{ maxWidth: 820 }}>

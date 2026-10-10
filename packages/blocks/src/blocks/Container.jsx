@@ -1,13 +1,15 @@
-// Container — styled background + padding container for visually grouping
+// Container - styled background + padding container for visually grouping
 // adjacent blocks. Doesn't accept children blocks (Puck DropZones add too
 // much complexity); instead this is a single decorative wrapper for one
 // title + one body of content.
+import { htmlField } from './HtmlField.jsx';
+
 export const Container = {
   label: 'Container box',
   fields: {
     eyebrow: { type: 'text', label: 'Eyebrow' },
     heading: { type: 'text', label: 'Heading' },
-    body_html: { type: 'textarea', label: 'Body (HTML)', rows: 5 },
+    body_html: htmlField('Body (HTML)'),
     background: {
       type: 'select', label: 'Box background',
       options: [
@@ -30,9 +32,12 @@ export const Container = {
   render: ({ eyebrow, heading, body_html, background, align }) => {
     const bg = {
       soft: { bg: 'var(--tps-bg-soft)', fg: 'var(--tps-ink)', border: '1px solid var(--tps-line)' },
-      primary: { bg: 'rgba(15, 118, 110, 0.08)', fg: 'var(--tps-ink)', border: '1px solid rgba(15, 118, 110, 0.2)' },
+      primary: { bg: 'var(--tps-primary-soft, #dbeafe)', fg: 'var(--tps-ink)', border: '1px solid var(--tps-primary-soft, #dbeafe)' },
       dark: { bg: '#0F172A', fg: '#fff', border: 'none' },
-      white: { bg: '#fff', fg: 'var(--tps-ink)', border: '1px solid var(--tps-line)' },
+      // The "white" variant is really the neutral surface: it follows --tps-bg
+      // so it's a light card in a light theme and a dark card in a dark theme
+      // (a fixed '#fff' bg left the --tps-ink text invisible once ink flipped).
+      white: { bg: 'var(--tps-bg)', fg: 'var(--tps-ink)', border: '1px solid var(--tps-line)' },
     }[background] || { bg: 'var(--tps-bg-soft)', fg: 'var(--tps-ink)', border: '1px solid var(--tps-line)' };
     return (
       <section className="tps-section" style={{ paddingTop: 32, paddingBottom: 32 }}>

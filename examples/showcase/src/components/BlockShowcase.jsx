@@ -1,4 +1,4 @@
-// Single-block deep-dive — full-width render of one block with the
+// Single-block deep-dive - full-width render of one block with the
 // current brand's defaults injected, plus the field/usage panel on the
 // right.
 
@@ -9,7 +9,7 @@ import { ArrowLeftOutlined } from '@ant-design/icons'
 import { PageStudioRender } from '@techrox/page-studio-renderer'
 import { getCatalog } from '../data/blockCatalog.js'
 
-// Puck's <Render> does not auto-apply defaultProps — those only fire when
+// Puck's <Render> does not auto-apply defaultProps - those only fire when
 // a block is inserted via the editor's drawer. To get a populated preview
 // here, pull the resolved defaults straight off the config and seed them
 // as the block's props.

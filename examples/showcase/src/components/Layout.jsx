@@ -1,4 +1,4 @@
-// Showcase shell — left rail navigation + top bar with brand switcher.
+// Showcase shell - left rail navigation + top bar with brand switcher.
 // Children render in `.showcase-content`. The brand id propagates into a
 // data attribute on the root container so the per-brand CSS overrides in
 // styles.css activate without remounting the page.
@@ -10,12 +10,12 @@
 
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { MenuOutlined, CloseOutlined } from '@ant-design/icons'
+import { MenuOutlined, CloseOutlined, BulbOutlined, BulbFilled } from '@ant-design/icons'
 import BrandSwitcher from './BrandSwitcher.jsx'
 
-export default function Layout({ brands, brandId, onBrandChange, title, children }) {
+export default function Layout({ brands, brandId, onBrandChange, theme = 'light', onThemeToggle, title, children }) {
   const location = useLocation()
-  // Hide the topbar title on the index page — the landing handles its own headline.
+  // Hide the topbar title on the index page - the landing handles its own headline.
   const showTitle = location.pathname !== '/'
 
   const [navOpen, setNavOpen] = useState(false)
@@ -32,7 +32,7 @@ export default function Layout({ brands, brandId, onBrandChange, title, children
   }, [navOpen])
 
   return (
-    <div className="showcase" data-brand={brandId} data-nav-open={navOpen ? 'true' : undefined}>
+    <div className="showcase" data-brand={brandId} data-tps-theme={theme} data-nav-open={navOpen ? 'true' : undefined}>
       <div
         className="showcase-nav-backdrop"
         aria-hidden="true"
@@ -41,7 +41,7 @@ export default function Layout({ brands, brandId, onBrandChange, title, children
       <aside className="showcase-nav" aria-label="Primary">
         <Link to="/" className="showcase-brand">
           <img
-            src={`${import.meta.env.BASE_URL}brand/page-studio-logo.svg`}
+            src={`${import.meta.env.BASE_URL}brand/page-studio-logo${theme === 'dark' ? '-reverse' : ''}.svg`}
             alt="Page Studio"
             width={204}
             height={44}
@@ -76,7 +76,7 @@ export default function Layout({ brands, brandId, onBrandChange, title, children
         </div>
 
         <div className="showcase-nav-foot">
-          The showcase is a working tour of <strong>@techrox/page-studio</strong> — block library, renderer, and editor.
+          The showcase is a working tour of <strong>@techrox/page-studio</strong> - block library, renderer, and editor.
         </div>
       </aside>
 
@@ -94,7 +94,7 @@ export default function Layout({ brands, brandId, onBrandChange, title, children
           </button>
           <Link to="/" className="showcase-topbar-brand">
             <img
-              src={`${import.meta.env.BASE_URL}brand/page-studio-logo.svg`}
+              src={`${import.meta.env.BASE_URL}brand/page-studio-logo${theme === 'dark' ? '-reverse' : ''}.svg`}
               alt="Page Studio"
               width={167}
               height={36}
@@ -102,6 +102,18 @@ export default function Layout({ brands, brandId, onBrandChange, title, children
             />
           </Link>
           <h2>{showTitle ? title || ' ' : ' '}</h2>
+          {onThemeToggle && (
+            <button
+              type="button"
+              className="showcase-theme-toggle"
+              aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+              aria-pressed={theme === 'dark'}
+              title={theme === 'dark' ? 'Dark theme - click for light' : 'Light theme - click for dark'}
+              onClick={onThemeToggle}
+            >
+              {theme === 'dark' ? <BulbFilled /> : <BulbOutlined />}
+            </button>
+          )}
           <BrandSwitcher brands={brands} current={brandId} onChange={onBrandChange} />
         </div>
         <div className="showcase-content">{children}</div>

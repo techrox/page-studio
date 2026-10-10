@@ -1,14 +1,13 @@
-// SectionHeader — eyebrow + heading + optional lede. The standard "what
+// SectionHeader - eyebrow + heading + optional lede. The standard "what
 // follows is a major section" introduction used across the site.
+
+import { htmlField } from './HtmlField.jsx';
 
 export const SectionHeader = {
   label: 'Section header',
   fields: {
     eyebrow: { type: 'text', label: 'Eyebrow' },
-    heading_html: {
-      type: 'textarea',
-      label: 'Heading (HTML allowed)',
-    },
+    heading_html: htmlField('Heading (HTML allowed)'),
     lede: { type: 'textarea', label: 'Lede (optional)' },
     align: {
       type: 'radio',
@@ -24,6 +23,7 @@ export const SectionHeader = {
       options: [
         { label: 'White', value: 'white' },
         { label: 'Soft', value: 'soft' },
+        { label: 'Dark', value: 'dark' },
       ],
     },
     spacing: {
@@ -49,7 +49,7 @@ export const SectionHeader = {
       spacing === 'compact' ? 32 : spacing === 'generous' ? 96 : 56;
     return (
       <section
-        className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`}
+        className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`}
         style={{ paddingTop: pad, paddingBottom: pad }}
       >
         <div

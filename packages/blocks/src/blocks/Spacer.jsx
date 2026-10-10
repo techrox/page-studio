@@ -1,4 +1,4 @@
-// Spacer — explicit vertical whitespace control between blocks.
+// Spacer - explicit vertical whitespace control between blocks.
 
 export const Spacer = {
   label: 'Spacer',

@@ -1,12 +1,13 @@
-// PrinciplesList — checkmark bullets with editable items.
+// PrinciplesList - checkmark bullets with editable items.
 
 import { CheckCircleFilled } from '@ant-design/icons';
+import { htmlField } from './HtmlField.jsx';
 
 export const PrinciplesList = {
   label: 'Principles list',
   fields: {
     eyebrow: { type: 'text', label: 'Eyebrow (optional)' },
-    heading_html: { type: 'textarea', label: 'Heading (HTML, optional)' },
+    heading_html: htmlField('Heading (HTML, optional)'),
     lede: { type: 'textarea', label: 'Lede (optional)' },
     label: { type: 'text', label: 'List label (small caps, optional)' },
     items: {

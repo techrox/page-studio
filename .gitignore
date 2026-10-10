@@ -9,3 +9,8 @@ coverage/
 
 # Lockfile must be tracked — override any global ignore that excludes it.
 !pnpm-lock.yaml
+
+# Playwright
+playwright-report/
+test-results/
+.pnpm-store/

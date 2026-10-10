@@ -171,7 +171,18 @@ When adding a new block:
 - Export it from `packages/blocks/src/index.js`.
 - Register it in `packages/blocks/src/config.jsx` (block map +
   category).
-- Mention it in `examples/showcase/BLOCKS.md`.
+- Add `packages/blocks/test/<Block>.test.jsx` covering its behaviour.
+  `testCoverage.test.js` fails the build for a block with no tests of
+  its own (`UNTESTED` is a backlog that only shrinks — never add to it).
+- Add it to `examples/showcase/src/data/blockCatalog.js` (the e2e
+  gallery test fails if a registered block is missing) and mention it
+  in `examples/showcase/BLOCKS.md`.
+
+Registering a block also opts it into the shared checks automatically:
+`allBlocks.test.jsx` (schema, renders with defaults and with no props,
+no console errors, has a category), `allBlocks.ssr.test.jsx` (renders in
+plain Node — no `window`/`document`), and the Playwright page check at
+`/blocks/<Block>`.
 
 ## Development workflow
 
@@ -181,6 +192,9 @@ All commands run from the repo root unless noted.
 pnpm install
 pnpm build         # tsup all four packages
 pnpm test          # vitest in each package
+pnpm test:coverage # same, enforcing each package's coverage floor
+pnpm test:e2e      # Playwright against the showcase (first run:
+                   #   pnpm --filter @techrox/page-studio-example-showcase exec playwright install chromium)
 pnpm test:watch
 pnpm lint
 pnpm clean         # rm -rf dist/ + node_modules/ everywhere
@@ -206,6 +220,12 @@ make build
 The showcase consumes the packages via `workspace:*`, so any build of
 the underlying packages is immediately visible after a rebuild — no
 republish dance.
+
+CI (`bitbucket-pipelines.yml`, `.github/workflows/ci.yml`) runs build +
+`test:coverage` and `test:e2e` on every PR and on pushes to
+`development`/`main`. Each package's `prepublishOnly` builds and tests,
+so `pnpm publish` refuses a red tree. Coverage floors live in each
+package's `vitest.config.js` — raise them as coverage grows, never lower.
 
 ## Editor → iframe boundary (important)
 

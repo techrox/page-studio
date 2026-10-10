@@ -1,0 +1,54 @@
+# CI for every pull request and for pushes to development and main.
+# Unit tests (with coverage floors) and e2e tests run in parallel; both must
+# pass. To block merges on red builds, enable the "Require passing builds"
+# merge check on development and main (Repository settings → Branch
+# restrictions).
+
+definitions:
+  caches:
+    pnpm: $BITBUCKET_CLONE_DIR/.pnpm-store
+
+  steps:
+    - step: &unit
+        name: Build, unit tests, coverage
+        image: node:20
+        caches:
+          - pnpm
+        script:
+          - corepack enable
+          - pnpm config set store-dir .pnpm-store
+          - pnpm install --frozen-lockfile
+          - pnpm build
+          - pnpm test:coverage
+
+    - step: &e2e
+        name: End-to-end tests (Playwright)
+        # Matches @playwright/test in examples/showcase; browsers preinstalled.
+        image: mcr.microsoft.com/playwright:v1.55.1-noble
+        caches:
+          - pnpm
+        script:
+          - corepack enable
+          - pnpm config set store-dir .pnpm-store
+          - pnpm install --frozen-lockfile
+          - CI=true pnpm test:e2e
+        artifacts:
+          - examples/showcase/playwright-report/**
+          - examples/showcase/test-results/**
+
+pipelines:
+  pull-requests:
+    '**':
+      - parallel:
+          - step: *unit
+          - step: *e2e
+
+  branches:
+    development:
+      - parallel:
+          - step: *unit
+          - step: *e2e
+    main:
+      - parallel:
+          - step: *unit
+          - step: *e2e

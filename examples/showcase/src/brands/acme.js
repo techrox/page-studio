@@ -1,4 +1,4 @@
-// Acme Co — corporate / enterprise voice. Pretend mid-market SaaS. The
+// Acme Co - corporate / enterprise voice. Pretend mid-market SaaS. The
 // counterpoint to Lumin: heavier register, blue palette, more cautious copy.
 
 export const acmeDefaults = {
@@ -74,7 +74,7 @@ export const acmeDefaults = {
   Banner: {
     variant: 'dark',
     label: 'EVENT',
-    title: 'Acme Summit · Sept 18–20, Chicago',
+    title: 'Acme Summit · Sept 18-20, Chicago',
     body: 'Two days of customer talks, hands-on labs, and the roadmap reveal.',
     link_label: 'Reserve your seat',
     link_href: '/pages/contact',

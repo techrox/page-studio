@@ -1,4 +1,4 @@
-// TwoColumn — generic side-by-side text columns with editable headings + body.
+// TwoColumn - generic side-by-side text columns with editable headings + body.
 
 export const TwoColumn = {
   label: 'Two columns',
@@ -13,6 +13,7 @@ export const TwoColumn = {
       options: [
         { label: 'White', value: 'white' },
         { label: 'Soft', value: 'soft' },
+        { label: 'Dark', value: 'dark' },
       ],
     },
   },
@@ -25,7 +26,7 @@ export const TwoColumn = {
   },
   render: ({ left_heading, left_body, right_heading, right_body, background }) => (
     <section
-      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`}
+      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`}
       style={{ paddingTop: 56, paddingBottom: 56 }}
     >
       <div className="tps-container">

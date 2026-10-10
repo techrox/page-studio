@@ -1,4 +1,4 @@
-// ContactInfo — office address + email + phone + hours card. No form;
+// ContactInfo - office address + email + phone + hours card. No form;
 // for a contact page or footer-adjacent placement.
 import { MailOutlined, PhoneOutlined, EnvironmentOutlined, ClockCircleOutlined } from '@ant-design/icons';
 
@@ -13,7 +13,7 @@ export const ContactInfo = {
     hours: { type: 'text', label: 'Hours' },
     background: {
       type: 'radio', label: 'Background',
-      options: [{ label: 'White', value: 'white' }, { label: 'Soft', value: 'soft' }],
+      options: [{ label: 'White', value: 'white' }, { label: 'Soft', value: 'soft' }, { label: 'Dark', value: 'dark' }],
     },
   },
   defaultProps: {
@@ -21,11 +21,11 @@ export const ContactInfo = {
     email: 'hello@example.com',
     phone: '',
     address: 'Your street\nYour city, Country',
-    hours: 'Mon–Fri · 09:00–18:00',
+    hours: 'Mon-Fri · 09:00-18:00',
     background: 'soft',
   },
   render: ({ eyebrow, heading, email, phone, address, hours, background }) => (
-    <section className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`} style={{ paddingTop: 48, paddingBottom: 48 }}>
+    <section className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`} style={{ paddingTop: 48, paddingBottom: 48 }}>
       <div className="tps-container" style={{ maxWidth: 720 }}>
         {(eyebrow || heading) && (
           <div style={{ marginBottom: 24 }}>
@@ -33,7 +33,7 @@ export const ContactInfo = {
             {heading && <h2 className="tps-h2" style={{ marginTop: 8 }}>{heading}</h2>}
           </div>
         )}
-        <div style={{ background: '#fff', border: '1px solid var(--tps-line)', borderRadius: 'var(--tps-radius)', padding: 28 }}>
+        <div style={{ background: 'var(--tps-bg)', border: '1px solid var(--tps-line)', borderRadius: 'var(--tps-radius)', padding: 28 }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(200px, 100%), 1fr))', gap: 20 }}>
             {email && (
               <div>

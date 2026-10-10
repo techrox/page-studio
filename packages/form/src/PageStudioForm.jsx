@@ -2,7 +2,7 @@
 
 // Schema-driven page editor. Uses raw AntD `Form` + `Form.List` (rather than
 // ProForm) because the editor renders heterogeneous field types from a
-// per-key schema registry — that doesn't compose cleanly with ProFormList's
+// per-key schema registry - that doesn't compose cleanly with ProFormList's
 // typed item components.
 //
 // Host-agnostic: the consumer supplies the schema, default content, the Link
@@ -362,7 +362,7 @@ function SeoFields() {
       <Form.Item
         label="Meta description"
         name="seo_description"
-        extra="Recommended 140–160 characters."
+        extra="Recommended 140-160 characters."
       >
         <Input.TextArea rows={3} maxLength={170} showCount />
       </Form.Item>
@@ -505,7 +505,7 @@ function Repeater({ field, namePath, defaults }) {
           const from = ids.indexOf(active.id);
           const to = ids.indexOf(over.id);
           if (from < 0 || to < 0) return;
-          // arrayMove + Form.List move are equivalent here — Form.List takes
+          // arrayMove + Form.List move are equivalent here - Form.List takes
           // care of re-indexing the underlying values.
           move(from, to);
         };

@@ -1,4 +1,4 @@
-// Config tests — verify the factory produces a valid Puck-shaped config and
+// Config tests - verify the factory produces a valid Puck-shaped config and
 // that overrides flow through.
 
 import { describe, it, expect } from 'vitest';

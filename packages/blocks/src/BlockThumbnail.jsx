@@ -1,60 +1,74 @@
 // SVG layout sketches for each block, shown in Puck's components panel.
 // Each preview is a stylised mini-diagram of the block's visual structure,
-// not a real render — fast, no AntD dependency, looks consistent across the
+// not a real render - fast, no AntD dependency, looks consistent across the
 // picker. The thumbnail viewBox is fixed so all blocks line up at the same
 // size in the picker.
 //
-// PRIMARY / PRIMARY_SOFT / ACCENT come from the active brand at render
-// time (we read --tps-primary etc. off the nearest ancestor with a
-// [data-brand] attribute, or :root otherwise). The thumbnails follow the
-// rest of the UI when the host swaps brands.
+// The whole palette - brand hues AND neutral surfaces - comes from the active
+// --tps-* tokens at render time. We read them off the nearest ancestor with a
+// [data-brand] attribute (the showcase / host wrapper), or :root otherwise.
+// That element also carries data-tps-theme, so the tokens already reflect the
+// active theme: the thumbnails follow the UI when the host swaps brand OR flips
+// light/dark. Brand hues (PRIMARY/PRIMARY_SOFT/ACCENT) stay constant across
+// themes; the neutrals (BG/CARD/BORDER/TEXT/MUTED) re-scope so the mini-mockup
+// reads as a light page in light mode and a dark page in dark mode.
 
 import { useState, useEffect } from 'react';
 
-const BG = '#F8FAFC';
-const BORDER = '#E2E8F0';
-const TEXT = '#0F172A';
-const MUTED = '#94A3B8';
-
-const DEFAULT_BRAND_COLORS = {
+// Light defaults - used for SSR and as the fallback when a token is unset.
+// BG is the page backdrop, CARD the raised surface on top of it, so a dark
+// theme keeps the same two-tone depth (e.g. #0a0a0a page / #141414 card).
+const DEFAULT_COLORS = {
   PRIMARY: '#0b60d8',
   PRIMARY_SOFT: '#dbeafe',
   ACCENT: '#F59E0B',
+  BG: '#F8FAFC',
+  BG_SOFT: '#F1F5F9',
+  CARD: '#ffffff',
+  BORDER: '#E2E8F0',
+  TEXT: '#0F172A',
+  MUTED: '#94A3B8',
 };
 
-function readBrandColors() {
-  if (typeof window === 'undefined') return DEFAULT_BRAND_COLORS;
+function readColors() {
+  if (typeof window === 'undefined') return DEFAULT_COLORS;
   const root =
     document.querySelector('[data-brand]') || document.documentElement;
   const style = getComputedStyle(root);
   const get = (name, fallback) =>
     style.getPropertyValue(name).trim() || fallback;
   return {
-    PRIMARY: get('--tps-primary', DEFAULT_BRAND_COLORS.PRIMARY),
-    PRIMARY_SOFT: get('--tps-primary-soft', DEFAULT_BRAND_COLORS.PRIMARY_SOFT),
-    ACCENT: get('--tps-accent', DEFAULT_BRAND_COLORS.ACCENT),
+    PRIMARY: get('--tps-primary', DEFAULT_COLORS.PRIMARY),
+    PRIMARY_SOFT: get('--tps-primary-soft', DEFAULT_COLORS.PRIMARY_SOFT),
+    ACCENT: get('--tps-accent', DEFAULT_COLORS.ACCENT),
+    BG: get('--tps-bg-section', DEFAULT_COLORS.BG),
+    BG_SOFT: get('--tps-bg-soft', DEFAULT_COLORS.BG_SOFT),
+    CARD: get('--tps-bg', DEFAULT_COLORS.CARD),
+    BORDER: get('--tps-line', DEFAULT_COLORS.BORDER),
+    TEXT: get('--tps-ink', DEFAULT_COLORS.TEXT),
+    MUTED: get('--tps-muted', DEFAULT_COLORS.MUTED),
   };
 }
 
-// Refresh when the [data-brand] attribute on the nearest ancestor flips —
-// the showcase / host toggles it when the user picks a new brand, so the
-// picker thumbnails need to follow.
+// Refresh when the brand OR theme on the nearest ancestor flips - the showcase
+// / host toggles data-brand when the user picks a new brand and data-tps-theme
+// when they flip light/dark, so the picker thumbnails need to follow both.
 //
-// The initial state is computed lazily from getComputedStyle so the very
-// first paint already uses the active brand. Without this, every preview
-// flashes the package-default teal for a frame before the post-mount
+// The initial state is computed lazily from getComputedStyle so the very first
+// paint already uses the active brand + theme. Without this, every preview
+// flashes the package-default light palette for a frame before the post-mount
 // effect re-reads the variables.
-function useBrandColors() {
-  const [colors, setColors] = useState(readBrandColors);
+function useThemeColors() {
+  const [colors, setColors] = useState(readColors);
   useEffect(() => {
-    setColors(readBrandColors());
+    setColors(readColors());
     if (typeof window === 'undefined') return;
     const target =
       document.querySelector('[data-brand]') || document.documentElement;
-    const observer = new MutationObserver(() => setColors(readBrandColors()));
+    const observer = new MutationObserver(() => setColors(readColors()));
     observer.observe(target, {
       attributes: true,
-      attributeFilter: ['data-brand', 'style', 'class'],
+      attributeFilter: ['data-brand', 'data-tps-theme', 'style', 'class'],
     });
     return () => observer.disconnect();
   }, []);
@@ -64,14 +78,30 @@ function useBrandColors() {
 const FRAME_W = 120;
 const FRAME_H = 70;
 
-function Frame({ children, soft = false }) {
-  return (
+// PREVIEWS is a function so the live palette (brand hues + themed neutrals)
+// can be passed in fresh on every render. The destructure makes the JSX below
+// identical to the static form - no further per-element changes needed. Frame
+// is defined here too so it closes over the themed BG / BG_SOFT / BORDER.
+// Five-point star as polygon points, centred on (cx, cy) with outer radius r.
+function starPoints(cx, cy, r) {
+  const pts = [];
+  for (let i = 0; i < 10; i += 1) {
+    const radius = i % 2 ? r * 0.45 : r;
+    const angle = (Math.PI / 5) * i - Math.PI / 2;
+    pts.push(`${(cx + radius * Math.cos(angle)).toFixed(2)},${(cy + radius * Math.sin(angle)).toFixed(2)}`);
+  }
+  return pts.join(' ');
+}
+
+function getPreviews(c) {
+  const { PRIMARY, PRIMARY_SOFT, ACCENT, BG, BG_SOFT, CARD, BORDER, TEXT, MUTED } = c;
+
+  const Frame = ({ children, soft = false }) => (
     <svg
       viewBox={`0 0 ${FRAME_W} ${FRAME_H}`}
       width="100%"
-      height="auto"
       preserveAspectRatio="xMidYMid meet"
-      style={{ display: 'block', borderRadius: 4 }}
+      style={{ display: 'block', height: 'auto', borderRadius: 4 }}
     >
       <rect
         x="0.5"
@@ -79,22 +109,146 @@ function Frame({ children, soft = false }) {
         width={FRAME_W - 1}
         height={FRAME_H - 1}
         rx="3"
-        fill={soft ? '#F1F5F9' : BG}
+        fill={soft ? BG_SOFT : BG}
         stroke={BORDER}
         strokeWidth="1"
       />
       {children}
     </svg>
   );
-}
 
-// PREVIEWS is a function so the brand-dependent colors (PRIMARY,
-// PRIMARY_SOFT, ACCENT) can be passed in fresh on every render. The
-// destructure makes the JSX below identical to the static form — no
-// further per-element changes needed.
-function getPreviews(c) {
-  const { PRIMARY, PRIMARY_SOFT, ACCENT } = c;
   return {
+  ContactHeader: (
+    <Frame>
+      <rect x="10" y="32" width="28" height="4" rx="1" fill={MUTED} />
+      <line x1="42" y1="31" x2="42" y2="37" stroke={BORDER} strokeWidth="1" />
+      <rect x="46" y="32" width="22" height="4" rx="1" fill={MUTED} />
+      <rect x="52" y="16" width="16" height="8" rx="2" fill={PRIMARY} />
+      <rect x="86" y="30" width="12" height="8" rx="2" fill="none" stroke={BORDER} strokeWidth="0.8" />
+      <rect x="101" y="30" width="14" height="8" rx="2" fill={PRIMARY} />
+    </Frame>
+  ),
+  ContactNavigationHeader: (
+    <Frame>
+      <rect x="0" y="0" width={FRAME_W} height="16" fill={PRIMARY} />
+      <rect x="10" y="6" width="22" height="4" rx="1" fill="#ffffff" opacity="0.9" />
+      <rect x="36" y="6" width="22" height="4" rx="1" fill="#ffffff" opacity="0.9" />
+      <rect x="96" y="5" width="18" height="6" rx="1" fill="#ffffff" opacity="0.25" />
+      <rect x="10" y="32" width="18" height="8" rx="2" fill={PRIMARY} />
+      <rect x="36" y="34" width="12" height="4" rx="1" fill={TEXT} />
+      <rect x="52" y="34" width="12" height="4" rx="1" fill={MUTED} />
+      <rect x="68" y="34" width="16" height="4" rx="1" fill={MUTED} />
+      <rect x="98" y="31" width="17" height="9" rx="2" fill={PRIMARY} />
+    </Frame>
+  ),
+  ImageCarousel: (
+    <Frame>
+      <rect x="8" y="8" width={FRAME_W - 16} height={FRAME_H - 16} rx="4" fill={BG_SOFT} stroke={BORDER} strokeWidth="1" />
+      <circle cx="20" cy="35" r="5" fill={CARD} stroke={BORDER} strokeWidth="1" />
+      <circle cx={FRAME_W - 20} cy="35" r="5" fill={CARD} stroke={BORDER} strokeWidth="1" />
+      <rect x="24" y="44" width="44" height="6" rx="1" fill={TEXT} />
+      <rect x="24" y="53" width="60" height="4" rx="1" fill={MUTED} />
+      <circle cx={FRAME_W / 2 - 8} cy={FRAME_H - 14} r="1.5" fill={PRIMARY} />
+      <circle cx={FRAME_W / 2} cy={FRAME_H - 14} r="1.5" fill={MUTED} />
+      <circle cx={FRAME_W / 2 + 8} cy={FRAME_H - 14} r="1.5" fill={MUTED} />
+    </Frame>
+  ),
+  NavigationHeader: (
+    <Frame>
+      <rect x="10" y="30" width="18" height="8" rx="2" fill={PRIMARY} />
+      <rect x="36" y="32" width="12" height="4" rx="1" fill={TEXT} />
+      <rect x="52" y="32" width="12" height="4" rx="1" fill={MUTED} />
+      <rect x="68" y="32" width="16" height="4" rx="1" fill={MUTED} />
+      <polygon points="86,33 89,33 87.5,36" fill={MUTED} />
+      <rect x="98" y="29" width="17" height="9" rx="2" fill={PRIMARY} />
+    </Frame>
+  ),
+  FooterNavigation: (
+    <Frame>
+      {/* Brand & address column on left */}
+      <rect x="8" y="10" width="22" height="6" rx="1.5" fill={PRIMARY} />
+      <rect x="8" y="19" width="28" height="2" rx="0.5" fill={MUTED} />
+      <rect x="8" y="23" width="24" height="2" rx="0.5" fill={MUTED} />
+      <rect x="8" y="27" width="20" height="2" rx="0.5" fill={MUTED} />
+      {/* Social circles */}
+      <circle cx="11" cy="35" r="2.5" fill={PRIMARY_SOFT} stroke={PRIMARY} strokeWidth="0.5" />
+      <circle cx="18" cy="35" r="2.5" fill={PRIMARY_SOFT} stroke={PRIMARY} strokeWidth="0.5" />
+      <circle cx="25" cy="35" r="2.5" fill={PRIMARY_SOFT} stroke={PRIMARY} strokeWidth="0.5" />
+      <circle cx="32" cy="35" r="2.5" fill={PRIMARY_SOFT} stroke={PRIMARY} strokeWidth="0.5" />
+
+      {/* Nav columns */}
+      {[44, 68, 92].map((x, i) => (
+        <g key={i}>
+          <rect x={x} y="10" width="18" height="3" rx="0.5" fill={TEXT} />
+          <rect x={x} y="16" width="16" height="2" rx="0.5" fill={MUTED} />
+          <rect x={x} y="20" width="20" height="2" rx="0.5" fill={MUTED} />
+          <rect x={x} y="24" width="14" height="2" rx="0.5" fill={MUTED} />
+          <rect x={x} y="28" width="18" height="2" rx="0.5" fill={MUTED} />
+          <rect x={x} y="32" width="12" height="2" rx="0.5" fill={MUTED} />
+        </g>
+      ))}
+
+      {/* Divider */}
+      <line x1="8" y1="46" x2={FRAME_W - 8} y2="46" stroke={BORDER} strokeWidth="0.6" />
+
+      {/* Bottom copyright & legal links */}
+      <rect x="8" y="52" width="45" height="2" rx="0.5" fill={MUTED} />
+      <rect x={FRAME_W - 48} y="52" width="12" height="2" rx="0.5" fill={MUTED} />
+      <rect x={FRAME_W - 32} y="52" width="12" height="2" rx="0.5" fill={MUTED} />
+      <rect x={FRAME_W - 16} y="52" width="8" height="2" rx="0.5" fill={MUTED} />
+    </Frame>
+  ),
+  MastheadHeader: (
+    <Frame>
+      <rect x="8" y="11" width="34" height="5" rx="1.5" fill={TEXT} />
+      <rect x="8" y="20" width="26" height="3" rx="1.5" fill={MUTED} />
+      <rect x="78" y="11" width="34" height="5" rx="1.5" fill={TEXT} />
+      <rect x="86" y="20" width="26" height="3" rx="1.5" fill={MUTED} />
+      <rect x="0" y="44" width={FRAME_W} height="18" fill={PRIMARY} />
+      <rect x="7" y="50" width="18" height="5" rx="1.5" fill="#ffffff" opacity="0.9" />
+      <rect x="30" y="50" width="14" height="5" rx="1.5" fill="#ffffff" opacity="0.9" />
+      <rect x="76" y="50" width="16" height="5" rx="1.5" fill="#ffffff" opacity="0.9" />
+      <rect x="97" y="50" width="16" height="5" rx="1.5" fill="#ffffff" opacity="0.9" />
+      <circle cx={FRAME_W / 2} cy="44" r="9" fill={CARD} stroke={PRIMARY} strokeWidth="2" />
+    </Frame>
+  ),
+  Marquee: (
+    <Frame>
+      <rect x="10" y="28" width="18" height="12" rx="6" fill={PRIMARY} />
+      <rect x="34" y="32" width="22" height="4" rx="1" fill={TEXT} />
+      <circle cx="62" cy="34" r="1.5" fill={MUTED} />
+      <rect x="70" y="32" width="28" height="4" rx="1" fill={TEXT} />
+      <circle cx="104" cy="34" r="1.5" fill={MUTED} />
+      <rect x="112" y="32" width="12" height="4" rx="1" fill={TEXT} />
+    </Frame>
+  ),
+  Notifications: (
+    <Frame>
+      <rect x="14" y="10" width="92" height="52" rx="3" fill={CARD} stroke={BORDER} strokeWidth="0.8" />
+      <rect x="14" y="10" width="92" height="12" rx="3" fill={BG_SOFT} />
+      <rect x="20" y="13.5" width="22" height="5" rx="2.5" fill={PRIMARY} />
+      <rect x="46" y="14" width="28" height="4" rx="1" fill={TEXT} />
+      {/* Item 1 with NEW tag */}
+      <rect x="20" y="27" width="12" height="4.5" rx="1" fill="#ef4444" />
+      <rect x="36" y="27.5" width="62" height="3.5" rx="1" fill={TEXT} />
+      <line x1="20" y1="36" x2="98" y2="36" stroke={BORDER} strokeWidth="0.5" />
+      {/* Item 2 */}
+      <rect x="20" y="41" width="12" height="4.5" rx="1" fill="#ef4444" />
+      <rect x="36" y="41.5" width="54" height="3.5" rx="1" fill={MUTED} />
+      <line x1="20" y1="50" x2="98" y2="50" stroke={BORDER} strokeWidth="0.5" />
+    </Frame>
+  ),
+  PopupModal: (
+    <Frame>
+      <rect x="25" y="10" width="70" height="50" rx="4" fill={CARD || BG} stroke={PRIMARY} strokeWidth="1.2" />
+      <rect x="30" y="14" width="60" height="14" rx="2" fill={PRIMARY} opacity="0.8" />
+      <rect x="30" y="32" width="45" height="4" rx="1" fill={TEXT} />
+      <rect x="30" y="39" width="55" height="3" rx="0.5" fill={MUTED} />
+      <rect x="30" y="44" width="40" height="3" rx="0.5" fill={MUTED} />
+      <rect x="30" y="50" width="22" height="6" rx="2" fill={PRIMARY} />
+      <circle cx="88" cy="17" r="2.5" fill={MUTED} opacity="0.8" />
+    </Frame>
+  ),
   Hero: (
     <Frame>
       <rect x="14" y="14" width="20" height="3" rx="1" fill={PRIMARY} opacity="0.7" />
@@ -148,7 +302,7 @@ function getPreviews(c) {
             width="32"
             height="42"
             rx="2"
-            fill="#fff"
+            fill={CARD}
             stroke={BORDER}
             strokeWidth="0.8"
           />
@@ -195,7 +349,7 @@ function getPreviews(c) {
             width="32"
             height="20"
             rx="2"
-            fill="#fff"
+            fill={CARD}
             stroke={BORDER}
             strokeWidth="0.8"
           />
@@ -260,13 +414,13 @@ function getPreviews(c) {
         width="60"
         height="32"
         rx="2"
-        fill="#fff"
+        fill={CARD}
         stroke={BORDER}
         strokeWidth="0.8"
       />
       <rect x="54" y="32" width="24" height="3" rx="1" fill={MUTED} />
-      <rect x="54" y="38" width="52" height="3" rx="1" fill="#fff" stroke={BORDER} strokeWidth="0.5" />
-      <rect x="54" y="44" width="52" height="3" rx="1" fill="#fff" stroke={BORDER} strokeWidth="0.5" />
+      <rect x="54" y="38" width="52" height="3" rx="1" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="54" y="44" width="52" height="3" rx="1" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
       <rect x="54" y="50" width="20" height="6" rx="1.5" fill={PRIMARY} />
     </Frame>
   ),
@@ -328,7 +482,7 @@ function getPreviews(c) {
   VideoEmbed: (
     <Frame>
       <rect x="20" y="16" width="80" height="38" rx="2" fill="#0F172A" />
-      <polygon points="55,26 55,44 70,35" fill="#fff" opacity="0.95" />
+      <polygon points="55,26 55,44 70,35" fill="#ffffff" opacity="0.95" />
       <rect x="40" y="60" width="40" height="2" rx="1" fill={MUTED} />
     </Frame>
   ),
@@ -343,7 +497,7 @@ function getPreviews(c) {
           width="16"
           height="10"
           rx="2"
-          fill="#fff"
+          fill={CARD}
           stroke={BORDER}
           strokeWidth="0.5"
         />
@@ -380,7 +534,7 @@ function getPreviews(c) {
             width="32"
             height="42"
             rx="2"
-            fill="#fff"
+            fill={CARD}
             stroke={BORDER}
             strokeWidth="0.8"
           />
@@ -405,7 +559,7 @@ function getPreviews(c) {
             width="92"
             height="10"
             rx="2"
-            fill={i === 0 ? PRIMARY_SOFT : '#fff'}
+            fill={i === 0 ? PRIMARY_SOFT : CARD}
             stroke={BORDER}
             strokeWidth="0.6"
             opacity={i === 0 ? 0.7 : 1}
@@ -450,7 +604,7 @@ function getPreviews(c) {
         width="64"
         height="9"
         rx="2"
-        fill="#fff"
+        fill={CARD}
         stroke={BORDER}
         strokeWidth="0.6"
       />
@@ -467,7 +621,7 @@ function getPreviews(c) {
             width="32"
             height="48"
             rx="2"
-            fill="#fff"
+            fill={CARD}
             stroke={BORDER}
             strokeWidth="0.6"
           />
@@ -523,7 +677,7 @@ function getPreviews(c) {
             width="32"
             height="48"
             rx="2"
-            fill="#fff"
+            fill={CARD}
             stroke={BORDER}
             strokeWidth="0.6"
           />
@@ -569,7 +723,7 @@ function getPreviews(c) {
             width="24"
             height="46"
             rx="2"
-            fill="#fff"
+            fill={CARD}
             stroke={BORDER}
             strokeWidth="0.6"
           />
@@ -594,7 +748,7 @@ function getPreviews(c) {
             width="24"
             height="46"
             rx="2"
-            fill="#fff"
+            fill={CARD}
             stroke={BORDER}
             strokeWidth="0.6"
           />
@@ -636,9 +790,9 @@ function getPreviews(c) {
           </defs>
           <rect x={x} y="12" width="32" height="48" rx="2" fill={`url(#oc-grad-${i})`} />
           <rect x={x + 4} y="38" width="10" height="2" rx="1" fill={ACCENT} />
-          <rect x={x + 4} y="44" width="22" height="3" rx="1" fill="#fff" />
-          <rect x={x + 4} y="50" width="20" height="1.5" rx="0.5" fill="#fff" opacity="0.85" />
-          <rect x={x + 4} y="53" width="14" height="1.5" rx="0.5" fill="#fff" opacity="0.85" />
+          <rect x={x + 4} y="44" width="22" height="3" rx="1" fill="#ffffff" />
+          <rect x={x + 4} y="50" width="20" height="1.5" rx="0.5" fill="#ffffff" opacity="0.85" />
+          <rect x={x + 4} y="53" width="14" height="1.5" rx="0.5" fill="#ffffff" opacity="0.85" />
         </g>
       ))}
     </Frame>
@@ -647,7 +801,7 @@ function getPreviews(c) {
     <Frame>
       {[10, 44, 78].map((x, i) => (
         <g key={i}>
-          <rect x={x} y="10" width="32" height="50" rx="2" fill={i === 1 ? PRIMARY : '#fff'} stroke={BORDER} strokeWidth="0.6" />
+          <rect x={x} y="10" width="32" height="50" rx="2" fill={i === 1 ? PRIMARY : CARD} stroke={BORDER} strokeWidth="0.6" />
           <rect x={x + 4} y="14" width="14" height="2" rx="1" fill={i === 1 ? '#fff' : MUTED} />
           <rect x={x + 4} y="20" width="18" height="6" rx="1.5" fill={i === 1 ? '#fff' : TEXT} />
           {[32, 38, 44].map((y, j) => (
@@ -669,9 +823,11 @@ function getPreviews(c) {
         <g key={i}>
           <rect x="14" y={y} width="22" height="1.5" rx="0.5" fill={MUTED} />
           {[42, 62, 82].map((cx, j) => (
-            <text key={j} x={cx + 7} y={y + 2} fontSize="5" fill={(i + j) % 2 ? PRIMARY : MUTED} textAnchor="middle" fontFamily="system-ui">
-              {(i + j) % 2 ? '✓' : '·'}
-            </text>
+            (i + j) % 2 ? (
+              <polyline key={j} points={`${cx + 5},${y + 0.5} ${cx + 6.5},${y + 2} ${cx + 9},${y - 1}`} fill="none" stroke={PRIMARY} strokeWidth="0.8" />
+            ) : (
+              <circle key={j} cx={cx + 7} cy={y + 0.75} r="0.6" fill={MUTED} />
+            )
           ))}
         </g>
       ))}
@@ -721,7 +877,7 @@ function getPreviews(c) {
   ),
   InlineCTA: (
     <Frame soft>
-      <rect x="10" y="22" width="100" height="26" rx="3" fill="#fff" stroke={BORDER} strokeWidth="0.6" />
+      <rect x="10" y="22" width="100" height="26" rx="3" fill={CARD} stroke={BORDER} strokeWidth="0.6" />
       <rect x="16" y="28" width="50" height="3.5" rx="1" fill={TEXT} />
       <rect x="16" y="36" width="58" height="2" rx="1" fill={MUTED} />
       <rect x="80" y="30" width="24" height="10" rx="2" fill={PRIMARY} />
@@ -730,7 +886,7 @@ function getPreviews(c) {
   AnnouncementBar: (
     <Frame>
       <rect x="0" y="20" width={FRAME_W} height="14" fill="#0F172A" />
-      <rect x="30" y="25" width="38" height="2" rx="1" fill="#fff" />
+      <rect x="30" y="25" width="38" height="2" rx="1" fill="#ffffff" />
       <rect x="72" y="25" width="22" height="2" rx="1" fill={ACCENT} />
     </Frame>
   ),
@@ -781,8 +937,8 @@ function getPreviews(c) {
   TabsBlock: (
     <Frame>
       <rect x="14" y="14" width="20" height="6" rx="1" fill={PRIMARY} />
-      <rect x="36" y="14" width="20" height="6" rx="1" fill="#fff" stroke={BORDER} strokeWidth="0.5" />
-      <rect x="58" y="14" width="20" height="6" rx="1" fill="#fff" stroke={BORDER} strokeWidth="0.5" />
+      <rect x="36" y="14" width="20" height="6" rx="1" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="58" y="14" width="20" height="6" rx="1" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
       <line x1="14" y1="22" x2="106" y2="22" stroke={BORDER} strokeWidth="0.5" />
       <rect x="14" y="28" width="78" height="2" rx="1" fill={TEXT} />
       <rect x="14" y="34" width="86" height="2" rx="1" fill={MUTED} />
@@ -794,7 +950,7 @@ function getPreviews(c) {
     <Frame>
       {[14, 30, 46].map((y, i) => (
         <g key={i}>
-          <rect x="14" y={y} width="92" height="10" rx="2" fill={i === 0 ? PRIMARY_SOFT : '#fff'} stroke={BORDER} strokeWidth="0.5" />
+          <rect x="14" y={y} width="92" height="10" rx="2" fill={i === 0 ? PRIMARY_SOFT : CARD} stroke={BORDER} strokeWidth="0.5" />
           <rect x="20" y={y + 4} width="44" height="2.5" rx="1" fill={TEXT} />
           <text x="100" y={y + 7} fontSize="6" fill={MUTED} textAnchor="middle" fontFamily="system-ui">{i === 0 ? '−' : '+'}</text>
           {i === 0 && (
@@ -817,7 +973,7 @@ function getPreviews(c) {
   ),
   ContactInfo: (
     <Frame>
-      <rect x="10" y="14" width="100" height="46" rx="2" fill="#fff" stroke={BORDER} strokeWidth="0.6" />
+      <rect x="10" y="14" width="100" height="46" rx="2" fill={CARD} stroke={BORDER} strokeWidth="0.6" />
       {[[18, 22], [62, 22], [18, 42], [62, 42]].map(([x, y], i) => (
         <g key={i}>
           <circle cx={x + 4} cy={y + 4} r="2.5" fill={PRIMARY} opacity="0.7" />
@@ -840,7 +996,7 @@ function getPreviews(c) {
     <Frame>
       {[14, 30, 46].map((y, i) => (
         <g key={i}>
-          <rect x="14" y={y} width="92" height="11" rx="2" fill="#fff" stroke={BORDER} strokeWidth="0.5" />
+          <rect x="14" y={y} width="92" height="11" rx="2" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
           <rect x="18" y={y + 2} width="14" height="7" rx="1" fill={PRIMARY_SOFT} />
           <text x="25" y={y + 7} fontSize="4" fontWeight="700" fill={PRIMARY} textAnchor="middle" fontFamily="system-ui">{['MAR', 'APR', 'MAY'][i]}</text>
           <rect x="36" y={y + 3} width="40" height="2" rx="1" fill={TEXT} />
@@ -853,7 +1009,7 @@ function getPreviews(c) {
   Divider: (
     <Frame>
       <line x1="14" y1="35" x2="50" y2="35" stroke={BORDER} strokeWidth="0.8" />
-      <text x="60" y="38" fontSize="6" fill={MUTED} textAnchor="middle" fontWeight="700" fontFamily="system-ui">— OR —</text>
+      <text x="60" y="38" fontSize="6" fill={MUTED} textAnchor="middle" fontWeight="700" fontFamily="system-ui">- OR -</text>
       <line x1="70" y1="35" x2="106" y2="35" stroke={BORDER} strokeWidth="0.8" />
     </Frame>
   ),
@@ -889,15 +1045,179 @@ function getPreviews(c) {
       <rect x="22" y="48" width="50" height="2" rx="1" fill={MUTED} />
     </Frame>
   ),
+
+  // ── Form blocks ──────────────────────────────────────────────────────────
+  FormContact: (
+    <Frame>
+      <rect x="14" y="9" width="46" height="3" rx="1" fill={TEXT} />
+      <rect x="14" y="17" width="42" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="62" y="17" width="44" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="27" width="42" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="62" y="27" width="44" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="37" width="92" height="18" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="59" width="28" height="8" rx="2" fill={PRIMARY} />
+    </Frame>
+  ),
+  FormLeadCapture: (
+    <Frame>
+      <rect x="14" y="9" width="52" height="3" rx="1" fill={TEXT} />
+      <rect x="14" y="17" width="42" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="62" y="17" width="44" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="27" width="92" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <text x="100" y="31.5" fontSize="5" fill={MUTED} fontFamily="system-ui">▼</text>
+      <rect x="14" y="37" width="92" height="6" rx="1.5" fill={PRIMARY_SOFT} stroke={PRIMARY} strokeWidth="0.5" opacity="0.7" />
+      <rect x="17" y="39.5" width="14" height="2.5" rx="1" fill={PRIMARY} opacity="0.8" />
+      <rect x="33" y="39.5" width="18" height="2.5" rx="1" fill={PRIMARY} opacity="0.8" />
+      <rect x="14" y="47" width="92" height="11" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="62" width="32" height="6" rx="2" fill={PRIMARY} />
+    </Frame>
+  ),
+  FormNewsletter: (
+    <Frame soft>
+      <rect x="28" y="9" width="64" height="4" rx="1.5" fill={TEXT} />
+      <rect x="28" y="17" width="60" height="2.5" rx="1" fill={MUTED} />
+      <rect x="14" y="28" width="60" height="8" rx="2" fill={CARD} stroke={BORDER} strokeWidth="0.6" />
+      <rect x="78" y="28" width="28" height="8" rx="2" fill={PRIMARY} />
+      <rect x="14" y="42" width="5" height="5" rx="1" fill={CARD} stroke={BORDER} strokeWidth="0.6" />
+      <rect x="22" y="43" width="50" height="2" rx="1" fill={MUTED} />
+      <rect x="22" y="48" width="38" height="2" rx="1" fill={MUTED} />
+    </Frame>
+  ),
+  FormFeedback: (
+    <Frame>
+      <rect x="14" y="9" width="44" height="3" rx="1" fill={TEXT} />
+      {[14, 22, 30, 38, 46].map((x, i) => (
+        <polygon key={i} points={starPoints(x + 3, 19, 3)} fill={i < 4 ? ACCENT : BORDER} />
+      ))}
+      <rect x="14" y="28" width="92" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <text x="100" y="32.5" fontSize="5" fill={MUTED} fontFamily="system-ui">▼</text>
+      <rect x="14" y="38" width="92" height="18" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="60" width="30" height="7" rx="2" fill={PRIMARY} />
+    </Frame>
+  ),
+  FormSurvey: (
+    <Frame>
+      <rect x="14" y="9" width="40" height="3" rx="1" fill={TEXT} />
+      {[14, 22, 30, 38, 46].map((x, i) => (
+        <polygon key={i} points={starPoints(x + 3, 18, 3)} fill={i < 3 ? ACCENT : BORDER} />
+      ))}
+      {[27, 35, 43, 51].map((y, i) => (
+        <g key={i}>
+          <circle cx="19" cy={y} r="2.5" fill={i === 0 ? PRIMARY_SOFT : CARD} stroke={i === 0 ? PRIMARY : BORDER} strokeWidth="0.7" />
+          {i === 0 && <circle cx="19" cy={y} r="1.2" fill={PRIMARY} />}
+          <rect x="25" y={y - 1.5} width="30" height="2.5" rx="1" fill={MUTED} />
+        </g>
+      ))}
+      <rect x="14" y="57" width="92" height="10" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+    </Frame>
+  ),
+  FormBooking: (
+    <Frame>
+      <rect x="14" y="9" width="36" height="3" rx="1" fill={TEXT} />
+      <rect x="14" y="17" width="42" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="62" y="17" width="44" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="27" width="92" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="37" width="42" height="6" rx="1.5" fill={PRIMARY_SOFT} stroke={PRIMARY} strokeWidth="0.5" opacity="0.8" />
+      <rect x="16" y="39" width="8" height="4" rx="0.5" fill={PRIMARY} opacity="0.7" />
+      <rect x="62" y="37" width="44" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <text x="100" y="41.5" fontSize="5" fill={MUTED} fontFamily="system-ui">▼</text>
+      <rect x="14" y="47" width="92" height="12" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="63" width="30" height="6" rx="2" fill={PRIMARY} />
+    </Frame>
+  ),
+  FormRegistration: (
+    <Frame>
+      <rect x="14" y="8" width="50" height="3" rx="1" fill={TEXT} />
+      <rect x="14" y="16" width="42" height="5.5" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="62" y="16" width="44" height="5.5" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="25" width="42" height="5.5" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="62" y="25" width="44" height="5.5" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="34" width="42" height="5.5" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <text x="49" y="38.5" fontSize="5" fill={MUTED} fontFamily="system-ui">▼</text>
+      <rect x="62" y="34" width="44" height="5.5" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <text x="100" y="38.5" fontSize="5" fill={MUTED} fontFamily="system-ui">▼</text>
+      <rect x="14" y="43" width="92" height="5.5" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <text x="100" y="47.5" fontSize="5" fill={MUTED} fontFamily="system-ui">▼</text>
+      <rect x="14" y="53" width="92" height="8" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="63" width="28" height="6" rx="2" fill={PRIMARY} />
+    </Frame>
+  ),
+  FormQuoteRequest: (
+    <Frame>
+      <rect x="14" y="9" width="44" height="3" rx="1" fill={TEXT} />
+      <rect x="14" y="17" width="42" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="62" y="17" width="44" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="27" width="42" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <text x="49" y="31.5" fontSize="5" fill={MUTED} fontFamily="system-ui">▼</text>
+      <rect x="62" y="27" width="44" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <text x="100" y="31.5" fontSize="5" fill={MUTED} fontFamily="system-ui">▼</text>
+      <rect x="14" y="37" width="92" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <text x="100" y="41.5" fontSize="5" fill={MUTED} fontFamily="system-ui">▼</text>
+      <rect x="14" y="47" width="92" height="14" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="63" width="30" height="5" rx="1.5" fill={PRIMARY} />
+    </Frame>
+  ),
+  FormApplication: (
+    <Frame>
+      <rect x="14" y="9" width="36" height="3" rx="1" fill={TEXT} />
+      <rect x="14" y="17" width="42" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="62" y="17" width="44" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="27" width="42" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="62" y="27" width="44" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="37" width="92" height="12" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="53" width="92" height="11" rx="2" fill={PRIMARY_SOFT} stroke={PRIMARY} strokeWidth="0.5" strokeDasharray="2 2" />
+      <text x="38" y="61" fontSize="6" fill={PRIMARY} fontFamily="system-ui" opacity="0.85">↑ Upload CV</text>
+    </Frame>
+  ),
+  FormSupport: (
+    <Frame>
+      <rect x="14" y="9" width="52" height="3" rx="1" fill={TEXT} />
+      <rect x="14" y="17" width="42" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="62" y="17" width="44" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="27" width="42" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <text x="49" y="31.5" fontSize="5" fill={MUTED} fontFamily="system-ui">▼</text>
+      <rect x="62" y="27" width="44" height="6" rx="1.5" fill={ACCENT} opacity="0.15" stroke={ACCENT} strokeWidth="0.5" />
+      <rect x="65" y="29.5" width="18" height="2" rx="1" fill={MUTED} />
+      <rect x="14" y="37" width="92" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="47" width="92" height="16" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="65" width="28" height="5" rx="1.5" fill={PRIMARY} />
+    </Frame>
+  ),
+  FormWaitlist: (
+    <Frame soft>
+      <rect x="14" y="9" width="44" height="3" rx="1" fill={TEXT} />
+      <rect x="14" y="15" width="70" height="2.5" rx="1" fill={MUTED} />
+      <rect x="14" y="23" width="42" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="62" y="23" width="44" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="33" width="42" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="62" y="33" width="44" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <text x="100" y="37.5" fontSize="5" fill={MUTED} fontFamily="system-ui">▼</text>
+      <rect x="14" y="43" width="92" height="14" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="61" width="28" height="7" rx="2" fill={PRIMARY} />
+    </Frame>
+  ),
+  FormAddress: (
+    <Frame>
+      <rect x="14" y="9" width="38" height="3" rx="1" fill={TEXT} />
+      <rect x="14" y="17" width="92" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="27" width="92" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="37" width="42" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="62" y="37" width="44" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="47" width="42" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <text x="49" y="51.5" fontSize="5" fill={MUTED} fontFamily="system-ui">▼</text>
+      <rect x="62" y="47" width="44" height="6" rx="1.5" fill={CARD} stroke={BORDER} strokeWidth="0.5" />
+      <rect x="14" y="57" width="28" height="8" rx="2" fill={PRIMARY} />
+    </Frame>
+  ),
   };
 }
 
 export const BLOCK_DESCRIPTIONS = {
   Hero: 'Eyebrow, large heading, lede, and two CTAs. The opening section of any page.',
   SectionHeader: 'Eyebrow + heading + lede that introduces a major section.',
-  StatsStrip: 'Horizontal row of 3–5 stat cards (number + label).',
-  RichText: 'Body copy with HTML formatting — paragraphs, lists, links, headings.',
-  PillarsRow: '2–4 column grid of icon + title + body cards.',
+  StatsStrip: 'Horizontal row of 3-5 stat cards (number + label).',
+  RichText: 'Body copy with HTML formatting - paragraphs, lists, links, headings.',
+  PillarsRow: '2-4 column grid of icon + title + body cards.',
   ApproachSteps: 'Numbered step-by-step breakdown (e.g. 01 Diagnose / 02 Design).',
   ServicesGrid: 'Auto-rendered grid of all (or first N) service capability cards.',
   CTABanner: 'Full-width call-to-action with tagline, heading, body, and button.',
@@ -905,38 +1225,47 @@ export const BLOCK_DESCRIPTIONS = {
   TwoColumn: 'Generic side-by-side text columns with editable headings + body.',
   ContactSection: 'Hero + sidebar info cards + lead-capture form. Drops a working contact section in one block.',
   Spacer: 'Pure vertical whitespace between blocks.',
-  RawHtml: 'Escape hatch — paste in any HTML when you need something the library doesn’t cover.',
+  RawHtml: 'Escape hatch - paste in any HTML when you need something the library doesn’t cover.',
   ImageText: 'Image on one side, eyebrow + heading + body + CTA on the other. Flip the image side per section.',
   VideoEmbed: 'Responsive YouTube or Vimeo embed with optional caption.',
   LogoStrip: '"Trusted by" row of client/partner logos. Falls back to brand-name text when no image is set.',
   TestimonialQuote: 'One large pull-quote with author photo, name, role, and company.',
   TestimonialGrid: '2- or 3-column grid of testimonial cards. Use for multi-voice social proof.',
   FAQ: 'Accordion of question / answer items. HTML allowed in answers; one open at a time.',
-  Timeline: 'Vertical chronological list — date + title + body. Useful for company history or "what happens next".',
+  Timeline: 'Vertical chronological list - date + title + body. Useful for company history or "what happens next".',
   NewsletterSignup: 'Single-field email capture. Submits to the leads endpoint with source="newsletter".',
   TeamGrid: '2/3/4-column team cards with photo, role, short bio, and LinkedIn link.',
-  Banner: 'Full-width announcement strip — info / success / warning / dark variants. Optional CTA link.',
-  ArticleFeatured: 'Hero-style featured article — large image + tag + headline + excerpt + byline + CTA.',
+  Banner: 'Full-width announcement strip - info / success / warning / dark variants. Optional CTA link.',
+  ArticleFeatured: 'Hero-style featured article - large image + tag + headline + excerpt + byline + CTA.',
   ArticleGrid: '2- or 3-column article cards (cover + tag + headline + excerpt + byline).',
   ArticleList: 'Text-heavy article list (date + tag + headline + excerpt). Best for archives.',
   IconCards: 'Compact icon + title + 1-line body cards. 2/3/4-col layouts.',
   MetricCards: 'Big-number cards with optional trend arrow + delta. The "by the numbers" section.',
   ImageOverlayCards: 'Full-bleed image cards with text overlay. Click-through "category" / "explore" pattern.',
   PricingTable: '3-tier pricing cards with feature lists and per-tier CTAs. Highlight one tier as popular.',
-  PricingComparison: 'Feature × tier comparison table — checkmarks/Xs or values per cell.',
+  PricingComparison: 'Feature × tier comparison table - checkmarks/Xs or values per cell.',
   AwardsBar: 'Row of certifications/awards with title + body + year. Trust signals for accreditations.',
   CountUpStats: 'Animated stat counters that tick from 0 to value when scrolled into view.',
   ImageGallery: 'Photo grid with click-to-enlarge lightbox. 2/3/4-col layouts.',
   ImageCaption: 'Single image with caption and optional photo credit.',
-  InlineCTA: 'Compact one-line CTA strip — sits between content sections without dominating.',
-  AnnouncementBar: 'Slim full-width strip for announcements, beta access, event invites — dark / primary / accent variants.',
+  InlineCTA: 'Compact one-line CTA strip - sits between content sections without dominating.',
+  ContactHeader: 'Top header with dynamic contact items (phones & emails), centered logo, and configurable actions/login.',
+  ContactNavigationHeader: 'Merged header with top contact strip (phones/emails), brand logo, full navigation menus, and unified mobile drawer.',
+  ImageCarousel: 'Interactive image slider / carousel with autoplay, custom slide captions, overlay styling, and arrow/dot navigation.',
+  NavigationHeader: 'Header with logo, horizontal navigation menus, multi-level dropdowns, and mobile drawer.',
+  FooterNavigation: 'Multi-column footer with brand logo, address, contact details, social buttons, customizable link columns, and dynamic copyright bar.',
+  MastheadHeader: 'Masthead with two titles flanking a centre crest over the coloured nav bar; compacts as the page scrolls.',
+  Marquee: 'Scrolling ticker / marquee for news, alerts, and updates with HTML links and ordering.',
+  Notifications: 'Container-based auto-scrolling notifications board with adjustable height, NEW tags, dates, and HTML body.',
+  PopupModal: 'Centered popup modal with image, rich text, actions, and auto-open/dismiss triggers.',
+  AnnouncementBar: 'Slim full-width strip for announcements, beta access, event invites - dark / primary / accent variants.',
   Quote: 'Editorial pull-quote with optional attribution. Left-bordered or centered.',
   CodeBlock: 'Monospace code snippet with title bar and language label.',
-  KeyValueList: 'Definition list / specs table — for "what\'s included", deal terms, technical specs.',
+  KeyValueList: 'Definition list / specs table - for "what\'s included", deal terms, technical specs.',
   StepsVertical: 'Large vertical numbered steps with title + body. Heavier than ApproachSteps.',
-  TabsBlock: 'Tabbed content panel — switch between named sections of HTML content.',
+  TabsBlock: 'Tabbed content panel - switch between named sections of HTML content.',
   AccordionBlock: 'Generic accordion (one or many open). For multi-section content beyond strict FAQ.',
-  SocialLinks: 'Row of social-network icon links — LinkedIn, X, YouTube, etc.',
+  SocialLinks: 'Row of social-network icon links - LinkedIn, X, YouTube, etc.',
   ContactInfo: 'Office address + email + phone + hours card. No form, just info.',
   MapEmbed: 'Google Maps iframe embed with caption.',
   EventsList: 'Upcoming events with date pill + title + venue + RSVP CTA.',
@@ -944,25 +1273,52 @@ export const BLOCK_DESCRIPTIONS = {
   ThreeColumn: 'Generic 3-col text layout. Lighter than PillarsRow.',
   PressMentions: '"As featured in" press logos. Italic serif text fallback when no logos.',
   Container: 'Decorative box (soft / primary / dark / white) wrapping a single titled callout.',
+  FormContact: 'Lightweight contact form - name, email, phone, company, message. No hero or sidebar.',
+  FormLeadCapture: 'Lead-gen form with journey-stage select, capability multi-select, and notes.',
+  FormNewsletter: 'Newsletter signup with name, email, and consent checkbox.',
+  FormFeedback: 'Customer feedback - star rating, category select, free-text comment, optional contact.',
+  FormSurvey: 'Configurable survey - defaults to NPS-style with rating, recommend radio, and open text.',
+  FormBooking: 'Demo / appointment request - name, email, company, date picker, time slot, notes.',
+  FormRegistration: 'Event registration - name, contact, role, t-shirt size, dietary select.',
+  FormQuoteRequest: 'Quote request - company, project type, budget range, timeline, requirements.',
+  FormApplication: 'Job / programme application - contact, LinkedIn, portfolio, role, cover note, CV upload.',
+  FormSupport: 'Support ticket - name, email, category, priority, subject, description, attachment.',
+  FormWaitlist: 'Product waitlist - name, email, company, role, intended use case.',
+  FormAddress: 'Address / location form - name, street, city, state, country select, postal code.',
 };
 
 export default function BlockThumbnail({ name }) {
-  const colors = useBrandColors();
+  const colors = useThemeColors();
   const previews = getPreviews(colors);
+  if (previews[name]) return previews[name];
+  // Fallback for an unmapped block - a plain framed label, themed to match.
   return (
-    previews[name] || (
-      <Frame>
-        <text
-          x="60"
-          y="40"
-          fontSize="8"
-          fill={MUTED}
-          textAnchor="middle"
-          fontFamily="system-ui"
-        >
-          {name}
-        </text>
-      </Frame>
-    )
+    <svg
+      viewBox={`0 0 ${FRAME_W} ${FRAME_H}`}
+      width="100%"
+      preserveAspectRatio="xMidYMid meet"
+      style={{ display: 'block', height: 'auto', borderRadius: 4 }}
+    >
+      <rect
+        x="0.5"
+        y="0.5"
+        width={FRAME_W - 1}
+        height={FRAME_H - 1}
+        rx="3"
+        fill={colors.BG}
+        stroke={colors.BORDER}
+        strokeWidth="1"
+      />
+      <text
+        x="60"
+        y="40"
+        fontSize="8"
+        fill={colors.MUTED}
+        textAnchor="middle"
+        fontFamily="system-ui"
+      >
+        {name}
+      </text>
+    </svg>
   );
 }

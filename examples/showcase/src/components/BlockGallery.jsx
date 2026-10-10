@@ -1,4 +1,4 @@
-// Block gallery — a grid of all blocks rendered small. Each card holds a
+// Block gallery - a grid of all blocks rendered small. Each card holds a
 // scaled-down PageStudioRender of a single-block Puck payload, so what you
 // see is the real block rendering with the current brand's defaults applied.
 //
@@ -55,7 +55,7 @@ export default function BlockGallery({ studio, blockConfig }) {
   const sectionRefs = useRef({})
 
   // Keep activeCat in sync with the visible categories whenever the search
-  // changes — the previously active one may have filtered away.
+  // changes - the previously active one may have filtered away.
   useEffect(() => {
     if (!visibleCats.length) return
     if (!visibleCats.some(([cat]) => cat === activeCat)) {
@@ -141,8 +141,13 @@ export default function BlockGallery({ studio, blockConfig }) {
               </h2>
               <div className="gallery-grid">
                 {entries.map(({ name, summary }) => (
-                  <Link key={name} to={`/blocks/${name}`} className="gallery-card">
-                    <div className="gallery-card-preview">
+                  <div key={name} className="gallery-card">
+                    {/* The link overlays the card instead of wrapping it: the
+                        live preview holds its own <a> tags, and <a> inside <a>
+                        is invalid HTML. `inert` keeps preview links out of the
+                        tab order. */}
+                    <Link to={`/blocks/${name}`} className="gallery-card-link" aria-label={name} />
+                    <div className="gallery-card-preview" inert="">
                       <div className="gallery-card-preview-inner">
                         <PageStudioRender data={singleBlockData(name, blockConfig)} config={blockConfig} studio={studio} />
                       </div>
@@ -155,7 +160,7 @@ export default function BlockGallery({ studio, blockConfig }) {
                       <h3>{name}</h3>
                       <p className="gallery-card-meta-desc">{summary}</p>
                     </div>
-                  </Link>
+                  </div>
                 ))}
               </div>
             </section>

@@ -1,4 +1,4 @@
-// ArticleFeatured — large hero-style featured article. Big image on one
+// ArticleFeatured - large hero-style featured article. Big image on one
 // side, tag/headline/excerpt/byline + CTA on the other. The "lead story"
 // of a blog or news section.
 
@@ -7,7 +7,7 @@ import { Button } from 'antd';
 import { ArrowRightOutlined } from '@ant-design/icons';
 
 export const ArticleFeatured = {
-  label: 'Article — featured',
+  label: 'Article - featured',
   fields: {
     eyebrow: { type: 'text', label: 'Section eyebrow (optional)' },
     tag: { type: 'text', label: 'Article tag (small, coloured)' },
@@ -28,6 +28,15 @@ export const ArticleFeatured = {
         { label: 'Left', value: 'left' },
       ],
     },
+    background: {
+      type: 'radio',
+      label: 'Background',
+      options: [
+        { label: 'White', value: 'white' },
+        { label: 'Soft', value: 'soft' },
+        { label: 'Dark', value: 'dark' },
+      ],
+    },
   },
   defaultProps: {
     eyebrow: 'Featured',
@@ -43,6 +52,7 @@ export const ArticleFeatured = {
     link_label: 'Read more',
     link_href: '#',
     image_position: 'right',
+    background: 'white',
   },
   render: ({
     eyebrow,
@@ -57,6 +67,7 @@ export const ArticleFeatured = {
     link_label,
     link_href,
     image_position,
+    background,
   }) => {
     const image = (
       <div
@@ -148,7 +159,12 @@ export const ArticleFeatured = {
     );
 
     return (
-      <section className="tps-section" style={{ paddingTop: 64, paddingBottom: 64 }}>
+      <section
+        className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${
+          background === 'dark' ? ' tps-section-dark' : ''
+        }`}
+        style={{ paddingTop: 64, paddingBottom: 64 }}
+      >
         <div className="tps-container">
           {eyebrow && (
             <div style={{ marginBottom: 32 }}>

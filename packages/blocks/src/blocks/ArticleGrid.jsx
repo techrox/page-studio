@@ -1,10 +1,10 @@
-// ArticleGrid — grid of article cards (image + tag + headline + excerpt +
+// ArticleGrid - grid of article cards (image + tag + headline + excerpt +
 // byline). Standard blog/news landing layout.
 
 import { StudioLink as Link } from '../context';
 
 export const ArticleGrid = {
-  label: 'Article — grid',
+  label: 'Article - grid',
   fields: {
     eyebrow: { type: 'text', label: 'Section eyebrow' },
     heading: { type: 'text', label: 'Section heading' },
@@ -45,6 +45,7 @@ export const ArticleGrid = {
       options: [
         { label: 'White', value: 'white' },
         { label: 'Soft', value: 'soft' },
+        { label: 'Dark', value: 'dark' },
       ],
     },
   },
@@ -85,7 +86,7 @@ export const ArticleGrid = {
   },
   render: ({ eyebrow, heading, columns, items, background }) => (
     <section
-      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`}
+      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`}
       style={{ paddingTop: 64, paddingBottom: 64 }}
     >
       <div className="tps-container">
@@ -109,7 +110,7 @@ export const ArticleGrid = {
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-                background: '#fff',
+                background: 'var(--tps-bg)',
                 border: '1px solid var(--tps-line)',
                 borderRadius: 'var(--tps-radius)',
                 overflow: 'hidden',
@@ -123,7 +124,7 @@ export const ArticleGrid = {
                 style={{
                   width: '100%',
                   aspectRatio: '16 / 10',
-                  background: a.image_url ? `url(${a.image_url}) center/cover no-repeat` : '#E2E8F0',
+                  background: a.image_url ? `url(${a.image_url}) center/cover no-repeat` : 'var(--tps-line)',
                 }}
               />
               <div style={{ padding: 24, display: 'flex', flexDirection: 'column', gap: 12, flex: 1 }}>

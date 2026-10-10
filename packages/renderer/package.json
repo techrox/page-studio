@@ -1,6 +1,6 @@
 {
   "name": "@techrox/page-studio-renderer",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "description": "SSR-safe React renderer for displaying saved Puck JSON from @techrox/page-studio on a public page. Small footprint, no editor dependencies.",
   "license": "MIT",
   "author": "techrox",
@@ -32,17 +32,20 @@
     "dev": "tsup --watch",
     "test": "vitest run",
     "test:watch": "vitest",
-    "prepublishOnly": "pnpm run build"
+    "prepublishOnly": "pnpm run build && pnpm run test",
+    "test:coverage": "vitest run --coverage"
   },
   "peerDependencies": {
     "@puckeditor/core": ">=0.21",
     "@techrox/page-studio-blocks": "workspace:*",
+    "antd": ">=5",
     "react": ">=18",
     "react-dom": ">=18"
   },
   "devDependencies": {
     "@puckeditor/core": "^0.21.2",
     "@techrox/page-studio-blocks": "workspace:*",
+    "antd": "^5.19.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

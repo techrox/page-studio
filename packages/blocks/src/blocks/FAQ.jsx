@@ -1,9 +1,10 @@
 'use client';
 
-// FAQ — accordion of question / answer items. Uses AntD Collapse so it gets
+// FAQ - accordion of question / answer items. Uses AntD Collapse so it gets
 // the accessibility + keyboard handling for free.
 
 import { Collapse } from 'antd';
+import { htmlField } from './HtmlField.jsx';
 
 export const FAQ = {
   label: 'FAQ accordion',
@@ -15,11 +16,7 @@ export const FAQ = {
       label: 'Questions',
       arrayFields: {
         question: { type: 'text', label: 'Question' },
-        answer_html: {
-          type: 'textarea',
-          label: 'Answer (HTML allowed)',
-          rows: 5,
-        },
+        answer_html: htmlField('Answer (HTML allowed)'),
       },
       defaultItemProps: {
         question: 'New question?',
@@ -33,6 +30,7 @@ export const FAQ = {
       options: [
         { label: 'White', value: 'white' },
         { label: 'Soft', value: 'soft' },
+        { label: 'Dark', value: 'dark' },
       ],
     },
   },
@@ -60,7 +58,7 @@ export const FAQ = {
   },
   render: ({ eyebrow, heading, items, background }) => (
     <section
-      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}`}
+      className={`tps-section ${background === 'soft' ? 'tps-section-soft' : ''}${background === 'dark' ? ' tps-section-dark' : ''}`}
       style={{ paddingTop: 56, paddingBottom: 56 }}
     >
       <div className="tps-container" style={{ maxWidth: 820 }}>
@@ -89,7 +87,7 @@ export const FAQ = {
               />
             ),
             style: {
-              background: '#fff',
+              background: 'var(--tps-bg)',
               border: '1px solid var(--tps-line)',
               borderRadius: 'var(--tps-radius)',
               marginBottom: 12,

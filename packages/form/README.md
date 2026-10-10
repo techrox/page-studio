@@ -148,3 +148,19 @@ import { RichText, HistoryPanel } from '@techrox/page-studio-form';
 - **[@techrox/page-studio](../editor)** — drag-and-drop visual builder
 - **[@techrox/page-studio-blocks](../blocks)** — the 50 blocks the builder ships with
 - **[@techrox/page-studio-renderer](../renderer)** — public-page renderer for builder output
+
+## Credits
+
+**Page Studio** is built and maintained by [Techlathon](https://www.techlathon.com/).
+
+Made with ♥ in India.
+
+### Work with us
+
+Have a project in mind? We'd love to hear from you — reach out at **[info@techlathon.com](mailto:info@techlathon.com)**.
+
+---
+
+<p align="center">
+  Built with <a href="https://techrox.github.io/page-studio/editor">Page Studio</a> · © Techlathon
+</p>
