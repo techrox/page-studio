@@ -508,9 +508,17 @@ h1, h2, h3, h4 {
   transform: translateY(-3px);
   box-shadow: 0 16px 38px -22px color-mix(in srgb, var(--tps-primary) 45%, transparent);
 }
-.gallery-card:focus-visible {
+.gallery-card:has(.gallery-card-link:focus-visible) {
   outline: 2px solid var(--tps-primary);
   outline-offset: 2px;
+}
+.gallery-card-link {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+.gallery-card-link:focus-visible {
+  outline: none;
 }
 .gallery-card-preview {
   height: 200px;

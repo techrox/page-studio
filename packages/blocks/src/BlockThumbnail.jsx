@@ -89,9 +89,8 @@ function getPreviews(c) {
     <svg
       viewBox={`0 0 ${FRAME_W} ${FRAME_H}`}
       width="100%"
-      height="auto"
       preserveAspectRatio="xMidYMid meet"
-      style={{ display: 'block', borderRadius: 4 }}
+      style={{ display: 'block', height: 'auto', borderRadius: 4 }}
     >
       <rect
         x="0.5"
@@ -1284,9 +1283,8 @@ export default function BlockThumbnail({ name }) {
     <svg
       viewBox={`0 0 ${FRAME_W} ${FRAME_H}`}
       width="100%"
-      height="auto"
       preserveAspectRatio="xMidYMid meet"
-      style={{ display: 'block', borderRadius: 4 }}
+      style={{ display: 'block', height: 'auto', borderRadius: 4 }}
     >
       <rect
         x="0.5"
