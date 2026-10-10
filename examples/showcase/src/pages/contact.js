@@ -1,4 +1,4 @@
-// Contact page — Hero (simple) + the all-in-one ContactSection, plus
+// Contact page - Hero (simple) + the all-in-one ContactSection, plus
 // supporting blocks that show the host's other channels.
 
 export const contact = {
@@ -30,7 +30,7 @@ export const contact = {
           email: 'hello@showcase.example',
           phone: '+1 (555) 012-3456',
           address: '14 Penberth Mews\nBristol BS1 4ER, UK',
-          hours: 'Mon–Fri · 9am–6pm GMT',
+          hours: 'Mon-Fri · 9am-6pm GMT',
           background: 'soft',
         },
       },

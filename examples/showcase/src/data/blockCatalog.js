@@ -229,7 +229,7 @@ export const BLOCK_FIELDS = {
   PricingComparison: [
     ['eyebrow / heading', 'text'],
     ['tiers[]', 'array -- each: name'],
-    ['rows[]', 'array -- feature label + per-tier value (✓ / -- / text)'],
+    ['rows[]', 'array -- feature label + per-tier value (check / -- / text)'],
   ],
   StatsStrip: [
     ['items[]', 'array -- each: value (e.g. "120+"), label'],
@@ -579,7 +579,7 @@ export const BLOCK_GUIDANCE = {
     when: 'Feature × tier matrix. Use after PricingTable when buyers need more detail.',
   },
   StatsStrip: {
-    when: '3–5 small stats below a hero. Faster than CountUpStats; no animation.',
+    when: '3-5 small stats below a hero. Faster than CountUpStats; no animation.',
   },
   CountUpStats: {
     when: 'A dramatic "by the numbers" hero strip. Numbers tick into view.',
@@ -626,7 +626,7 @@ export const BLOCK_GUIDANCE = {
     when: 'Multi-voice social proof -- 2 or 3 testimonials side by side.',
   },
   FAQ: {
-    when: 'Standard question/answer accordion. Most pages benefit from a 4–6 question FAQ.',
+    when: 'Standard question/answer accordion. Most pages benefit from a 4-6 question FAQ.',
   },
   AccordionBlock: {
     when: 'A generic accordion for product features, multi-section content.',
@@ -694,14 +694,14 @@ export const BLOCK_GUIDANCE = {
     tips: ['Wire `submitLead` (not `subscribeNewsletter`) -- the form posts to the leads endpoint.'],
   },
   FormFeedback: {
-    when: 'Customer feedback after a purchase, onboarding, or event. The star rating field stores a number 1–5.',
+    when: 'Customer feedback after a purchase, onboarding, or event. The star rating field stores a number 1-5.',
     tips: ['Make name and email optional to maximize completion rate.'],
   },
   FormSurvey: {
     when: 'A short research survey -- NPS, product feedback, post-event. Swap the default fields for your own questions.',
     tips: [
-      'Use `field_type: radio` for single-answer questions with 2–6 options.',
-      'Use `field_type: rating` for scale questions (stored as 1–5).',
+      'Use `field_type: radio` for single-answer questions with 2-6 options.',
+      'Use `field_type: rating` for scale questions (stored as 1-5).',
     ],
   },
   FormBooking: {

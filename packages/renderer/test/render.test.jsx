@@ -1,4 +1,4 @@
-// Renderer tests — fallback path, empty data path, and a sanity check that
+// Renderer tests - fallback path, empty data path, and a sanity check that
 // non-empty data goes down the Puck-render branch (not the fallback). The
 // real Puck render is Puck's responsibility; we stub it here so the test
 // stays focused on this package's logic.

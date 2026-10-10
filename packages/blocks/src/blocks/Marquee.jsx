@@ -180,7 +180,7 @@ export const Marquee = {
       options: [
         { label: 'Bullet ( • )', value: '•' },
         { label: 'Pipe ( | )', value: '|' },
-        { label: 'Star ( ★ )', value: '★' },
+        { label: 'Star ( * )', value: '*' },
         { label: 'Slash ( / )', value: '/' },
         { label: 'None', value: 'none' },
       ],
@@ -210,19 +210,19 @@ export const Marquee = {
     items: [
       {
         order: 1,
-        text: '📢 Admissions open for the <strong>2026-2027</strong> academic year! <a href="/admissions">Apply Now &rarr;</a>',
+        text: 'New platform update now live. <a href="/updates">Read release notes</a>',
         link_label: '',
         link_href: '',
       },
       {
         order: 2,
-        text: '🏆 Ranked #1 for Legal Studies & Moot Court Excellence. <a href="/about">Learn More</a>',
+        text: 'Join our upcoming community webinar on digital transformation. <a href="/events">Register now</a>',
         link_label: '',
         link_href: '',
       },
       {
         order: 3,
-        text: '⚡ Annual National Law Conference scheduled for November 15-18.',
+        text: 'Explore our latest documentation and developer guides.',
         link_label: '',
         link_href: '',
       },

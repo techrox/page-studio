@@ -1,4 +1,4 @@
-// ApproachSteps — numbered step list with title + description.
+// ApproachSteps - numbered step list with title + description.
 
 export const ApproachSteps = {
   label: 'Approach steps',

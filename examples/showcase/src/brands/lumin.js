@@ -1,4 +1,4 @@
-// Lumin Labs — punchy startup voice. Pretend small studio of designers
+// Lumin Labs - punchy startup voice. Pretend small studio of designers
 // and engineers. Used to demonstrate the per-block `defaults` override
 // (shallow-merged into each block's defaultProps when it lands on the
 // canvas / renders).
@@ -23,7 +23,7 @@ export const luminDefaults = {
   CTABanner: {
     tagline: 'READY WHEN YOU ARE',
     heading_html: 'Let’s build something <em>together</em>.',
-    body: 'Start a conversation — we reply within a day.',
+    body: 'Start a conversation - we reply within a day.',
     button_label: 'Get in touch',
     button_href: '/pages/contact',
     background: 'soft',
@@ -40,7 +40,7 @@ export const luminDefaults = {
     items: [
       { n: '01', title: 'Listen', text: 'We learn the shape of the problem in your words.' },
       { n: '02', title: 'Sketch', text: 'Lo-fi flows over hi-fi designs. Iterate fast.' },
-      { n: '03', title: 'Build', text: 'Production code on day one — no throwaway prototypes.' },
+      { n: '03', title: 'Build', text: 'Production code on day one - no throwaway prototypes.' },
       { n: '04', title: 'Refine', text: 'We stay after launch, polishing what users actually touch.' },
     ],
   },
@@ -52,7 +52,7 @@ export const luminDefaults = {
     items: [
       { text: 'Designed for the person doing the work, not the org chart' },
       { text: 'Documented enough for the next person to pick it up' },
-      { text: 'Reversible — easy to roll back, easy to evolve' },
+      { text: 'Reversible - easy to roll back, easy to evolve' },
     ],
   },
   ContactSection: {

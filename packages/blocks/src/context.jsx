@@ -1,4 +1,4 @@
-// StudioContext — the single dependency-injection surface that block components
+// StudioContext - the single dependency-injection surface that block components
 // read from. Lets blocks stay framework-agnostic: a Next.js host can pass
 // `next/link`; a Vite host can pass a React Router `Link`; a server-only
 // renderer can leave it unset and fall back to plain `<a>`.
@@ -29,10 +29,10 @@ const DEFAULTS = {
   // "areas of interest" select. Default: empty so blocks render gracefully.
   services: [],
   // Async function the form blocks call to submit a lead. Throws by default
-  // — surfaces a clear message instead of failing silently if a host
+  // - surfaces a clear message instead of failing silently if a host
   // accidentally drops a ContactSection on a page without wiring submitLead.
   submitLead: notConfigured('submitLead'),
-  // Same shape — newsletter signups. Hosts can point both at the same backend.
+  // Same shape - newsletter signups. Hosts can point both at the same backend.
   subscribeNewsletter: notConfigured('subscribeNewsletter'),
   // First-party analytics hook. Default no-op so dropping an instrumented
   // block in a host that doesn't track anything is silent.

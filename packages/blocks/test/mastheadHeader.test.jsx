@@ -33,9 +33,9 @@ describe('MastheadHeader component & block', () => {
 
     expect(container.querySelector('.tps-masthead')).not.toBeNull();
     expect(container.querySelector('.tps-masthead__bar')).not.toBeNull();
-    expect(container.textContent).toContain('Academy of Science & Arts');
+    expect(container.textContent).toContain('Organization Name');
     expect(container.textContent).toContain('About');
-    expect(container.textContent).toContain('Quick Links');
+    expect(container.textContent).toContain('Contact');
   });
 
   it('splits menu items either side of the centre crest', () => {
@@ -47,13 +47,13 @@ describe('MastheadHeader component & block', () => {
     const end = container.querySelector('.tps-masthead__menu--end');
 
     expect(start.textContent).toContain('About');
-    expect(start.textContent).toContain('Academics');
-    expect(start.textContent).toContain('Research');
+    expect(start.textContent).toContain('Services');
+    expect(start.textContent).toContain('Products');
     expect(start.textContent).not.toContain('News');
 
-    expect(end.textContent).toContain('Campus Life');
+    expect(end.textContent).toContain('Resources');
     expect(end.textContent).toContain('News');
-    expect(end.textContent).toContain('Quick Links');
+    expect(end.textContent).toContain('Contact');
     expect(end.textContent).not.toContain('About');
 
     expect(container.querySelector('.tps-masthead__crest-gap')).not.toBeNull();

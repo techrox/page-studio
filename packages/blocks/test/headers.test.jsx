@@ -21,7 +21,7 @@ describe('ContactHeader component & block', () => {
     );
     expect(container.querySelector('.tps-contact-header')).not.toBeNull();
     expect(container.textContent).toContain('+1 (555) 234-5678');
-    expect(container.textContent).toContain('info@techrox.com');
+    expect(container.textContent).toContain('contact@example.com');
     expect(container.textContent).toContain('Login');
     expect(container.textContent).toContain('Enquiry');
   });
@@ -183,14 +183,14 @@ describe('NavigationHeader component & block', () => {
     { label: 'Home', path: '/' },
     { label: 'About', path: '/about' },
     {
-      label: 'Courses',
+      label: 'Services',
       children: [
-        { label: 'LLB', path: '/courses/llb' },
-        { label: 'BA LLB', path: '/courses/ba-llb' },
+        { label: 'Consulting', path: '/services/consulting' },
+        { label: 'Training', path: '/services/training' },
         {
-          label: 'Specializations',
+          label: 'Industries',
           children: [
-            { label: 'Corporate Law', path: '/courses/corporate' },
+            { label: 'Finance', path: '/services/finance' },
           ],
         },
       ],
@@ -205,7 +205,7 @@ describe('NavigationHeader component & block', () => {
     expect(container.querySelector('.tps-nav-header')).not.toBeNull();
     expect(container.textContent).toContain('Home');
     expect(container.textContent).toContain('About');
-    expect(container.textContent).toContain('Courses');
+    expect(container.textContent).toContain('Products');
     expect(container.textContent).toContain('Login');
   });
 
@@ -262,8 +262,8 @@ describe('NavigationHeader component & block', () => {
 
   it('dynamically generates menus from configuration without hardcoding', () => {
     const customMenus = [
-      { label: 'Products', path: '/products' },
-      { label: 'Pricing', path: '/pricing' },
+      { label: 'Catalog', path: '/catalog' },
+      { label: 'Plans', path: '/plans' },
     ];
 
     const { container } = render(
@@ -272,9 +272,9 @@ describe('NavigationHeader component & block', () => {
       </Wrap>
     );
 
-    expect(container.textContent).toContain('Products');
-    expect(container.textContent).toContain('Pricing');
-    expect(container.textContent).not.toContain('Courses');
+    expect(container.textContent).toContain('Catalog');
+    expect(container.textContent).toContain('Plans');
+    expect(container.textContent).not.toContain('Products');
   });
 
   it('renders dropdown items for parent menus with children', () => {
@@ -285,9 +285,9 @@ describe('NavigationHeader component & block', () => {
     );
 
     // Parent item with children has dropdown button with chevron
-    const coursesBtn = container.querySelector('.tps-nav-link--dropdown');
-    expect(coursesBtn).not.toBeNull();
-    expect(coursesBtn.textContent).toContain('Courses');
+    const servicesBtn = container.querySelector('.tps-nav-link--dropdown');
+    expect(servicesBtn).not.toBeNull();
+    expect(servicesBtn.textContent).toContain('Services');
   });
 
   it('highlights active menu item matching activePath', () => {

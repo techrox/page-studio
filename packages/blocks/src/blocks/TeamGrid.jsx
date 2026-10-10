@@ -1,4 +1,4 @@
-// TeamGrid — team member cards (photo, name, role, bio, LinkedIn link).
+// TeamGrid - team member cards (photo, name, role, bio, LinkedIn link).
 
 import { LinkedinFilled } from '@ant-design/icons';
 
@@ -29,7 +29,7 @@ export const TeamGrid = {
       defaultItemProps: {
         name: 'New team member',
         role: 'Role',
-        bio: 'A short bio (2–3 sentences).',
+        bio: 'A short bio (2-3 sentences).',
         image_url: '',
         linkedin: '',
       },

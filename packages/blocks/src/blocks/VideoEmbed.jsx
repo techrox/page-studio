@@ -1,4 +1,4 @@
-// VideoEmbed — YouTube or Vimeo embed with caption. Parses the URL to
+// VideoEmbed - YouTube or Vimeo embed with caption. Parses the URL to
 // extract the video ID and renders the standard responsive iframe.
 
 function parseVideoUrl(url) {

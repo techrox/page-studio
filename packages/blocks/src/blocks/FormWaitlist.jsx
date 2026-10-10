@@ -1,6 +1,6 @@
 import { FormBlockBase, COMMON_FORM_FIELDS, COMMON_FORM_DEFAULTS } from './_FormBlockBase';
 
-// Product waitlist — name, email, company, role, intended use case.
+// Product waitlist - name, email, company, role, intended use case.
 export const FormWaitlist = {
   label: 'Waitlist form',
   fields: COMMON_FORM_FIELDS,
@@ -28,7 +28,7 @@ export const FormWaitlist = {
         default_value: '',
         help_text: '',
       },
-      { field_type: 'textarea', field_key: 'use_case', label: 'How would you use it?', placeholder: 'A sentence or two about your intended use case…', required: 'no', width: 'full', validation: 'none', options: '', default_value: '', help_text: 'Optional — helps us prioritise access' },
+      { field_type: 'textarea', field_key: 'use_case', label: 'How would you use it?', placeholder: 'A sentence or two about your intended use case…', required: 'no', width: 'full', validation: 'none', options: '', default_value: '', help_text: 'Optional - helps us prioritise access' },
     ],
   },
   render: (props) => <FormBlockBase {...props} />,

@@ -1,4 +1,4 @@
-// ImageOverlayCards — full-bleed image cards with text overlay. The
+// ImageOverlayCards - full-bleed image cards with text overlay. The
 // "category" / "explore" pattern. Click-through to a destination URL.
 
 import { StudioLink as Link } from '../context';

@@ -1,4 +1,4 @@
-// SocialLinks — row of social media icons. Standalone block — site-wide
+// SocialLinks - row of social media icons. Standalone block - site-wide
 // social URLs are stored on `site.globals` for the footer; this is for
 // ad-hoc placements on individual pages.
 import {

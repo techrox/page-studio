@@ -1,4 +1,4 @@
-// MastheadHeader — the university-style masthead: a primary title + subtitle
+// MastheadHeader - the university-style masthead: a primary title + subtitle
 // on the left, an optional translated title + subtitle on the right, and a
 // round crest centred between them that straddles the coloured navigation
 // bar underneath.
@@ -6,7 +6,7 @@
 // Two behaviours the block is built around:
 //   1. `sticky` pins the whole masthead to the top of the viewport.
 //   2. `shrink_on_scroll` compacts it once the page scrolls past
-//      `shrink_after` px — titles/subtitles drop a size, the crest scales
+//      `shrink_after` px - titles/subtitles drop a size, the crest scales
 //      down and the band padding tightens, so the masthead keeps the page
 //      content in view without disappearing.
 //
@@ -385,21 +385,21 @@ export const MastheadHeader = {
     maxWidth: { type: 'text', label: 'Content max width' },
   },
   defaultProps: {
-    title: 'Academy of Science & Arts',
-    subtitle: 'Centre for Higher Education, Research & Innovation',
+    title: 'Organization Name',
+    subtitle: 'Your tagline or department name',
     title_alt: '',
     subtitle_alt: '',
     crest_url: '',
-    crest_alt: 'Institution crest',
+    crest_alt: 'Organization crest',
     crest_href: '/',
     crest_size: 116,
     menus: [
       { label: 'About', path: '/about' },
-      { label: 'Academics', path: '/academics' },
-      { label: 'Research', path: '/research' },
-      { label: 'Campus Life', path: '/campus-life' },
+      { label: 'Services', path: '/services' },
+      { label: 'Products', path: '/products' },
+      { label: 'Resources', path: '/resources' },
       { label: 'News', path: '/news' },
-      { label: 'Quick Links', path: '/quick-links' },
+      { label: 'Contact', path: '/contact' },
     ],
     sticky: true,
     shrink_on_scroll: true,

@@ -1,4 +1,4 @@
-// Showcase shell — left rail navigation + top bar with brand switcher.
+// Showcase shell - left rail navigation + top bar with brand switcher.
 // Children render in `.showcase-content`. The brand id propagates into a
 // data attribute on the root container so the per-brand CSS overrides in
 // styles.css activate without remounting the page.
@@ -15,7 +15,7 @@ import BrandSwitcher from './BrandSwitcher.jsx'
 
 export default function Layout({ brands, brandId, onBrandChange, theme = 'light', onThemeToggle, title, children }) {
   const location = useLocation()
-  // Hide the topbar title on the index page — the landing handles its own headline.
+  // Hide the topbar title on the index page - the landing handles its own headline.
   const showTitle = location.pathname !== '/'
 
   const [navOpen, setNavOpen] = useState(false)
@@ -76,7 +76,7 @@ export default function Layout({ brands, brandId, onBrandChange, theme = 'light'
         </div>
 
         <div className="showcase-nav-foot">
-          The showcase is a working tour of <strong>@techrox/page-studio</strong> — block library, renderer, and editor.
+          The showcase is a working tour of <strong>@techrox/page-studio</strong> - block library, renderer, and editor.
         </div>
       </aside>
 
@@ -108,7 +108,7 @@ export default function Layout({ brands, brandId, onBrandChange, theme = 'light'
               className="showcase-theme-toggle"
               aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
               aria-pressed={theme === 'dark'}
-              title={theme === 'dark' ? 'Dark theme — click for light' : 'Light theme — click for dark'}
+              title={theme === 'dark' ? 'Dark theme - click for light' : 'Light theme - click for dark'}
               onClick={onThemeToggle}
             >
               {theme === 'dark' ? <BulbFilled /> : <BulbOutlined />}

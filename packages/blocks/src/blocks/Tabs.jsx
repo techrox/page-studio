@@ -1,5 +1,5 @@
 'use client';
-// TabsBlock — tabbed content panel. Each tab has a label + HTML body.
+// TabsBlock - tabbed content panel. Each tab has a label + HTML body.
 import { Tabs as AntTabs } from 'antd';
 import { htmlField } from './HtmlField.jsx';
 

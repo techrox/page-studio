@@ -1,4 +1,4 @@
-// PricingComparison — feature comparison table across N tiers. For "what's
+// PricingComparison - feature comparison table across N tiers. For "what's
 // in / what's out" matrices.
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 

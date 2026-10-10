@@ -1,4 +1,4 @@
-// LogoStrip — "Trusted by" client/partner logos in a single row. Renders
+// LogoStrip - "Trusted by" client/partner logos in a single row. Renders
 // each logo as an image OR (when no image_url is provided) as styled text,
 // so authors can use it before they've uploaded SVGs.
 

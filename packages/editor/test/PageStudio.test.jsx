@@ -1,4 +1,4 @@
-// PageStudio tests — wire the editor up with a fake adapter and verify it
+// PageStudio tests - wire the editor up with a fake adapter and verify it
 // loads, renders, and routes publish through the adapter. We don't try to
 // simulate Puck's drag-drop UI (that's covered by Puck's own tests); we
 // focus on the integration glue this package owns.
@@ -54,7 +54,7 @@ describe('PageStudio', () => {
     await waitFor(() => {
       expect(screen.queryByText(/Loading editor/i)).not.toBeInTheDocument();
     });
-    // Editor mounted with empty data — Puck's top bar should be visible
+    // Editor mounted with empty data - Puck's top bar should be visible
     // (renderHeader hooked up by the editor).
     expect(adapter.loadPage).toHaveBeenCalled();
   });

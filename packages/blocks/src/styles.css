@@ -1,4 +1,4 @@
-/* @techrox/page-studio-blocks — base styles for the block library.
+/* @techrox/page-studio-blocks - base styles for the block library.
  *
  * Includes:
  *   - CSS variable defaults (override at :root in your host to theme)
@@ -26,7 +26,7 @@
   --tps-radius:        14px;
   --tps-radius-lg:     20px;
 
-  /* Masthead header — titles, crest ring and the nav bar behind it. */
+  /* Masthead header - titles, crest ring and the nav bar behind it. */
   --tps-masthead-bar:      var(--tps-primary, #0b60d8);
   --tps-masthead-bar-text: #ffffff;
   --tps-masthead-title:    var(--tps-primary, #0b60d8);
@@ -35,7 +35,7 @@
 }
 
 /* -------------------------------------------------------------------------
-   Layout primitives — referenced by block render functions
+   Layout primitives - referenced by block render functions
    ------------------------------------------------------------------------- */
 .tps-renderer-root {
   width: 100%;
@@ -72,11 +72,11 @@
    (ink / muted / line / bg / …). Brand tokens (--tps-primary, --tps-accent)
    are deliberately left alone, so every vendor keeps its hue in every theme.
 
-   Apply a theme by setting `data-tps-theme="<name>"` on ANY container — the
+   Apply a theme by setting `data-tps-theme="<name>"` on ANY container - the
    renderer root, a page wrapper, a single section. Every descendant block
    reads var(--tps-*) and re-paints automatically: no per-block code, no
    re-render, just the CSS cascade. That's the whole mechanism, and it scales
-   — adding a new theme is one rule below, nothing else changes.
+   - adding a new theme is one rule below, nothing else changes.
 
        <div data-tps-theme="dark"> … blocks … </div>
 
@@ -115,7 +115,7 @@
   --tps-bg-soft:      #1a1a1a;
   --tps-bg-section:   #0a0a0a;
   --tps-primary-soft: #1a1a1a;
-  /* Masthead titles sit on the band surface — lift them for contrast. */
+  /* Masthead titles sit on the band surface - lift them for contrast. */
   --tps-masthead-title:    var(--tps-primary-light, #93c5fd);
   --tps-masthead-subtitle: var(--tps-muted, #94a3b8);
 }
@@ -129,7 +129,7 @@
   background: #0a0a0a;
   color: var(--tps-ink);
 }
-/* Eyebrows are primary by default — low contrast on dark, so flip to accent. */
+/* Eyebrows are primary by default - low contrast on dark, so flip to accent. */
 [data-tps-theme="dark"] .tps-eyebrow,
 .tps-section-dark .tps-eyebrow {
   color: var(--tps-accent);
@@ -211,7 +211,7 @@
   margin: 0 0 24px;
 }
 
-/* Hero — soft radial glow in primary + accent colours, dot-grid overlay */
+/* Hero - soft radial glow in primary + accent colours, dot-grid overlay */
 .tps-hero {
   position: relative;
   padding: clamp(48px, 6vw, 84px) clamp(16px, 3vw, 24px) clamp(44px, 5vw, 72px);
@@ -338,7 +338,7 @@
 }
 /* Preview is flush to the card edges and uses the full tile width. The
  * SVG inside is `width: 100%; height: auto`, so its rendered height
- * tracks the tile width — wider tiles make the icon visibly larger. */
+ * tracks the tile width - wider tiles make the icon visibly larger. */
 .tps-block-card__preview {
   width: 85%;
   margin: 16px auto 0;
@@ -348,7 +348,7 @@
   /* Lock the slot to the thumbnail's natural ratio so the SVG can't
    * collapse to a default height when the inline `height="auto"`
    * attribute is ignored (it's not a valid SVG length). The slot's height
-   * derives from `width × 70/120` — deterministic regardless of context.
+   * derives from `width × 70/120` - deterministic regardless of context.
    * Don't add `height: 100%` here: under the @dnd-kit drag overlay the
    * cloned card lives in a fixed-height wrapper, and `height: 100%` would
    * blow the slot up to fill it. */
@@ -382,7 +382,7 @@
   font-size: 12px;
   font-weight: 600;
   color: var(--tps-ink);
-  /* Keep names to a single line so the grid stays visually aligned —
+  /* Keep names to a single line so the grid stays visually aligned -
    * fall back to the `title` attribute on the card for the full label. */
   white-space: nowrap;
   overflow: hidden;
@@ -999,7 +999,7 @@
   top: 0;
   z-index: 90;
 }
-/* Scrolled state — every size the masthead compacts lives on these vars, so
+/* Scrolled state - every size the masthead compacts lives on these vars, so
    one class toggles the whole shrink (band padding, type scale, crest). */
 .tps-masthead.is-compact {
   --tps-masthead-title-size: 19px;
@@ -1057,7 +1057,7 @@
   opacity: 0.9;
   transition: font-size 0.25s ease;
 }
-/* Centre column only reserves the gap — the crest itself is positioned
+/* Centre column only reserves the gap - the crest itself is positioned
    against the band so it straddles the band/bar boundary either way. */
 .tps-masthead__crest-cell {
   width: var(--tps-masthead-crest);
@@ -1094,7 +1094,7 @@
   height: 100%;
   object-fit: cover;
 }
-/* No crest image yet — a ringed monogram keeps the centre anchored. */
+/* No crest image yet - a ringed monogram keeps the centre anchored. */
 .tps-masthead__crest-fallback {
   display: flex;
   align-items: center;
@@ -1203,7 +1203,7 @@
   .tps-masthead__side--end {
     display: none;
   }
-  /* No room to straddle on a phone — the crest drops into the flow and
+  /* No room to straddle on a phone - the crest drops into the flow and
      sits inline beside the title instead. */
   .tps-masthead__crest {
     position: static;

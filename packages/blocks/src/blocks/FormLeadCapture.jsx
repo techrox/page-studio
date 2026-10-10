@@ -1,6 +1,6 @@
 import { FormBlockBase, COMMON_FORM_FIELDS, COMMON_FORM_DEFAULTS } from './_FormBlockBase';
 
-// Lead-capture form — name, email, company, journey stage, interests, notes.
+// Lead-capture form - name, email, company, journey stage, interests, notes.
 // Drop above a pricing or services section to convert visitors into leads.
 export const FormLeadCapture = {
   label: 'Lead capture form',

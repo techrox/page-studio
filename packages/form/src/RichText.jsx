@@ -1,6 +1,6 @@
 'use client';
 
-// Full WYSIWYG rich-text editor — Medium / Notion / CKEditor 5 in feel.
+// Full WYSIWYG rich-text editor - Medium / Notion / CKEditor 5 in feel.
 // Persistent toolbar + selection bubble menu + Notion-style "+" on empty
 // paragraphs. Custom blocks (columns, callout, share, subscribe), image
 // alignment & width, table merge/align controls.
@@ -8,7 +8,7 @@
 // Output is HTML. The host site renders it inside a `.tps-rich-body` element
 // (or whichever container class it themes) so editor canvas and public render
 // share styles. Image uploads are driven by the consumer via the `uploadMedia`
-// prop — it receives a FormData with a single `file` field and must return
+// prop - it receives a FormData with a single `file` field and must return
 // `{ url }`.
 
 import { useEffect, useMemo, useState } from 'react';
@@ -1033,7 +1033,7 @@ function BlockAttributeModal({ kind, open, onClose, editor }) {
               <Input placeholder="Stay in the loop" />
             </Form.Item>
             <Form.Item label="Body" name="body">
-              <Input.TextArea rows={2} placeholder="One short email when we publish — never more." />
+              <Input.TextArea rows={2} placeholder="One short email when we publish - never more." />
             </Form.Item>
             <Form.Item label="Button label" name="button">
               <Input placeholder="Subscribe" />
@@ -1104,7 +1104,7 @@ function EditorStyles() {
         outline: 2px solid var(--tps-primary); outline-offset: 2px;
       }
 
-      /* Tables — alternating rows + resize handles. */
+      /* Tables - alternating rows + resize handles. */
       .tiptap table.tps-rich-table, .tiptap table {
         border-collapse: collapse; width: 100%; margin: 1em 0; table-layout: fixed;
       }
@@ -1151,7 +1151,7 @@ function EditorStyles() {
         border-color: #DC2626; background: rgba(220, 38, 38, 0.06);
       }
 
-      /* Atom blocks (share, subscribe) — show as cards in the canvas. */
+      /* Atom blocks (share, subscribe) - show as cards in the canvas. */
       .tiptap .tps-block-share, .tiptap .tps-block-subscribe {
         border: 1px solid var(--tps-line); border-radius: 8px;
         padding: 16px; margin: 1em 0; background: var(--tps-bg-soft);

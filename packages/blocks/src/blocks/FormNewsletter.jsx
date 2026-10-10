@@ -1,6 +1,6 @@
 import { FormBlockBase, COMMON_FORM_FIELDS, COMMON_FORM_DEFAULTS } from './_FormBlockBase';
 
-// Newsletter signup — name, email, optional consent checkbox.
+// Newsletter signup - name, email, optional consent checkbox.
 // Lighter than the full NewsletterSignup block (no hero imagery).
 export const FormNewsletter = {
   label: 'Newsletter form',

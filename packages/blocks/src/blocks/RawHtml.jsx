@@ -1,4 +1,4 @@
-// RawHtml — escape hatch for pasting in arbitrary markup (embeds, custom
+// RawHtml - escape hatch for pasting in arbitrary markup (embeds, custom
 // layouts, etc.). Wrapped in a container so it inherits site spacing.
 
 import { htmlField } from './HtmlField.jsx';
@@ -17,7 +17,7 @@ export const RawHtml = {
     },
   },
   defaultProps: {
-    html: '<div style="padding: 24px; border: 1px dashed #cbd5e1; text-align: center; color: #64748b;">Custom HTML block — replace with your own markup</div>',
+    html: '<div style="padding: 24px; border: 1px dashed #cbd5e1; text-align: center; color: #64748b;">Custom HTML block - replace with your own markup</div>',
     contained: 'contained',
   },
   render: ({ html, contained }) => {

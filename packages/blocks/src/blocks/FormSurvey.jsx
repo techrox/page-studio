@@ -1,6 +1,6 @@
 import { FormBlockBase, COMMON_FORM_FIELDS, COMMON_FORM_DEFAULTS } from './_FormBlockBase';
 
-// Configurable survey — defaults to an NPS-style pulse survey.
+// Configurable survey - defaults to an NPS-style pulse survey.
 // Authors swap in their own questions via the fields array editor.
 export const FormSurvey = {
   label: 'Survey form',

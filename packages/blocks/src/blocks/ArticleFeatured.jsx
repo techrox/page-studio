@@ -1,4 +1,4 @@
-// ArticleFeatured — large hero-style featured article. Big image on one
+// ArticleFeatured - large hero-style featured article. Big image on one
 // side, tag/headline/excerpt/byline + CTA on the other. The "lead story"
 // of a blog or news section.
 
@@ -7,7 +7,7 @@ import { Button } from 'antd';
 import { ArrowRightOutlined } from '@ant-design/icons';
 
 export const ArticleFeatured = {
-  label: 'Article — featured',
+  label: 'Article - featured',
   fields: {
     eyebrow: { type: 'text', label: 'Section eyebrow (optional)' },
     tag: { type: 'text', label: 'Article tag (small, coloured)' },

@@ -1,5 +1,5 @@
 'use client';
-// CountUpStats — animated counter stats. Numbers tick from 0 to value
+// CountUpStats - animated counter stats. Numbers tick from 0 to value
 // when scrolled into view. Subtle, used for "by the numbers" hero strips.
 import { useEffect, useRef, useState } from 'react';
 
@@ -57,7 +57,7 @@ export const CountUpStats = {
       { value: '120', prefix: '', suffix: '+', label: 'Happy customers' },
       { value: '80', prefix: '', suffix: '%', label: 'Time saved on average' },
       { value: '24', prefix: '', suffix: '/7', label: 'Support, always on' },
-      { value: '5', prefix: '', suffix: '★', label: 'Average review' },
+      { value: '5', prefix: '', suffix: '/5', label: 'Average review' },
     ],
     background: 'soft',
   },

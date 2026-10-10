@@ -1,4 +1,4 @@
-// SectionHeader — eyebrow + heading + optional lede. The standard "what
+// SectionHeader - eyebrow + heading + optional lede. The standard "what
 // follows is a major section" introduction used across the site.
 
 import { htmlField } from './HtmlField.jsx';

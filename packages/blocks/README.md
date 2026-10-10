@@ -130,15 +130,15 @@ CSS variables (with `--psd-*` defaults in the package's styles.css):
 | `--psd-bg-soft` | `#F8FAFC` |
 | `--psd-radius` | `8px` |
 
-Many blocks also read `--tps-*` legacy variables for backwards compatibility with the original Page Studio host — alias these to your brand if you don't want to rewrite block code.
+Many blocks also read `--tps-*` legacy variables for backwards compatibility with the original Page Studio host - alias these to your brand if you don't want to rewrite block code.
 
 ## Exports
 
 - `createPuckConfig({ blocks?, categories?, reveal?, root? })`
 - `defaultBlocks`, `defaultCategories`, `defaultOverrides`, `emptyPuckData`
 - `PageStudioProvider`, `useStudio`, `StudioLink`
-- `withReveal(block, animation)` — wrap a block with a scroll-reveal animation
-- `BlockThumbnail`, `BLOCK_DESCRIPTIONS` — picker preview helpers
+- `withReveal(block, animation)` - wrap a block with a scroll-reveal animation
+- `BlockThumbnail`, `BLOCK_DESCRIPTIONS` - picker preview helpers
 - Every block by name (e.g. `Hero`, `RichText`, `Spacer`) for cherry-picking
 
 ## License
@@ -153,7 +153,7 @@ Made with ♥ in India.
 
 ### Work with us
 
-Have a project in mind? We'd love to hear from you — reach out at **[info@techlathon.com](mailto:info@techlathon.com)**.
+Have a project in mind? We'd love to hear from you - reach out at **[info@techlathon.com](mailto:info@techlathon.com)**.
 
 ---
 

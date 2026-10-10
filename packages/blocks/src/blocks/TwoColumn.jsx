@@ -1,4 +1,4 @@
-// TwoColumn — generic side-by-side text columns with editable headings + body.
+// TwoColumn - generic side-by-side text columns with editable headings + body.
 
 export const TwoColumn = {
   label: 'Two columns',

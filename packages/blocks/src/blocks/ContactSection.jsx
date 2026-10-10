@@ -1,6 +1,6 @@
 'use client';
 
-// ContactSection — a self-contained contact-page block. Renders the hero,
+// ContactSection - a self-contained contact-page block. Renders the hero,
 // the sidebar (email + LinkedIn + response card) and the lead-capture form
 // as one editable unit. Authors get fields for every visible label and
 // dropdown option; the form wiring (validation, submit, tracking) stays
@@ -9,7 +9,7 @@
 
 import { useState } from 'react';
 import { Row, Col, Form, Input, Button, Select, Space, message as antdMessage, App as AntdApp } from 'antd';
-import { SendOutlined, MailOutlined, PhoneOutlined, LinkedinFilled } from '@ant-design/icons';
+import { SendOutlined, MailOutlined, PhoneOutlined, LinkedinFilled, CheckOutlined } from '@ant-design/icons';
 
 import { useStudio } from '../context';
 import { htmlField } from './HtmlField.jsx';
@@ -73,7 +73,7 @@ function ContactSectionRender({
         source: 'contact_page',
       });
       track('contact_submit', { surface: 'contact_page' });
-      message.success("Thank you — we'll reach out within one business day.");
+      message.success("Thank you - we'll reach out within one business day.");
       form.resetFields();
       setSubmitted(true);
     } catch (err) {
@@ -229,7 +229,7 @@ function ContactSectionRender({
                         marginBottom: 24,
                       }}
                     >
-                      ✓
+                      <CheckOutlined />
                     </div>
                     {success_heading && <h2 className="tps-h3">{success_heading}</h2>}
                     {success_body && (

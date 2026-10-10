@@ -1,7 +1,7 @@
-// Hero block — eyebrow + heading (HTML allowed) + lede + two CTAs.
+// Hero block - eyebrow + heading (HTML allowed) + lede + two CTAs.
 // Two visual variants:
 //   - 'landing' (default): uses .tps-hero with the radial-gradient halo,
-//     dot pattern, and bigger padding — matches the original landing page
+//     dot pattern, and bigger padding - matches the original landing page
 //     hero so visitors see no visual shift after admin saves in Puck.
 //   - 'simple': plain section padding for sub-page heroes.
 

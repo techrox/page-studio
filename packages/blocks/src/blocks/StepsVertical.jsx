@@ -1,8 +1,8 @@
-// StepsVertical — large vertical numbered steps with body. Heavier than
+// StepsVertical - large vertical numbered steps with body. Heavier than
 // ApproachSteps (which is a horizontal grid). Best for "how it works"
 // or onboarding sequences.
 export const StepsVertical = {
-  label: 'Steps — vertical',
+  label: 'Steps - vertical',
   fields: {
     eyebrow: { type: 'text', label: 'Eyebrow' },
     heading: { type: 'text', label: 'Heading' },

@@ -1,4 +1,4 @@
-// CTABanner — full-width call-to-action with tagline + heading + body + button.
+// CTABanner - full-width call-to-action with tagline + heading + body + button.
 
 import { StudioLink as Link } from '../context';
 import { Button } from 'antd';

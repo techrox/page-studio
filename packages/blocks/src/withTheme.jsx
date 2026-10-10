@@ -1,8 +1,8 @@
-// withTheme — gives EVERY block a per-block theme control, for free.
+// withTheme - gives EVERY block a per-block theme control, for free.
 //
 // A theme is just a re-scope of the neutral --tps-* tokens (see the "Themes"
 // section in styles.css). Setting `data-tps-theme="<name>"` on any element
-// re-paints it and its descendants through the CSS cascade — no per-block
+// re-paints it and its descendants through the CSS cascade - no per-block
 // code. This HOC does exactly that at the block level:
 //
 //   1. It injects a shared `theme` field into the block's field panel, so an
@@ -10,7 +10,7 @@
 //   2. On render it clones the block's outermost element and stamps
 //      `data-tps-theme` onto it when the author picks a non-inherit value.
 //
-// Default is '' ("Inherit") — the block follows whatever theme the page or
+// Default is '' ("Inherit") - the block follows whatever theme the page or
 // site sets, which is the common case. Pick "Dark" on one block and only that
 // block flips, regardless of the surrounding theme.
 //
@@ -18,7 +18,7 @@
 // plus one CSS rule in styles.css. No block, and nothing here, changes.
 //
 // SSR-safe: no window/document. Works identically in the editor canvas and on
-// a rendered page (unlike withReveal, we do NOT skip in the editor — the
+// a rendered page (unlike withReveal, we do NOT skip in the editor - the
 // author needs to see the theme they picked while editing).
 
 import { cloneElement, isValidElement } from 'react';

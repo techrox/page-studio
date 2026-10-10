@@ -1,4 +1,4 @@
-// PricingTable — 3-tier pricing cards with feature lists.
+// PricingTable - 3-tier pricing cards with feature lists.
 import { StudioLink as Link } from '../context';
 import { Button } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';

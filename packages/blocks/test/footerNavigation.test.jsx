@@ -83,18 +83,18 @@ describe('FooterNavigation component & Puck block', () => {
   it('renders customized columns and clickable page links', () => {
     const customColumns = [
       {
-        title: 'Academics',
+        title: 'Products',
         links: [
-          { label: 'Courses Offering', href: '/courses-offering' },
-          { label: 'Admissions', href: '/admissions' },
+          { label: 'Overview', href: '/products' },
+          { label: 'Pricing', href: '/pricing' },
         ],
       },
       {
-        title: 'Campus Infra',
+        title: 'Company',
         links: [
-          { label: 'Moot Court', href: '/moot-court' },
-          { label: 'Central Library', href: '/library' },
-          { label: 'Laboratories', href: '/lab' },
+          { label: 'Careers', href: '/careers' },
+          { label: 'Press', href: '/press' },
+          { label: 'Partners', href: '/partners' },
         ],
       },
     ];
@@ -105,8 +105,8 @@ describe('FooterNavigation component & Puck block', () => {
       </Wrap>
     );
 
-    expect(container.textContent).toContain('Academics');
-    expect(container.textContent).toContain('Campus Infra');
+    expect(container.textContent).toContain('Products');
+    expect(container.textContent).toContain('Company');
 
     const links = Array.from(container.querySelectorAll('.tps-footer-nav__link')).map(
       (a) => ({
@@ -117,11 +117,11 @@ describe('FooterNavigation component & Puck block', () => {
 
     expect(links).toEqual(
       expect.arrayContaining([
-        { label: 'Courses Offering', href: '/courses-offering' },
-        { label: 'Admissions', href: '/admissions' },
-        { label: 'Moot Court', href: '/moot-court' },
-        { label: 'Central Library', href: '/library' },
-        { label: 'Laboratories', href: '/lab' },
+        { label: 'Overview', href: '/products' },
+        { label: 'Pricing', href: '/pricing' },
+        { label: 'Careers', href: '/careers' },
+        { label: 'Press', href: '/press' },
+        { label: 'Partners', href: '/partners' },
       ])
     );
   });

@@ -1,14 +1,14 @@
-// Pulsar — a dark-by-default vendor: green accents on near-black, AI-studio
+// Pulsar - a dark-by-default vendor: green accents on near-black, AI-studio
 // voice. Demonstrates two independent things:
 //   1. A brand palette (--tps-primary / --tps-accent) set via the
 //      data-brand CSS rule in styles.css.
-//   2. A default *theme* (`theme: 'dark'` on the branding) — the showcase
+//   2. A default *theme* (`theme: 'dark'` on the branding) - the showcase
 //      flips data-tps-theme to dark when this brand is active, so the whole
 //      surface re-paints near-black. The user can still toggle it to light.
 //
 // Note there are no `background:'dark'` props on the blocks here: darkness is
 // a theme concern now, not a per-block one. The same defaults render light or
-// dark depending on the active theme, which is the point — a vendor owns a
+// dark depending on the active theme, which is the point - a vendor owns a
 // default theme but isn't hard-wired to it.
 
 export const pulsarDefaults = {
@@ -16,7 +16,7 @@ export const pulsarDefaults = {
     eyebrow: 'Pulsar',
     heading_html: 'Intelligent automation, <em>built for outcomes</em>.',
     lede:
-      'We design, train, and ship AI systems that take real work off your team — measured, monitored, and yours to keep.',
+      'We design, train, and ship AI systems that take real work off your team - measured, monitored, and yours to keep.',
     primary_cta_label: 'Book a demo',
     primary_cta_href: '/pages/contact',
     secondary_cta_label: 'See our work',
@@ -43,7 +43,7 @@ export const pulsarDefaults = {
       { icon: 'RocketOutlined', title: 'Applied ML', body: 'Models trained on your data, evaluated against your metrics.' },
       { icon: 'ThunderboltOutlined', title: 'Automation', body: 'Pipelines that retire repetitive work end to end.' },
       { icon: 'BarChartOutlined', title: 'Decision support', body: 'Forecasts and signals your team will actually act on.' },
-      { icon: 'SafetyCertificateOutlined', title: 'Governance', body: 'Auditable, monitored systems — no black boxes.' },
+      { icon: 'SafetyCertificateOutlined', title: 'Governance', body: 'Auditable, monitored systems - no black boxes.' },
       { icon: 'BulbOutlined', title: 'Research', body: 'We prototype the hard ideas before you commit.' },
       { icon: 'TeamOutlined', title: 'Enablement', body: 'We hand the keys over and train your people.' },
     ],

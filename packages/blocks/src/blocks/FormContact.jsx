@@ -1,6 +1,6 @@
 import { FormBlockBase, COMMON_FORM_FIELDS, COMMON_FORM_DEFAULTS } from './_FormBlockBase';
 
-// Lightweight contact form — name, email, phone, company, message.
+// Lightweight contact form - name, email, phone, company, message.
 // Use this when you need just the form; pair with a Hero block above for
 // a full contact-page layout. For the combined hero + sidebar + form layout
 // use ContactSection instead.

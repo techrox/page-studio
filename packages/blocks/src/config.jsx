@@ -298,7 +298,7 @@ function prettyName(name) {
     .replace(/([a-zA-Z])(\d)/g, '$1 $2');
 }
 
-// Default Puck overrides — replaces the drawer item with our block-card UI
+// Default Puck overrides - replaces the drawer item with our block-card UI
 // (preview + name + description) backed by BlockThumbnail.
 export const defaultOverrides = {
   drawerItem: ({ name }) => {
@@ -318,7 +318,7 @@ export const defaultOverrides = {
   },
 };
 
-// Default empty Puck payload — used when no saved data exists for a page yet.
+// Default empty Puck payload - used when no saved data exists for a page yet.
 export const emptyPuckData = {
   root: { props: { title: '' } },
   content: [],
@@ -326,8 +326,8 @@ export const emptyPuckData = {
 };
 
 // Puck v0.20 keys every component in content[] by props.id (it's the lookup
-// into indexes.nodes). Seed/CMS payloads that omit ids — or that re-use the
-// same id across instances — cause Layer/DropZoneChild renders to crash with
+// into indexes.nodes). Seed/CMS payloads that omit ids - or that re-use the
+// same id across instances - cause Layer/DropZoneChild renders to crash with
 // "Cannot read properties of undefined (reading 'data')" and silently merge
 // dropped blocks into a single ghost node. We normalize defensively here so
 // hosts can author plain `{ type, props: {} }` entries without ceremony.
@@ -341,7 +341,7 @@ function makeBlockId(type) {
 
 // Fill each content item's missing props from its config component's
 // defaultProps. Puck applies defaultProps only when a block is dragged in
-// via the drawer — saved/seeded payloads that store `{ type, props: {} }`
+// via the drawer - saved/seeded payloads that store `{ type, props: {} }`
 // otherwise render (and edit) with empty fields. Existing props always win.
 //
 // Both the renderer and the editor call this on initial data so the field
@@ -389,7 +389,7 @@ export function normalizePuckData(input) {
 // values shallow-merge over each block's intrinsic `defaultProps` when the
 // component first lands in the canvas. Lets hosts ship tenant-specific copy
 // (from DB or a static file) without forking the package's block files.
-// Shallow merge — pass the full replacement array for `items` / `stages` etc.
+// Shallow merge - pass the full replacement array for `items` / `stages` etc.
 //
 // Signature kept deliberately small. Tweak via spread; don't pass options we
 // can derive (e.g. categories use whatever component names exist in blocks).

@@ -1,12 +1,12 @@
 'use client';
 
-// NewsletterSignup — single-field email capture. Submits through the
+// NewsletterSignup - single-field email capture. Submits through the
 // existing leads endpoint with source='newsletter' so subscribers land in
 // the same admin Leads list as contact-form submissions, but are filterable.
 
 import { useState } from 'react';
 import { Button, Input, Form, message as antdMessage, App as AntdApp } from 'antd';
-import { ArrowRightOutlined } from '@ant-design/icons';
+import { ArrowRightOutlined, CheckOutlined } from '@ant-design/icons';
 
 import { useStudio } from '../context';
 
@@ -35,7 +35,7 @@ function NewsletterSignupRender({
       setSubmitted(true);
       form.resetFields();
     } catch (err) {
-      message.error(err?.message || err?.response?.data?.error || 'Could not subscribe — please try again.');
+      message.error(err?.message || err?.response?.data?.error || 'Could not subscribe - please try again.');
     } finally {
       setSubmitting(false);
     }
@@ -127,7 +127,7 @@ function NewsletterSignupRender({
               fontWeight: 600,
             }}
           >
-            ✓ {success_message || "You're subscribed."}
+            <CheckOutlined /> {success_message || "You're subscribed."}
           </div>
         ) : (
           <Form

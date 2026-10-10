@@ -1,4 +1,4 @@
-// HistoryPanel surface tests — verifies the loadHistory adapter is invoked
+// HistoryPanel surface tests - verifies the loadHistory adapter is invoked
 // and that the panel renders without a router/host present.
 
 import { describe, it, expect, vi } from 'vitest';

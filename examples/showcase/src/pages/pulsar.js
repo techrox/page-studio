@@ -1,4 +1,4 @@
-// Pulsar — a stacked sample page for the green-on-black AI-studio vendor.
+// Pulsar - a stacked sample page for the green-on-black AI-studio vendor.
 // hero → achievements → solutions → approach → mentors → goal → events → CTA.
 //
 // No per-block `background:'dark'` here: the page inherits whatever theme is
@@ -9,7 +9,7 @@
 export const pulsar = {
   slug: 'pulsar',
   title: 'Pulsar',
-  summary: 'Stacked demo — hero, stats, solutions, approach, mentors, goal, events, CTA.',
+  summary: 'Stacked demo - hero, stats, solutions, approach, mentors, goal, events, CTA.',
   data: {
     root: { props: { title: 'Pulsar' } },
     content: [
@@ -19,7 +19,7 @@ export const pulsar = {
           eyebrow: 'Pulsar',
           heading_html: 'Intelligent automation, <em>built for outcomes</em>.',
           lede:
-            'We design, train, and ship AI systems that take real work off your team — measured, monitored, and yours to keep.',
+            'We design, train, and ship AI systems that take real work off your team - measured, monitored, and yours to keep.',
           primary_cta_label: 'Book a demo',
           primary_cta_href: '/pages/contact',
           secondary_cta_label: 'See our work',
@@ -51,7 +51,7 @@ export const pulsar = {
             { icon: 'RocketOutlined', title: 'Applied ML', body: 'Models trained on your data, evaluated against your metrics.' },
             { icon: 'ThunderboltOutlined', title: 'Automation', body: 'Pipelines that retire repetitive work end to end.' },
             { icon: 'BarChartOutlined', title: 'Decision support', body: 'Forecasts and signals your team will actually act on.' },
-            { icon: 'SafetyCertificateOutlined', title: 'Governance', body: 'Auditable, monitored systems — no black boxes.' },
+            { icon: 'SafetyCertificateOutlined', title: 'Governance', body: 'Auditable, monitored systems - no black boxes.' },
             { icon: 'BulbOutlined', title: 'Research', body: 'We prototype the hard ideas before you commit.' },
             { icon: 'TeamOutlined', title: 'Enablement', body: 'We hand the keys over and train your people.' },
           ],
@@ -103,7 +103,7 @@ export const pulsar = {
         props: {
           eyebrow: 'Spotlight',
           tag: 'EVENT',
-          headline: 'Pulsar Summit — a day on production AI.',
+          headline: 'Pulsar Summit - a day on production AI.',
           excerpt:
             'Customer talks, hands-on labs, and a look at what we are shipping next. One day, in person and online.',
           image_url: '',

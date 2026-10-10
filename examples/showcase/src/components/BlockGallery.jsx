@@ -1,4 +1,4 @@
-// Block gallery — a grid of all blocks rendered small. Each card holds a
+// Block gallery - a grid of all blocks rendered small. Each card holds a
 // scaled-down PageStudioRender of a single-block Puck payload, so what you
 // see is the real block rendering with the current brand's defaults applied.
 //
@@ -55,7 +55,7 @@ export default function BlockGallery({ studio, blockConfig }) {
   const sectionRefs = useRef({})
 
   // Keep activeCat in sync with the visible categories whenever the search
-  // changes — the previously active one may have filtered away.
+  // changes - the previously active one may have filtered away.
   useEffect(() => {
     if (!visibleCats.length) return
     if (!visibleCats.some(([cat]) => cat === activeCat)) {

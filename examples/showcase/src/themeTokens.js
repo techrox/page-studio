@@ -1,7 +1,7 @@
 // Theme token sets for the showcase.
 //
 // Renderer surfaces (/blocks, /pages, the landing) get their theme purely from
-// the `data-tps-theme` attribute on the .showcase root — the cascade does the
+// the `data-tps-theme` attribute on the .showcase root - the cascade does the
 // rest, no JS needed (see .showcase[data-tps-theme="dark"] in styles.css and
 // the [data-tps-theme] contract in @techrox/page-studio-blocks/styles.css).
 //

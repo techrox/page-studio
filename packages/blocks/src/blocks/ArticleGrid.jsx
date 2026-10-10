@@ -1,10 +1,10 @@
-// ArticleGrid — grid of article cards (image + tag + headline + excerpt +
+// ArticleGrid - grid of article cards (image + tag + headline + excerpt +
 // byline). Standard blog/news landing layout.
 
 import { StudioLink as Link } from '../context';
 
 export const ArticleGrid = {
-  label: 'Article — grid',
+  label: 'Article - grid',
   fields: {
     eyebrow: { type: 'text', label: 'Section eyebrow' },
     heading: { type: 'text', label: 'Section heading' },

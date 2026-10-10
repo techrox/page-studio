@@ -1,5 +1,5 @@
 'use client';
-// AccordionBlock — generic accordion (siblings open simultaneously). Use
+// AccordionBlock - generic accordion (siblings open simultaneously). Use
 // for product features lists, multi-section content. (FAQ block is the
 // strict question/answer variant.)
 import { Collapse } from 'antd';

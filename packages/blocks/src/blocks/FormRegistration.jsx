@@ -1,6 +1,6 @@
 import { FormBlockBase, COMMON_FORM_FIELDS, COMMON_FORM_DEFAULTS } from './_FormBlockBase';
 
-// Event / conference registration — name, contact, role, dietary requirements.
+// Event / conference registration - name, contact, role, dietary requirements.
 export const FormRegistration = {
   label: 'Registration form',
   fields: COMMON_FORM_FIELDS,
@@ -38,7 +38,7 @@ export const FormRegistration = {
         validation: 'none',
         options: 'XS\nS\nM\nL\nXL\nXXL',
         default_value: '',
-        help_text: 'Optional — if swag is included',
+        help_text: 'Optional - if swag is included',
       },
       {
         field_type: 'select',

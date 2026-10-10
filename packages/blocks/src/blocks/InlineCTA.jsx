@@ -1,4 +1,4 @@
-// InlineCTA — compact one-line CTA strip. Smaller than CTABanner; sits
+// InlineCTA - compact one-line CTA strip. Smaller than CTABanner; sits
 // between content sections to nudge conversion without dominating.
 import { StudioLink as Link } from '../context';
 import { Button } from 'antd';

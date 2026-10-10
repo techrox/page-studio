@@ -1,4 +1,4 @@
-// Context tests — verify the provider injects values into the block tree and
+// Context tests - verify the provider injects values into the block tree and
 // that adapter-style functions throw a clear error when not configured.
 
 import { describe, it, expect, vi } from 'vitest';

@@ -1,4 +1,4 @@
-// @techrox/page-studio-form — public surface.
+// @techrox/page-studio-form - public surface.
 //
 // PageStudioForm is the high-level admin component (schema-driven page
 // editor with tabs for content / SEO / preview / history). RichText and

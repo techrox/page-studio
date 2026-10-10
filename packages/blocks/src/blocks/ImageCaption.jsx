@@ -1,4 +1,4 @@
-// ImageCaption — single image with caption + optional credit. For
+// ImageCaption - single image with caption + optional credit. For
 // editorial pages.
 export const ImageCaption = {
   label: 'Image with caption',

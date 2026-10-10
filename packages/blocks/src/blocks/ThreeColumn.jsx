@@ -1,4 +1,4 @@
-// ThreeColumn — generic 3-col text layout. Lighter than PillarsRow
+// ThreeColumn - generic 3-col text layout. Lighter than PillarsRow
 // (which is icon + body cards). Use for parallel text features.
 export const ThreeColumn = {
   label: 'Three columns',

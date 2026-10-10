@@ -1,4 +1,4 @@
-// PrinciplesList — checkmark bullets with editable items.
+// PrinciplesList - checkmark bullets with editable items.
 
 import { CheckCircleFilled } from '@ant-design/icons';
 import { htmlField } from './HtmlField.jsx';

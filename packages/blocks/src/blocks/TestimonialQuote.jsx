@@ -1,4 +1,4 @@
-// TestimonialQuote — pull-quote testimonial section with slider / carousel
+// TestimonialQuote - pull-quote testimonial section with slider / carousel
 // support. Allows displaying a single quote or multiple quotes as an
 // interactive carousel with arrows, dots, and autoplay controls.
 //

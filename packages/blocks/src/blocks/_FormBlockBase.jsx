@@ -6,7 +6,7 @@ import { DynamicFormField } from './_DynamicFormField';
 import { htmlField } from './HtmlField.jsx';
 
 // Puck array-field definition shared by every form block.
-// Authors configure form fields in the Puck sidebar — add, remove, reorder,
+// Authors configure form fields in the Puck sidebar - add, remove, reorder,
 // and edit each field's type, label, validation preset, and layout width.
 export const FORM_FIELD_ARRAY_DEF = {
   type: 'array',
@@ -56,7 +56,7 @@ export const FORM_FIELD_ARRAY_DEF = {
     },
     options: {
       type: 'textarea',
-      label: 'Options — one per line (dropdown, radio, checkboxes)',
+      label: 'Options - one per line (dropdown, radio, checkboxes)',
     },
     default_value: { type: 'text', label: 'Default value' },
     help_text: { type: 'text', label: 'Help / hint text' },
